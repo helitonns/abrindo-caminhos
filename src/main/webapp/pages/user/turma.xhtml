@@ -1,0 +1,236 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/user/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Turmas</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px;">Gerenciar turmas</div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:message for="idNomeTurma" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <p:message for="idSelectAtividade" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <p:message for="idSelectHorario" showSummary="true" showDetail="false"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idNomeTurma" value="#{turmaMB.turma.nome}" required="true"  converter="upper" requiredMessage="Campo obrigatório"/>
+                                        <label>Nome da turma</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:selectOneMenu id="idSelectAtividade" value="#{turmaMB.idAtividade}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                    <f:selectItem itemLabel="Selecione a atividade" noSelectionOption="true"/>
+                                    <f:selectItems value="#{turmaMB.atividades}" var="varAtividade" itemValue="#{varAtividade.id}" itemLabel="#{varAtividade.descricao}" />
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:selectOneMenu id="idSelectHorario" value="#{turmaMB.idHorario}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                    <f:selectItem itemLabel="Selecione o horário" noSelectionOption="true"/>
+                                    <f:selectItems value="#{turmaMB.horarios}" var="varHorario" itemValue="#{varHorario.id}" itemLabel="#{varHorario.descricao}" />
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:message for="idDataInicio" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:message for="idDataTermino" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6">
+                                <p:message for="cds" showSummary="true" showDetail="false"/>
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:calendar id="idDataInicio" value="#{turmaMB.turma.dataInicio}" required="true" requiredMessage="Campo obrigatório"  pattern="dd/MM/yyyy" style="margin-top: 11px;" mask="99/99/9999" showOn="button"/> 
+                                        <label>Data de início:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:calendar id="idDataTermino" value="#{turmaMB.turma.dataTermino}"  requiredMessage="Campo obrigatório" pattern="dd/MM/yyyy" style="margin-top: 11px;" mask="99/99/9999" showOn="button"/> 
+                                        <label>Data de término:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+                            
+                            
+                            <div class="ui-g-12 ui-md-6">
+                                <p:selectManyCheckbox id="cds"  value="#{turmaMB.diasDaSemanaSelecionados}" required="true" requiredMessage="Campo obrigatório" style="width: 100%; float: right">
+                                    <f:selectItems value="#{turmaMB.diasDaSemana}" var="ds" itemValue="#{ds}" itemLabel="#{ds}"  />
+                                </p:selectManyCheckbox>
+                            </div>
+
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <p:message for="idSelectIdadeMin" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:message for="idSelectIdadeMax" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6"/>
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <h:outputText value="Idade mínima"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <h:outputText value="Idade máxima"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6"/>
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu id="idSelectIdadeMin" value="#{turmaMB.turma.idadeMinima}" required="true" requiredMessage="Campo obrigatório" >
+                                    <!--<f:selectItem itemLabel="Idade mínima" noSelectionOption="true"/>-->
+                                    <f:selectItems value="#{turmaMB.idades}" var="varIdadeMinima" itemValue="#{varIdadeMinima.descricao}" itemLabel="#{varIdadeMinima.descricao}" />
+                                </p:selectOneMenu>
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu id="idSelectIdadeMax" value="#{turmaMB.turma.idadeMaxima}" required="true" requiredMessage="Campo obrigatório" >
+                                    <!--<f:selectItem itemLabel="Idade Máxima" noSelectionOption="true"/>-->
+                                    <f:selectItems value="#{turmaMB.idades}" var="varIdadeMaxima" itemValue="#{varIdadeMaxima.descricao}" itemLabel="#{varIdadeMaxima.descricao}" />
+                                </p:selectOneMenu>
+                            </div>
+                            
+                            
+                            
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Salvar" action="#{turmaMB.salvarTurma}" ajax="false" icon="ui-icon-save"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Cancelar" action="#{turmaMB.cancelar()}" styleClass="blue-grey-btn" icon="ui-icon-cancel" immediate="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+        <h:form id="form2">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title"> 
+                        <div style="margin-left: 20px;">Turmas cadastradas</div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                            <div class="ui-g-12 ui-md-12">
+                                <p:dataTable var="turma_var" value="#{turmaMB.turmas}" reflow="true" rowKey="#{turma_var.id}" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Id" style="width: 100px">
+                                        <h:outputText value="#{turma_var.id}" />
+                                    </p:column>
+
+                                    <p:column headerText="Atividade" sortBy="#{turma_var.atividade.descricao}" filterBy="#{turma_var.atividade.descricao}">
+                                        <h:outputText value="#{turma_var.atividade.descricao}" />
+                                    </p:column>
+                                    
+                                    <p:column headerText="Nome" sortBy="#{turma_var.nome}" filterBy="#{turma_var.nome}">
+                                        <h:outputText value="#{turma_var.nome}" />
+                                    </p:column>
+
+                                    <p:column headerText="Horário" sortBy="#{turma_var.horario.descricao}" filterBy="#{turma_var.horario.descricao}">
+                                        <h:outputText value="#{turma_var.horario.descricao}" />
+                                    </p:column>
+
+                                    <p:column headerText="Dias da semana">
+                                        <h:outputText value="#{turma_var.exibirDiasDaSemana}" />
+                                    </p:column>
+                                    <p:column headerText="Idade" style="width: 60px">
+                                        <h:outputText value="#{turma_var.idadeMinima}-#{turma_var.idadeMaxima}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ação" style="width: 170px">
+                                        <h:panelGrid columns="3">
+                                            <p:commandButton id="btnEditar" icon="ui-icon-edit" ajax="true" update="form"  action="#{turmaMB.prepararEdicaoDeTurma()}">
+                                                <p:tooltip value="Editar" for="btnEditar"/>
+                                                <f:setPropertyActionListener value="#{turma_var}" target="#{turmaMB.turma}"/>
+                                                <f:setPropertyActionListener value="#{turma_var.atividade.id}" target="#{turmaMB.idAtividade}"/>
+                                                <f:setPropertyActionListener value="#{turma_var.horario.id}" target="#{turmaMB.idHorario}"/>
+                                            </p:commandButton>
+                                            <p:commandButton id="btnFinalizar" icon="ui-icon-done-all"  styleClass="green-btn" ajax="true" update="form" onclick="PF('modal_finalizar').show();">
+                                                <p:tooltip value="Finalizar" for="btnFinalizar"/>
+                                                <f:setPropertyActionListener value="#{turma_var}" target="#{turmaMB.turma}"/>
+                                                <f:setPropertyActionListener value="#{true}" target="#{turmaMB.finalizarTurma}"/>
+                                            </p:commandButton>
+                                            <p:commandButton id="btnExcluir" icon="ui-icon-delete"  styleClass="red-btn" actionListener="#{turmaMB.setTurma(turma_var)}" onclick="PF('modal_excluir').show();">
+                                                <p:tooltip value="Excluir" for="btnExcluir"/>
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+
+                        <p:dialog header="Finalizar turma" widgetVar="modal_finalizar" modal="true" height="100" width="550">
+                            <h:outputText value="Tem certeza que deseja finalizar a turma selecionada?" style="width: 100%"/>
+
+                            <f:facet name="footer">
+                                <h:panelGrid columns="2" style="width: 100%">
+                                    <p:commandButton value="Finalizar" icon="ui-icon-done-all" styleClass="green-btn" ajax="false" action="#{turmaMB.finalizarTurma()}" style="width: 100%"/>
+                                    <p:button value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:dialog>
+
+                        <p:dialog header="Exclusão" widgetVar="modal_excluir" modal="true" height="100" width="550">
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+                                <p:selectOneButton value="#{turmaMB.removerTurma}">
+                                    <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                    <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                </p:selectOneButton>
+                            </h:panelGrid>
+
+                            <f:facet name="footer">
+                                <h:panelGrid columns="2" style="width: 100%">
+                                    <p:commandButton value="Excluir" icon="ui-icon-delete" ajax="false" action="#{turmaMB.removerTurma()}" style="width: 100%"/>
+                                    <p:button value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:dialog>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

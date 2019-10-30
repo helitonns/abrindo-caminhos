@@ -1,0 +1,148 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:stella="http://stella.caelum.com.br/faces2"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/user/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Família</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px">Pesquisar Aluno por Código, CPF ou Nome</div>
+
+                        <div class="ui-g ui-fluid form-group">
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idAluno" value="#{alunoListagemMB.aluno.id}" converterMessage="O valor do campo deve ser um número inteiro">
+                                            <f:convertNumber />
+                                        </p:inputText>
+                                        <label>Código</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idNomePesquisa" value="#{alunoListagemMB.aluno.nome}" converter="upperClean"/>
+                                        <label>Nome</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:commandButton value="Pesquisar"  action="#{alunoListagemMB.pesquisarAluno()}" ajax="false" icon="ui-icon-search" style="width: 100%;" update="@form"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12" style="margin-top: 20px;">
+                                <p:dataTable value="#{alunoListagemMB.alunos}" var="varAlunoListagem" emptyMessage=" " style="width: 100%">
+                                    <p:column headerText="Código"  style="width: 130px;">
+                                        <h:outputText value="#{varAlunoListagem.id}" />
+                                    </p:column>
+                                    <p:column headerText="Nome" sortBy="#{varAlunoListagem.nome}" filterBy="#{varAlunoListagem.nome}">
+                                        <h:outputText value="#{varAlunoListagem.nome}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 1" style="width: 140px">
+                                        <h:outputText value="#{varAlunoListagem.celular}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 2" style="width: 140px">
+                                        <h:outputText value="#{varAlunoListagem.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Ação" style="width: 200px;">
+                                        <p:commandButton value="Visualizar família" id="btnEditar" icon="ui-icon-search" update="@form" actionListener="#{alunoListagemMB.setAluno(varAlunoListagem)}"  action="#{alunoListagemMB.pesquisarFamilia()}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="card card-w-title" style="margin-top: 5px">
+                        <div style="margin-left: 20px">Família</div>
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                            <div class="ui-g-12 ui-md-6">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idMae" value="#{alunoListagemMB.genitores.nomeMae}" converter="upperClean"/>
+                                        <label>Mãe</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idPai" value="#{alunoListagemMB.genitores.nomePai}" converter="upperClean"/>
+                                        <label>Pai</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12" style="margin-top: 20px;">
+                                <div><p>Filhos</p></div>
+                                <p:dataTable value="#{alunoListagemMB.irmaos}" var="var_irmaos"  emptyMessage=" " style="width: 100%">
+                                    <p:column headerText="Código"  style="width: 130px;">
+                                        <h:outputText value="#{var_irmaos.id}" />
+                                    </p:column>
+                                    <!--                                    <p:column headerText="CPF"  style="width: 130px;">
+                                                                            <h:outputText value="# {var_irmaos.cpf}" />
+                                                                        </p:column>-->
+                                    <p:column headerText="Nome">
+                                        <h:outputText value="#{var_irmaos.nome}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 1" style="width: 140px">
+                                        <h:outputText value="#{var_irmaos.celular}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 2" style="width: 140px">
+                                        <h:outputText value="#{var_irmaos.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Ação" style="width: 200px;">
+                                        <p:commandButton value="Minhas atividades" icon="ui-icon-search" styleClass="orange-btn" onclick="PF('modal_atividades').show();" action="#{alunoListagemMB.pegarTurma()}">
+                                            <f:setPropertyActionListener value="#{var_irmaos}" target="#{alunoListagemMB.irmao}"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+
+
+
+                            <h:panelGroup rendered="#{alunoListagemMB.exibirAtividade}">
+                                <div class="ui-g-12 ui-md-12" style="margin-top: 20px;">
+                                    <p:outputLabel value="ATIVIDADES DE: #{alunoListagemMB.irmao.nome}"/>
+
+                                    <p:dataTable id="idTabelaCursoDoAlunos" value="#{alunoListagemMB.matriculas}" var="varTurma" reflow="true" emptyMessage=" " style="width: 100%; margin-top: 5px">
+                                        <p:column headerText="Turma">
+                                            <h:outputText value="#{varTurma.turma.nomeExibicao}" />
+                                        </p:column>
+
+                                        <p:column headerText="Status" style="width: 140px;">
+                                            <h:outputText value="#{varTurma.turma.iniciada ? 'Em andamento' : 'Concluída'}"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

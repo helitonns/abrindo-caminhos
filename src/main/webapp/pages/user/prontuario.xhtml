@@ -1,0 +1,183 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:stella="http://stella.caelum.com.br/faces2"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/user/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Prontuário</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px">Pesquisar Aluno por Código, CPF ou Nome</div>
+
+                        <div class="ui-g ui-fluid form-group">
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idAluno" value="#{prontuarioMB.aluno.id}" converterMessage="O valor do campo deve ser um número inteiro">
+                                            <f:convertNumber />
+                                        </p:inputText>
+                                        <label>Código</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idNomePesquisa" value="#{prontuarioMB.aluno.nome}" converter="upperClean"/>
+                                        <label>Nome</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:commandButton value="Pesquisar"  action="#{prontuarioMB.pesquisarAluno()}" ajax="false" icon="ui-icon-search" style="width: 100%;"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12" style="margin-top: 20px;">
+                                <p:dataTable value="#{prontuarioMB.alunos}" var="varAlunoListagem" emptyMessage=" " style="width: 100%">
+                                    <p:column headerText="Código"  style="width: 130px;">
+                                        <h:outputText value="#{varAlunoListagem.id}" />
+                                    </p:column>
+                                    <p:column headerText="Nome" sortBy="#{varAlunoListagem.nome}" filterBy="#{varAlunoListagem.nome}">
+                                        <h:outputText value="#{varAlunoListagem.nome}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 1" style="width: 140px">
+                                        <h:outputText value="#{varAlunoListagem.celular}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 2" style="width: 140px">
+                                        <h:outputText value="#{varAlunoListagem.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Ação" style="width: 200px;">
+                                        <p:commandButton id="btnEditar" value="Exibir prontuário" icon="ui-icon-search" actionListener="#{prontuarioMB.setAluno(varAlunoListagem)}"  action="#{prontuarioMB.preSalvar()}" update="@form"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h:panelGroup id="pnl_prontuario" rendered="#{prontuarioMB.exibirProntuario}">
+                        <div class="card card-w-title" style="margin-top: 5px">
+                            <div style="margin-left: 20px"><p:outputLabel value="PRONTUÁRIO:    "/></div>
+
+                            <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                                <div class="ui-g-12 ui-md-4">
+                                    <div class="ui-inputgroup">
+                                        <h:panelGroup styleClass="md-inputfield">
+                                            <p:inputText id="idCodigoAluno" value="#{prontuarioMB.alunoProntuario.id}"/>
+                                            <label>Código</label>
+                                        </h:panelGroup>     
+                                    </div>
+                                </div>
+                                
+                                <div class="ui-g-12 ui-md-4">
+                                    <div class="ui-inputgroup">
+                                        <h:panelGroup styleClass="md-inputfield">
+                                            <p:inputText id="idNomeAluno" value="#{prontuarioMB.alunoProntuario.nome}"/>
+                                            <label>Aluno</label>
+                                        </h:panelGroup>     
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <div class="ui-inputgroup">
+                                        <h:panelGroup styleClass="md-inputfield">
+                                            <p:inputText id="idPeso" value="#{prontuarioMB.prontuario.peso}" converterMessage="O valor do campo deve ser um número inteiro">
+                                                <f:convertNumber />
+                                            </p:inputText>
+                                            <label>Peso (Kg)</label>
+                                        </h:panelGroup>     
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12">
+                                    <div class="ui-inputgroup">
+                                        <h:panelGroup styleClass="md-inputfield">
+                                            <p:inputText id="idObservacao" value="#{prontuarioMB.prontuario.observacoes}"/>
+                                            <label>Observações</label>
+                                        </h:panelGroup>     
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12" style="margin-top: 20px;">
+                                    <p:dataTable id="tbl_receitas" value="#{prontuarioMB.receitas}" var="varReceita" reflow="true"  emptyMessage=" " style="width: 100%">
+                                        <f:facet name="header"></f:facet>
+                                        <p:column headerText="Alergia">
+                                            <h:outputText value="#{varReceita.alergia.nome}" />
+                                        </p:column>
+                                        <p:column headerText="Medicação">
+                                            <h:outputText value="#{varReceita.medicacao.nome}" />
+                                        </p:column>
+                                        <p:column headerText="Ação" style="width: 250px;">
+                                            <p:commandButton  value="Remover do prontuário" icon="ui-icon-delete" styleClass="red-btn" actionListener="#{prontuarioMB.setReceita(varReceita)}"  onclick="PF('modal_excluir').show();"/>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <p:selectOneMenu id="idSelectAlergia" value="#{prontuarioMB.alergia}"  converter="entityConverter" style="margin-top: 10px;">
+                                        <f:selectItem itemLabel="Alergia" noSelectionOption="true"/>
+                                        <f:selectItems value="#{prontuarioMB.alergias}" var="varAlergia" itemValue="#{varAlergia}" itemLabel="#{varAlergia.nome}" />
+                                    </p:selectOneMenu>
+                                </div>
+                               
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <p:selectOneMenu id="idSelectMedicacao" value="#{prontuarioMB.medicacao}" converter="entityConverter" style="margin-top: 10px;">
+                                        <f:selectItem itemLabel="Medicação" noSelectionOption="true"/>
+                                        <f:selectItems value="#{prontuarioMB.medicacoes}" var="varMedicacao" itemValue="#{varMedicacao}" itemLabel="#{varMedicacao.nome}" />
+                                    </p:selectOneMenu>
+                                </div>
+                              
+                                <div class="ui-g-12 ui-md-4">
+                                    <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_receitas idSelectAlergia idSelectMedicacao" action="#{prontuarioMB.adicionarReceita()}"/>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-12" style="margin-top: 20px;"/>
+                                <div class="ui-g-12 ui-md-4"/>
+                                <div class="ui-g-12 ui-md-4">
+                                    <p:commandButton value="Salvar" icon="ui-icon-save"  action="#{prontuarioMB.salvarProntuario()}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-4">
+                                    <p:commandButton value="Cancelar" icon="ui-icon-cancel" styleClass="blue-grey-btn" action="#{prontuarioMB.cancelar()}"/>
+                                </div>
+
+                                <p:dialog header="Exclusão" widgetVar="modal_excluir" modal="true" height="100" width="550">
+                                    <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+
+                                    <f:facet name="footer">
+                                        <h:panelGrid columns="2" style="width: 100%">
+                                            <p:commandButton value="Excluir" icon="ui-icon-delete" action="#{prontuarioMB.removerReceita()}" update="tbl_receitas" onclick="PF('modal_excluir').hide();" style="width: 100%"/>
+                                            <p:commandButton value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel" onclick="PF('modal_excluir').hide();"  style="width: 100%"/>
+                                        </h:panelGrid>
+                                    </f:facet>
+                                </p:dialog>
+                                
+                                
+                            </div>
+                        </div>
+                    </h:panelGroup>   
+
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

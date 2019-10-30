@@ -1,0 +1,114 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/user/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Situações</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px;">Gerenciar situações</div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idSituacaoDescricao" value="#{situacaoMB.situacao.descricao}" required="true"  converter="upper"/>
+                                        <label>Situação</label>
+                                        <p:message for="idSituacaoDescricao" showSummary="false" showDetail="false"/>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectBooleanButton id="idSituacaoStatus" value="#{situacaoMB.situacao.status}"  onLabel="Ativa" offLabel="Inativa" label="Status" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                                    <p:tooltip value="Clique para selecoinar o Status" for="idSituacaoStatus"/>
+                                </p:selectBooleanButton>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Salvar" action="#{situacaoMB.salvarSituacao}" ajax="false" icon="ui-icon-save"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Cancelar" action="#{situacaoMB.cancelar()}" styleClass="blue-grey-btn" icon="ui-icon-cancel" immediate="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+        <h:form id="form2">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title"> 
+                        <div style="margin-left: 20px;">Denominações cadastradas</div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                            <div class="ui-g-12 ui-md-12">
+                                <p:dataTable var="situacao_var" value="#{situacaoMB.situacoes}" reflow="true" rowKey="#{situacao_var.id}" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Id" style="width: 50px">
+                                        <h:outputText value="#{situacao_var.id}" />
+                                    </p:column>
+
+                                    <p:column headerText="Nome" sortBy="#{situacao_var.descricao}" filterBy="#{situacao_var.descricao}">
+                                        <h:outputText value="#{situacao_var.descricao}" />
+                                    </p:column>
+
+                                    <p:column headerText="Status" sortBy="#{situacao_var.status}" style="width: 100px">
+                                        <h:outputText value="#{situacao_var.status ? 'Ativa' : 'Inativa'}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ação" style="width: 250px">
+                                        <h:panelGrid columns="2">
+                                            <p:commandButton value="Editar"  icon="ui-icon-edit" ajax="true" update="form" style="width: 100%"  actionListener="#{situacaoMB.setSituacao(situacao_var)}" />
+                                            <p:commandButton value="Excluir" icon="ui-icon-cancel"  style="width: 100%" styleClass="red-btn" actionListener="#{situacaoMB.setSituacaoSelecionada(situacao_var)}" onclick="PF('modal_excluir_situacao').show();"/>
+                                        </h:panelGrid>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+
+                        <p:dialog header="Exclusão" widgetVar="modal_excluir_situacao" modal="true" height="100" width="550">
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+                                <p:selectOneButton value="#{situacaoMB.removerSituacaoSelecionada}">
+                                    <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                    <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                </p:selectOneButton>
+                            </h:panelGrid>
+
+                            <f:facet name="footer">
+                                <h:panelGrid columns="2" style="width: 100%">
+                                    <p:commandButton value="Excluir" icon="ui-icon-delete" ajax="false" action="#{situacaoMB.removerSituacao()}" style="width: 100%"/>
+                                    <p:button value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:dialog>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

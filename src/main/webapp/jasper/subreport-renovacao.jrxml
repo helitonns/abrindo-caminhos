@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.0.final using JasperReports Library version 6.3.0  -->
+<!-- 2019-09-10T10:37:49 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="subreport-renovacao" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="6420730a-5f98-468a-9615-c983853581ea">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<parameter name="cabecalho" class="net.sf.jasperreports.engine.data.JRBeanCollectionDataSource"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="turma.atividade.descricao" class="java.lang.String"/>
+	<field name="turma.diasDaSemana" class="java.lang.String"/>
+	<field name="turma.horario.descricao" class="java.lang.String"/>
+	<field name="turma.nome" class="java.lang.String"/>
+	<title>
+		<band height="45" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="18" y="1" width="182" height="19" uuid="41695b43-46b4-447c-b3ed-23bb66021852"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{turma.atividade.descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="395" y="0" width="93" height="20" uuid="ddcdff73-e8d1-4a40-8094-d39edbe26b6d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Dias da Semana:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-20" y="1" width="135" height="19" uuid="bbf3f342-d32a-46da-8b2b-71fc08ca4413"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Atividade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="639" y="0" width="40" height="21" uuid="1b97d876-dd58-42bb-ad0f-affa26964bb6"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[Horário:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="-20" y="24" width="800" height="1" uuid="cc904602-64f2-45ad-9919-371ea3745f3d"/>
+			</line>
+			<textField>
+				<reportElement x="459" y="0" width="150" height="20" uuid="9d64d9b2-f2e1-484b-928d-e5d06ee0324f"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{turma.diasDaSemana}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="671" y="0" width="97" height="20" uuid="12662c3f-935f-474b-9a67-1818ab155a29"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{turma.horario.descricao}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="215" y="0" width="40" height="20" uuid="dcc74617-ad05-4d87-b9ef-352e1c797062"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Turma:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="243" y="1" width="141" height="19" uuid="42be2d4b-46b0-4060-b8d5-840e00a249d4"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{turma.nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="243" y="24" width="366" height="18" uuid="78c99863-d7ed-4b5e-a9ee-c9ec23fa0ed0"/>
+				<textElement verticalAlignment="Bottom">
+					<font size="8" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[PERÍODO DA RENOVAÇÃO DE  ____ A ____ DE _____________________________]]></text>
+			</staticText>
+		</band>
+	</title>
+</jasperReport>

@@ -1,0 +1,82 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:stella="http://stella.caelum.com.br/faces2"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/relatorio/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Listar / Editar aluno</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px">Pesquisar Aluno por Código, CPF ou Nome</div>
+
+                        <div class="ui-g ui-fluid form-group">
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idAluno" value="#{alunoListagemMB.aluno.id}" converterMessage="O valor do campo deve ser um número inteiro">
+                                            <f:convertNumber />
+                                        </p:inputText>
+                                        <label>Código</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idNomePesquisa" value="#{alunoListagemMB.aluno.nome}" converter="upper"/>
+                                        <label>Nome</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:commandButton value="Pesquisar"  action="#{alunoListagemMB.pesquisarAluno()}" ajax="false" icon="ui-icon-search" style="width: 100%;"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12" style="margin-top: 20px;">
+                                <p:dataTable value="#{alunoListagemMB.alunos}" var="varAlunoListagem" emptyMessage=" " style="width: 100%">
+                                    <p:column headerText="Código"  style="width: 100px;">
+                                        <h:outputText value="#{varAlunoListagem.id}" />
+                                    </p:column>
+                                    <p:column headerText="Nome" sortBy="#{varAlunoListagem.nome}" filterBy="#{varAlunoListagem.nome}">
+                                        <h:outputText value="#{varAlunoListagem.nome}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 1">
+                                        <h:outputText value="#{varAlunoListagem.celular}" />
+                                    </p:column>
+                                    <p:column headerText="Celular 2" >
+                                        <h:outputText value="#{varAlunoListagem.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Ação" style="width: 80px">
+                                        <p:commandButton id="btnEditar" icon="ui-icon-edit" actionListener="#{alunoListagemMB.setAluno(varAlunoListagem)}"  action="#{alunoListagemMB.editarAluno()}">
+                                            <p:tooltip value="Editar item" for="btnEditar"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

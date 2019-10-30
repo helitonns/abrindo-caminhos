@@ -1,0 +1,442 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/user/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+            <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Exibir aluno</label>
+
+            <div class="p-grid dashboard">
+
+                <!--OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO COLUNA 1 OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+                <div class="p-col-12 p-lg-3">
+                    <div class="card">
+                        <div style="margin-left: 20px">Foto do aluno</div>
+                        <h:panelGroup id="pnl-foto" style="width: 100%;" >
+                            <center>
+                                <div class="ui-g-12 ui-md-12 backgroundFoto" style="height: 280px;">
+                                    <p:graphicImage value="#{alunoMB.imagemStreamed}" styleClass="foto-selecionada" stream="false" rendered="#{alunoMB.imagem != null}" style="width: 100%; height: 100%; min-width: 200px; min-height: 240px;"/>
+                                </div>
+                            </center>
+                        </h:panelGroup>
+                        <!-- ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo-->
+                    </div>
+                </div>
+
+                <div class="p-col-12 p-lg-9">
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px">Dados do aluno</div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px;">
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idAluno" value="#{alunoMB.aluno.id}"/>
+                                        <label>Código:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-6">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idNomeAluno" value="#{alunoMB.aluno.nome}"/>
+                                        <label>Nome:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idRgAluno" label="RG:" value="#{alunoMB.aluno.rg}"/>
+                                        <label>RG:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText value="#{alunoMB.aluno.sexo}"/>
+                                        <label>Sexo:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText label="Data de Nascimento: " value="#{alunoMB.aluno.dataNascimento}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy" type="date"/>
+                                        </p:inputText>
+                                        <label>Data de nascimento:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText  value="#{alunoMB.aluno.idade}"/>
+                                        <label>Idade:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idCelularAluno"  value="#{alunoMB.aluno.celular}" />
+                                        <label>Celular 1:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idFixoAluno"  value="#{alunoMB.aluno.fixo}" />
+                                        <label>Celular 2:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idEMailAluno" value="#{alunoMB.aluno.naturalidade}"/>
+                                        <label>Naturalidade:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText  value="#{alunoMB.aluno.paisDeOrigem.nome}"/>
+                                        <label>País:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText value="#{alunoMB.aluno.dataDeCadastro}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm" type="date"/>
+                                        </p:inputText>
+                                        <label>Data do cadastro:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-12"/>
+
+                            <div class="ui-g-12 ui-md-12">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputTextarea  value="#{alunoMB.aluno.informacoesComplementares}" rows="1"/>
+                                        <label>Informações complementares:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O PAINEL DA INSTRUCAO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+            <div class="card card-w-title">
+                <div style="margin-left: 20px">Instrução</div>
+                <div class="ui-g ui-fluid form-group">
+
+                    <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
+                        <p:selectOneMenu id="idEscolaridade" value="#{alunoMB.idEscolaridade}" style="width: 100%">
+                            <f:selectItem itemLabel="Escolaridade" itemValue="0" noSelectionOption="true"/>
+                            <f:selectItems value="#{alunoMB.escolaridades}" var="slc_escolaridade" itemValue="#{slc_escolaridade.id}" itemLabel="#{slc_escolaridade.descricao}"  />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
+                        <p:selectOneMenu id="idSerie" value="#{alunoMB.idSerie}" style="width: 100%"  >
+                            <f:selectItem itemLabel="Série" itemValue="0" noSelectionOption="true"/>
+                            <f:selectItems value="#{alunoMB.series}" var="slc_series" itemValue="#{slc_series.id}" itemLabel="#{slc_series.descricao}"  />
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
+                        <p:selectOneMenu id="idPeriodo" value="#{alunoMB.idPeriodo}" style="width: 100%">
+                            <f:selectItem itemLabel="Perído" itemValue="0" noSelectionOption="true"/>
+                            <f:selectItems value="#{alunoMB.periodos}" var="slc_periodo" itemValue="#{slc_periodo.id}" itemLabel="#{slc_periodo.descricao}"  />
+                        </p:selectOneMenu>
+                    </div>
+
+
+                    <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
+                        <p:selectOneMenu id="idDenominacao" value="#{alunoMB.idDenominacao}" valueChangeListener="#{alunoMB.valueChangedDenominacao}" >
+                            <p:ajax event="change" update="idEscola" />
+                            <f:selectItem itemLabel="Denominação" />
+                            <f:selectItems value="#{alunoMB.denominacoes}" var="slc_denominacoes" itemValue="#{slc_denominacoes.id}" itemLabel="#{slc_denominacoes.descricao}"/>
+                        </p:selectOneMenu> 
+                    </div>
+
+                    <div class="ui-g-12 ui-md-8" style="margin-top: 12px;">
+                        <p:selectOneMenu id="idEscola" value="#{alunoMB.idEscola}" style="width: 100%">
+                            <f:selectItem itemLabel="Escola" itemValue="0" noSelectionOption="true"/>
+                            <f:selectItems value="#{alunoMB.escolas}" var="slc_escola" itemValue="#{slc_escola.id}" itemLabel="#{slc_escola.nome}"  />
+                        </p:selectOneMenu>
+                    </div>
+                </div>
+            </div>
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->      
+
+
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00 PAINEL DO ENDEREÇO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->      
+            <div class="card card-w-title">
+                <div style="margin-left: 20px">Dados do endereço</div>
+                <div class="ui-g ui-fluid form-group" style="margin-top: 20px;">
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idRuaAluno" value="#{alunoMB.endereco.rua}"/>
+                                <label>Rua:</label>
+                            </h:panelGroup>
+
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNumeroAluno" value="#{alunoMB.endereco.numero}"/>
+                                <label>Número:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText value="#{alunoMB.endereco.complemento}"/>
+                                <label>Complemento:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputMask id="idCepAluno" label="CEP:" value="#{alunoMB.endereco.cep}" mask="99.999-999"/>
+                                <label>CEP:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText value="#{alunoMB.endereco.bairro.municipio.nome}"/>
+                                <label>Município:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText  value="#{alunoMB.endereco.bairro.nome}"/>
+                                <label>Bairro:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O000 PAINEL DOS GENITORESOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+            <div class="card card-w-title">
+                <div style="margin-left: 20px">Informações dos genitores</div>
+                <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNomeMae" value="#{alunoMB.genitores.nomeMae}" style="width: 100%;" converter="upper"/>
+                                <label>Nome da Mãe:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputMask id="idCpfMae" value="#{alunoMB.genitores.cpfMae}" mask="999.999.999-99" style="width: 100%;"/>
+                            <label>CPF da Mãe: </label>
+                        </h:panelGroup>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idRGMae" value="#{alunoMB.genitores.rgMae}" style="width: 100%;" converter="upper"/>
+                                <label>RG da Mãe:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:calendar id="idDataNascimentoMae" value="#{alunoMB.genitores.dataNascimentoMae}"  pattern="dd/MM/yyyy" style="margin-top: 11px;" mask="99/99/9999" showOn="button"/> 
+                                <label>Data de nascimento da Mãe:</label>
+                                <p:message for="idDataNascimentoMae" showSummary="true" showDetail="false"/>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText  value="#{alunoMB.genitores.idadeMae}"/>
+                                <label>Idade Mãe:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputMask id="idCelularMae"  value="#{alunoMB.genitores.telefoneMae}" mask="(99) 99999-9999" style="width: 100%;"/>
+                                <label>Celular 1 da Mãe:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputMask id="idCelular2Mae"  value="#{alunoMB.genitores.telefoneMae2}" mask="(99) 99999-9999" style="width: 100%;"/>
+                                <label>Celular 2 da Mãe:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-12" style="margin-top: 15px;"/>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNomePai" value="#{alunoMB.genitores.nomePai}" style="width: 100%;" converter="upper"/>
+                                <label>Nome do Pai:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputMask id="idCpfPai" value="#{alunoMB.genitores.cpfPai}" mask="999.999.999-99" style="width: 100%;"/>
+                            <label>CPF do Pai:</label>
+                        </h:panelGroup>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idRGPai" value="#{alunoMB.genitores.rgPai}" style="width: 100%;" converter="upper"/>
+                                <label>RG do Pai:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:calendar id="idDataNascimentoPai" value="#{alunoMB.genitores.dataNascimentoPai}"  pattern="dd/MM/yyyy" style="margin-top: 11px;" mask="99/99/9999" showOn="button"/> 
+                                <label>Data de nascimento do Pai:</label>
+                                <p:message for="idDataNascimentoPai" showSummary="false" showDetail="false"/>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-2">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText  value="#{alunoMB.genitores.idadePai}"/>
+                                <label>Idade Pai:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputMask id="idCelularPai"  value="#{alunoMB.genitores.telefonePai}" mask="(99) 99999-9999" style="width: 100%;"/>
+                                <label>Celular 1 do Pai:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                    <div class="ui-g-12 ui-md-4">
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputMask id="idCelular2Pai"  value="#{alunoMB.genitores.telefonePai2}" mask="(99) 99999-9999" style="width: 100%;"/>
+                                <label>Celular 2 do Pai:</label>
+                            </h:panelGroup>     
+                        </div>
+                    </div>
+
+                </div>
+            </div>        
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+            <h:panelGroup id="idTabelaCursoDoAlunos">
+                <div class="card card-w-title">
+                    <div style="margin-left: 20px">Minhas atividades</div>
+                    <div class="ui-g ui-fluid form-group">
+                        <p:dataTable value="#{alunoMB.matriculas}" var="varTurma" emptyMessage=" " rendered="#{alunoMB.exibirMinhasAtividades}" style="width: 100%">
+                            <p:column headerText="Turma">
+                                <h:outputText value="#{varTurma.turma.nomeExibicao}" />
+                            </p:column>
+
+                            <p:column headerText="Status" style="width: 140px;">
+                                <h:outputText value="#{varTurma.turma.iniciada ? 'Em andamento' : 'Concluída'}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>
+            </h:panelGroup>
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+            <div class="card card-w-title">
+                <div class="ui-g ui-fluid form-group">
+                    <div class="ui-g-12 ui-md-3">
+                        <p:commandButton value="Voltar" action="listar-editar-aluno" styleClass="orange-btn" immediate="true" icon="ui-icon-navigate-before" style="width: 100%" />
+                    </div>
+                    <div class="ui-g-12 ui-md-3">
+                        <p:commandButton value="Minhas atividades" actionListener="#{alunoMB.verificarMinhasAtividades()}" update="idTabelaCursoDoAlunos"  styleClass="purple-btn" icon="ui-icon-directions-run" style="width: 100%"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-3">
+                        <p:commandButton value="Editar" action="#{alunoMB.editarAluno()}" ajax="false" icon="ui-icon-edit" style="width: 100%"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-3">
+                        <p:commandButton value="Matricular" action="#{alunoMB.enviarAlunoParaMatricula()}" styleClass="green-btn" immediate="true" icon="ui-icon-trending-flat" style="width: 100%" />
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+    </ui:define>
+</ui:composition>

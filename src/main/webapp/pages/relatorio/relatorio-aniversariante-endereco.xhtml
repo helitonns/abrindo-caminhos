@@ -1,0 +1,182 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:stella="http://stella.caelum.com.br/faces2"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/relatorio/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Relatório Aniversariantes com endereço</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px;"></div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 10px">
+
+                            <div class="ui-g-12 ui-md-12">
+                                <p:outputLabel value="Parâmetros da consulta:"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <label>Data 1</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <label>Data 2</label>
+                            </div>
+                            <div class="ui-g-12 ui-md-6"/>
+                            <!-- ############ PRIMEIRA LINHA #############-->
+                            <div class="ui-g-12 ui-md-3">
+                                <!--DATA DE NACIMENTO INTERVALO 1-->
+                                <p:calendar id="diaDoMes1" value="#{relatorioEspecificoMB.data1}" pattern="dd/MM" mask="99/99" showOn="button">
+                                    <p:tooltip for="diaDoMes1" value="Digite apenas o dia e o mês!"/>
+                                </p:calendar>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <!--DATA DE NASCIMENTO INTERVALO 2-->
+                                <p:calendar id="diaDoMes2" value="#{relatorioEspecificoMB.data2}" pattern="dd/MM" mask="99/99" showOn="button" >
+                                    <p:tooltip for="diaDoMes2" value="Digite apenas o dia e o mês!"/>
+                                </p:calendar>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%">
+                                    <f:selectItem itemLabel="Tipo de relatório"  noSelectionOption="true"   />
+                                    <f:selectItem itemLabel="Por matrícula ativa" itemValue="porMatriculaAtiva" />
+                                    <f:selectItem itemLabel="Geral" itemValue="geral" />
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}" required="true" style="width: 100%">
+                                    <f:selectItem itemLabel="Unidades"  noSelectionOption="true"   />
+                                    <f:selectItem itemLabel="Todas" itemValue="#{0}" />
+                                    <f:selectItems value="#{relatorioEspecificoMB.unidades}" var="var_unidade" itemValue="#{var_unidade.id}" itemLabel="#{var_unidade.nome}"/>
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioEspecificoMB.pesquisarPaisAniversariantes}" ajax="false" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:commandButton value="Exportar PDF" action="#{relatorioEspecificoMB.imprimirRelAniversariantesMes}" ajax="false" icon="ui-icon-picture-as-pdf"   styleClass="deep-orange-btn"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <p:commandButton value="Limpar" icon="ui-icon-close" action="relatorio-aniversariante-endereco" immediate="true" ajax="false" styleClass="blue-grey-btn"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+        <h:form id="form2">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title"> 
+                        <div style="margin-left: 20px">Resultado da pesquisa</div>
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+
+                            <div class="ui-g-12 ui-md-12">
+                                <p:dataTable id="tbl_aluno" var="var_aluno" value="#{relatorioEspecificoMB.alunos}" rendered="#{relatorioEspecificoMB.exibirTabelaAluno}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Data de Aniversário" sortBy="#{(var_aluno.genitores.dataNascimentoMae != '' and var_aluno.genitores.dataNascimentoMae != null) ?  var_aluno.genitores.dataNascimentoMae : var_matricula.aluno.genitores.dataNascimentoPai}">
+                                        <h:outputText value="#{(var_aluno.genitores.dataNascimentoMae != '' and var_aluno.genitores.dataNascimentoMae != null) ?  var_aluno.genitores.dataNascimentoMae : var_aluno.genitores.dataNascimentoPai}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Pais" sortBy="#{(var_aluno.genitores.nomeMae != '' and var_aluno.genitores.nomeMae != null) ?  var_aluno.genitores.nomeMae : var_aluno.genitores.nomePai}">
+                                        <h:outputText value="#{(var_aluno.genitores.nomeMae != '' and var_aluno.genitores.nomeMae != null) ?  var_aluno.genitores.nomeMae : var_aluno.genitores.nomePai}" />
+                                    </p:column>
+                                    <p:column headerText="Bairro" sortBy="#{var_aluno.endereco.bairro.nome}">
+                                        <h:outputText value="#{var_aluno.endereco.bairro.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Contato">
+                                        <h:outputText value="#{var_aluno.celular}" />
+                                        <h:outputText value=" - " rendered="#{(var_aluno.celular != '' and var_aluno.celular != null) and (var_aluno.fixo != '' and var_aluno.fixo != null)}"/>
+                                        <h:outputText value="#{var_aluno.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Rua" sortBy="#{var_aluno.endereco.rua}">
+                                        <h:outputText value="#{var_aluno.endereco.rua}"/>
+                                    </p:column>
+                                    <p:column headerText="Rua" sortBy="#{var_aluno.endereco.numero}">
+                                        <h:outputText value="#{var_aluno.endereco.numero}"/>
+                                    </p:column>
+                                    <p:column headerText="Município" sortBy="#{var_aluno.endereco.bairro.municipio.nome}">
+                                        <h:outputText value="#{var_aluno.endereco.bairro.municipio.nome}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        Total: #{fn:length(relatorioEspecificoMB.alunos)}
+                                    </f:facet>
+                                </p:dataTable>
+
+                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Data de Aniversário" sortBy="#{(var_matricula.aluno.genitores.dataNascimentoMae != '' and var_matricula.aluno.genitores.dataNascimentoMae != null) ?  var_matricula.aluno.genitores.dataNascimentoMae : var_matricula.aluno.genitores.dataNascimentoPai}">
+                                        <h:outputText value="#{(var_matricula.aluno.genitores.dataNascimentoMae != '' and var_matricula.aluno.genitores.dataNascimentoMae != null) ?  var_matricula.aluno.genitores.dataNascimentoMae : var_matricula.aluno.genitores.dataNascimentoPai}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Pais" sortBy="#{(var_matricula.aluno.genitores.nomeMae != '' and var_matricula.aluno.genitores.nomeMae != null) ?  var_matricula.aluno.genitores.nomeMae : var_matricula.aluno.genitores.nomePai}">
+                                        <h:outputText value="#{(var_matricula.aluno.genitores.nomeMae != '' and var_matricula.aluno.genitores.nomeMae != null) ?  var_matricula.aluno.genitores.nomeMae : var_matricula.aluno.genitores.nomePai}" />
+                                    </p:column>
+
+                                    <p:column headerText="Bairro" sortBy="#{var_matricula.aluno.endereco.bairro.nome}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.bairro.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Contato">
+                                        <h:outputText value="#{var_matricula.aluno.celular}" />
+                                        <h:outputText value=" - " rendered="#{(var_matricula.aluno.celular != '' and var_matricula.aluno.celular != null) and (var_matricula.aluno.fixo != '' and var_matricula.aluno.fixo != null)}"/>
+                                        <h:outputText value="#{var_matricula.aluno.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Rua" sortBy="#{var_matricula.aluno.endereco.rua}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.rua}"/>
+                                    </p:column>
+                                    <p:column headerText="Rua" sortBy="#{var_matricula.aluno.endereco.numero}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.numero}"/>
+                                    </p:column>
+                                    <p:column headerText="Município" sortBy="#{var_matricula.aluno.endereco.bairro.municipio.nome}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.bairro.municipio.nome}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        Total: #{fn:length(relatorioEspecificoMB.matriculas)}
+                                    </f:facet>
+                                </p:dataTable>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-9"/>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="EXCEL" ajax="false" icon="ui-icon-file-download" styleClass="green-btn" rendered="#{relatorioEspecificoMB.exibirTabelaAluno}">
+                                    <p:dataExporter type="xls" target="tbl_aluno" fileName="relatorio-geral"/>
+                                </p:commandButton>    
+                                <p:commandButton value="EXCEL" ajax="false" icon="ui-icon-file-download" styleClass="green-btn" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}">
+                                    <p:dataExporter type="xls" target="tbl_matricula" fileName="relatorio-geral"/>
+                                </p:commandButton>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

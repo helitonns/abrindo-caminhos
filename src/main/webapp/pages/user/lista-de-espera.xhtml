@@ -1,0 +1,147 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/user/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Lista de espera</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px;">Gerenciar listas</div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:message for="idNomeTurma" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:message for="idSelectAtividade" showSummary="true" showDetail="false"/>
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-6"/>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idNomeTurma" value="#{listaDeEsperaMB.listaDeEspera.nome}" required="true"  converter="upper" requiredMessage="Campo obrigatório"/>
+                                        <label>Nome da lista</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu id="idSelectAtividade" value="#{listaDeEsperaMB.idAtividade}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                    <f:selectItem itemLabel="Selecione a atividade" noSelectionOption="true"/>
+                                    <f:selectItems value="#{listaDeEsperaMB.atividades}" var="varAtividade" itemValue="#{varAtividade.id}" itemLabel="#{varAtividade.descricao}" />
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Salvar" action="#{listaDeEsperaMB.salvarTurma}" ajax="false" icon="ui-icon-save"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Cancelar" action="#{listaDeEsperaMB.cancelar()}" styleClass="blue-grey-btn" icon="ui-icon-cancel" immediate="true"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+        <h:form id="form2">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title"> 
+                        <div style="margin-left: 20px;">Listas cadastradas</div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                            <div class="ui-g-12 ui-md-12">
+                                <p:dataTable var="listaDeEspera_var" value="#{listaDeEsperaMB.listas}" reflow="true" rowKey="#{listaDeEspera_var.id}" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Id" style="width: 100px">
+                                        <h:outputText value="#{listaDeEspera_var.id}" />
+                                    </p:column>
+
+                                    <p:column headerText="Nome" sortBy="#{listaDeEspera_var.nome}" filterBy="#{listaDeEspera_var.nome}">
+                                        <h:outputText value="#{listaDeEspera_var.nome}" />
+                                    </p:column>
+
+                                    <p:column headerText="Atividade" sortBy="#{listaDeEspera_var.atividade.descricao}" filterBy="#{listaDeEspera_var.atividade.descricao}">
+                                        <h:outputText value="#{listaDeEspera_var.atividade.descricao}" />
+                                    </p:column>
+
+                                    <p:column headerText="Ação" style="width: 170px">
+                                        <h:panelGrid columns="3">
+                                            <p:commandButton id="btnEditar" icon="ui-icon-edit" ajax="true" update="form">
+                                                <p:tooltip value="Editar" for="btnEditar"/>
+                                                <f:setPropertyActionListener value="#{listaDeEspera_var}" target="#{listaDeEsperaMB.listaDeEspera}"/>
+                                                <f:setPropertyActionListener value="#{listaDeEspera_var.atividade.id}" target="#{listaDeEsperaMB.idAtividade}"/>
+                                            </p:commandButton>
+                                            <p:commandButton id="btnFinalizar" icon="ui-icon-done-all"  styleClass="green-btn" ajax="true" update="form" onclick="PF('modal_finalizar').show();">
+                                                <p:tooltip value="Finalizar" for="btnFinalizar"/>
+                                                <f:setPropertyActionListener value="#{listaDeEspera_var}" target="#{listaDeEsperaMB.listaDeEspera}"/>
+                                                <f:setPropertyActionListener value="#{true}" target="#{listaDeEsperaMB.finalizarLista}"/>
+                                            </p:commandButton>
+                                            <p:commandButton id="btnExcluir" icon="ui-icon-delete"  styleClass="red-btn" actionListener="#{listaDeEsperaMB.setListaDeEspera(listaDeEspera_var)}" onclick="PF('modal_excluir').show();">
+                                                <p:tooltip value="Excluir" for="btnExcluir"/>
+                                            </p:commandButton>
+                                        </h:panelGrid>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+                        </div>
+
+                        <p:dialog header="Finalizar Lista de Espera" widgetVar="modal_finalizar" modal="true" height="100" width="550">
+                            <h:outputText value="Tem certeza que deseja finalizar a Lista de Espera selecionada?" style="width: 100%"/>
+
+                            <f:facet name="footer">
+                                <h:panelGrid columns="2" style="width: 100%">
+                                    <p:commandButton value="Finalizar" icon="ui-icon-done-all" styleClass="green-btn" ajax="false" action="#{listaDeEsperaMB.finalizarLista()}" style="width: 100%"/>
+                                    <p:button value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:dialog>
+
+                        <p:dialog header="Exclusão" widgetVar="modal_excluir" modal="true" height="100" width="550">
+                            <h:panelGrid columns="2" style="width: 100%">
+                                <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+                                <p:selectOneButton value="#{listaDeEsperaMB.removerLista}">
+                                    <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                    <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                </p:selectOneButton>
+                            </h:panelGrid>
+
+                            <f:facet name="footer">
+                                <h:panelGrid columns="2" style="width: 100%">
+                                    <p:commandButton value="Excluir" icon="ui-icon-delete" ajax="false" action="#{listaDeEsperaMB.removerLista()}" style="width: 100%"/>
+                                    <p:button value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
+                                </h:panelGrid>
+                            </f:facet>
+                        </p:dialog>
+
+
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>

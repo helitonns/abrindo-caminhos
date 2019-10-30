@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Scene Scope="Project" version="2">
+    <Scope Scope="Faces Configuration Only"/>
+    <Scope Scope="Project">
+        <Node id="pages/relatorio/relatorio-aniversariante.xhtml" x="150" y="1500" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-atividade-quantidade.xhtml" x="650" y="150" zoom="true"/>
+        <Node id="pages/user/alergia.xhtml" x="1400" y="150" zoom="true"/>
+        <Node id="pages/user/exibir-aluno.xhtml" x="1150" y="900" zoom="true"/>
+        <Node id="pages/user/aluno.xhtml" x="1400" y="300" zoom="true"/>
+        <Node id="pages/user/pais.xhtml" x="150" y="750" zoom="true"/>
+        <Node id="pages/user/horario.xhtml" x="150" y="150" zoom="true"/>
+        <Node id="pages/user/curso.xhtml" x="650" y="900" zoom="true"/>
+        <Node id="pages/user/verificar-aprovacao.xhtml" x="1650" y="450" zoom="true"/>
+        <Node id="pages/user/minhas-atividades.xhtml" x="1650" y="300" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-turma-renovacao.xhtml" x="150" y="1200" zoom="true"/>
+        <Node id="pages/user/prontuario.xhtml" x="1150" y="750" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-atividade.xhtml" x="2150" y="450" zoom="true"/>
+        <Node id="pages/user/verificar-cpf.xhtml" x="400" y="300" zoom="true"/>
+        <Node id="pages/user/relatorio.xhtml" x="150" y="1050" zoom="true"/>
+        <Node id="access.xhtml" x="650" y="1050" zoom="true"/>
+        <Node id="pages/user/visualizar-frequencia.xhtml" x="650" y="1200" zoom="true"/>
+        <Node id="index.xhtml" x="1900" y="150" zoom="true"/>
+        <Node id="pages/user/relatorio-atividade-quantidade.xhtml" x="650" y="600" zoom="true"/>
+        <Node id="pages/superadmin/superusuario.xhtml" x="1650" y="150" zoom="true"/>
+        <Node id="pages/superadmin/unidade.xhtml" x="150" y="1350" zoom="true"/>
+        <Node id="pages/admin/diretor.xhtml" x="400" y="750" zoom="true"/>
+        <Node id="pages/user/relatorio-turma-quantidade.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="pages/user/grupo-disciplina.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="pages/user/escola.xhtml" x="400" y="600" zoom="true"/>
+        <Node id="pages/user/relatorio-turma-mae.xhtml" x="400" y="900" zoom="true"/>
+        <Node id="pages/user/situacao.xhtml" x="1400" y="750" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-bairro.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="pages/user/denominacao.xhtml" x="900" y="150" zoom="true"/>
+        <Node id="pages/user/relatorio-turma.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="pages/user/aprovados.xhtml" x="650" y="450" zoom="true"/>
+        <Node id="pages/user/listar-editar-aluno.xhtml" x="1400" y="450" zoom="true"/>
+        <Node id="pages/user/serie.xhtml" x="1400" y="600" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-turma.xhtml" x="1900" y="600" zoom="true"/>
+        <Node id="pages/user/relatorio-atividade.xhtml" x="400" y="1200" zoom="true"/>
+        <Node id="pages/user/familia.xhtml" x="900" y="600" zoom="true"/>
+        <Node id="pages/user/relatorio-turma-renovacao.xhtml" x="1150" y="600" zoom="true"/>
+        <Node id="pages/user/relatorio-bairro.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="pages/user/turma.xhtml" x="2150" y="150" zoom="true"/>
+        <Node id="pages/user/medicacao.xhtml" x="900" y="450" zoom="true"/>
+        <Node id="pages/user/relatorio-turma-telefone.xhtml" x="1150" y="450" zoom="true"/>
+        <Node id="notfound.xhtml" x="496" y="1343" zoom="true"/>
+        <Node id="pages/admin/usuario.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="pages/user/redefinir.xhtml" x="150" y="900" zoom="true"/>
+        <Node id="pages/user/atividade.xhtml" x="650" y="750" zoom="true"/>
+        <Node id="pages/user/escolaridade.xhtml" x="2150" y="300" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-turma-telefone.xhtml" x="900" y="1050" zoom="true"/>
+        <Node id="pages/user/bairro.xhtml" x="1900" y="450" zoom="true"/>
+        <Node id="pages/user/periodo.xhtml" x="2650" y="150" zoom="true"/>
+        <Node id="error.xhtml" x="400" y="1050" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-turma-quantidade.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="pages/user/relatorio-aniversariante.xhtml" x="1900" y="300" zoom="true"/>
+        <Node id="pages/admin/municipio.xhtml" x="400" y="450" zoom="true"/>
+        <Node id="pages/user/modulo.xhtml" x="1650" y="600" zoom="true"/>
+        <Node id="pages/user/disciplina.xhtml" x="2400" y="150" zoom="true"/>
+        <Node id="pages/user/frequencia.xhtml" x="900" y="900" zoom="true"/>
+        <Node id="pages/user/matricula.xhtml" x="900" y="750" zoom="true"/>
+        <Node id="pages/relatorio/relatorio-turma-mae.xhtml" x="2400" y="300" zoom="true"/>
+        <Node id="pages/user/declaracao.xhtml" x="1150" y="300" zoom="true"/>
+    </Scope>
+    <Scope Scope="All Faces Configurations"/>
+</Scene>

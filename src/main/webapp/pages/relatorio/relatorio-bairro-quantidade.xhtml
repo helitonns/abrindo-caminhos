@@ -1,0 +1,107 @@
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:stella="http://stella.caelum.com.br/faces2"
+                xmlns:fn="http://java.sun.com/jsp/jstl/functions"
+                template="../../WEB-INF/template.xhtml">
+
+    <ui:define name="breadcrumb">
+        <li>Páginas</li>
+        <li>/</li>
+        <li><p:link outcome="/pages/user/listar-editar-aluno">Listar / Editar aluno</p:link></li>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="form">
+
+
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Relatório Bairros por Quantidade</label>
+                    <div class="card card-w-title" style="margin-top: 5px">
+
+                        <p:messages globalOnly="true" closable="true"/>
+
+                        <div style="margin-left: 20px;"></div>
+
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 10px">
+
+                            <div class="ui-g-12 ui-md-12">
+                                <p:outputLabel value="Parâmetros da consulta:"/>
+                            </div>
+
+                            <!-- ############ PRIMEIRA LINHA #############-->
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idMunicipio}" required="true" style="width: 100%">
+                                    <f:selectItem itemLabel="Municípios"  itemValue="#{-1}" noSelectionOption="true" />
+                                    <f:selectItems value="#{relatorioEspecificoMB.municipios}" var="var_municipio" itemValue="#{var_municipio.id}" itemLabel="#{var_municipio.nome}"/>
+                                </p:selectOneMenu>
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%">
+                                    <f:selectItem itemLabel="Tipo de relatório"  noSelectionOption="true"   />
+                                    <f:selectItem itemLabel="Ativo" itemValue="porMatriculaAtiva" />
+                                    <f:selectItem itemLabel="Inativo" itemValue="geral" />
+                                </p:selectOneMenu>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2">
+                                <p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioEspecificoMB.pesquisarBairroPorQuantidade()}" ajax="false" />
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2">
+                                <p:commandButton value="Exportar PDF" icon="ui-icon-picture-as-pdf" action="#{relatorioEspecificoMB.imprimirRelQuantidadeAlunoBairro()}" ajax="false" styleClass="deep-orange-btn"/>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2">
+                                <p:commandButton value="Limpar" icon="ui-icon-close" action="#{relatorioEspecificoMB.cancelarBairroPorQuantidade()}" immediate="true" ajax="false" styleClass="blue-grey-btn"/>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+
+        <h:form id="form2">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <div class="card card-w-title"> 
+                        <div style="margin-left: 20px">Resultado da pesquisa</div>
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+
+                            <div class="ui-g-12 ui-md-12">
+                                <p:dataTable id="tbl_bairro_quantidade" var="var_bairro_quantidade" value="#{relatorioEspecificoMB.retornoConsultaQuantidades}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Bairro" sortBy="#{var_bairro_quantidade.texto}">
+                                        <h:outputText value="#{var_bairro_quantidade.texto}"/>
+                                    </p:column>
+                                    <p:column headerText="Quantidade de aluno" sortBy="#{var_bairro_quantidade.quantidade}">
+                                        <h:outputText value="#{var_bairro_quantidade.quantidade}"/>
+                                    </p:column>
+                                    <f:facet name="footer">
+                                        Total: #{relatorioEspecificoMB.totalDeAlunos}
+                                    </f:facet>
+                                </p:dataTable>
+
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-9"/>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="EXCEL" ajax="false" icon="ui-icon-file-download" styleClass="green-btn">
+                                    <p:dataExporter type="xls" target="tbl_bairro_quantidade" fileName="relatorio-bairro-quantidade"/>
+                                </p:commandButton>    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </h:form>
+
+    </ui:define>
+</ui:composition>
