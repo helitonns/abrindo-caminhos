@@ -113,5 +113,11 @@ public class UsuarioComUnidadeDAO{
         }
     }
     
-    
+    public UsuarioComUnidade passarReferencia(UsuarioComUnidade u)throws DAOException{
+        try {
+            return em.getReference(UsuarioComUnidade.class, u.getId());
+        } catch (Exception e) {
+            throw new DAOException("Erro ao passar referência de usuário", e);
+        }
+    }
 }

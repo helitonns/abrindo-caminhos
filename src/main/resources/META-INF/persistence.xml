@@ -9,10 +9,10 @@
         <!--<jta-data-source>alrr-ds</jta-data-source>-->
    
         <!-- HOMOLOGACAO -->
-        <!--<jta-data-source>homologacao</jta-data-source>-->
+        <jta-data-source>homologacao</jta-data-source>
    
         <!-- PRODUCAO -->
-        <jta-data-source>alrr</jta-data-source>
+        <!--<jta-data-source>alrr</jta-data-source>-->
         <properties>
             <!--SEM ESSA CONFIGURAÇÃO NÃO FUNCIONA-->
             <!--<property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform"/>-->
@@ -23,7 +23,7 @@
             
             <!--ESQUEMA USADO NA HOMOLOGACAO/IMPLANTACAO-->
             <property name="hibernate.default_schema" value="abrindo_caminhos" />
-            <!--<property name="hibernate.hbm2ddl.auto" value="update"/>-->
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
       
             <!-- Configuração do Hibernate Envers -->
             <property name="post-insert" value="org.hibernate.ejb.event.EJB3PostInsertEventListener, org.hibernate.envers.event.EnversListener" />
