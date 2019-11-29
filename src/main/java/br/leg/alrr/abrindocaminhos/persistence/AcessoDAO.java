@@ -3,6 +3,7 @@ package br.leg.alrr.abrindocaminhos.persistence;
 import br.leg.alrr.abrindocaminhos.model.Acesso;
 import br.leg.alrr.abrindocaminhos.model.Usuario;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
+import java.time.LocalDate;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -40,9 +41,9 @@ public class AcessoDAO{
 
     public List listarTodos() throws DAOException{
         try {
-            return em.createQuery("select o from Acesso o order by o.dataDeAcesso, o.inicioDoAcesso").getResultList();
+            return em.createQuery("select o from Acesso o order by o.dataDeAcesso,o.momentoDoAcesso, o.usuario.nome").getResultList();
         } catch (Exception e) {
-            throw new DAOException("Erro ao listar bairros.", e);
+            throw new DAOException("Erro ao listar acessos.", e);
         }
     }
 
@@ -65,11 +66,32 @@ public class AcessoDAO{
     
     public List<Acesso> listarAcessoPorUsuario(Usuario u) throws DAOException{
         try {
-            return em.createQuery("select o from Acesso o where o.usuario =:u order by o.dataDeAcesso, o.inicioDoAcesso")
+            return em.createQuery("select o from Acesso o where o.usuario =:u order by o.dataDeAcesso, o.momentoDoAcesso")
                     .setParameter("u", u)
                     .getResultList();
         } catch (Exception e) {
-            throw new DAOException("Erro ao buscar bairro por município.", e);
+            throw new DAOException("Erro ao buscar bairro por usuário.", e);
+        }
+    }
+    
+    public Long contarAcessosPorData(LocalDate dataDeAcesso) throws DAOException{
+        try {
+            Long quantidade = (Long) em.createQuery("select COUNT (o) from Acesso o where o.dataDeAcesso = :dataDeAcesso")
+                    .setParameter("dataDeAcesso", dataDeAcesso)
+                    .getSingleResult();
+            return quantidade;
+        } catch (Exception e) {
+            throw new DAOException("Erro ao contar acessos por data.", e);
+        }
+    }
+    
+    public List listarAcessosPorData(LocalDate dataDeAcesso) throws DAOException{
+        try {
+            return em.createQuery("select o from Acesso o where o.dataDeAcesso = :dataDeAcesso ORDER BY o.dataDeAcesso, o.momentoDoAcesso")
+                    .setParameter("dataDeAcesso", dataDeAcesso)
+                    .getResultList();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao listar acessos por data.", e);
         }
     }
 
