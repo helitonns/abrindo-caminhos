@@ -102,7 +102,7 @@ public class AutorizacaoDAO{
     
     public List listarUsuariosQueTemPermissaoNoSistema(String chave) throws DAOException{
         try {
-            return  em.createQuery("select u from Autorizacao a inner join a.usuario u where a.privilegio.sistema.chave =:chaveSistema")
+            return  em.createQuery("select u from Autorizacao a inner join a.usuario u where a.privilegio.sistema.chave =:chaveSistema order by u.login")
                     .setParameter("chaveSistema", chave)
                     .getResultList();
         } catch (Exception e) {

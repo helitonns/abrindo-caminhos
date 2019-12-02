@@ -29,7 +29,7 @@
                                 <p:menuitem id="sm_curso_lista_de_espera" value="Lista de espera" icon="group" outcome="/pages/user/lista-de-espera"/>
                                 <p:menuitem id="sm_curso_inscricao" value="Inscrição na lista" icon="contact_mail" outcome="/pages/user/inscricao" />
                             </p:submenu>
-                            
+
                             <p:submenu id="sub_menu_configuracoes_gerais" label="Configurações Gerais" icon="settings" rendered="#{!startMB.usuarioRelatorio}">
                                 <p:menuitem id="sm_cg_denominacao" value="Esfera de atuação" icon="sort_by_alpha" outcome="/pages/user/denominacao"/>
                                 <p:menuitem id="sm_cg_escola" value="Escola" icon="school" outcome="/pages/user/escola"/>
@@ -49,7 +49,7 @@
                                 <p:menuitem id="sm_cg_permissao" value="Privilégio" icon="lock" outcome="/pages/superadmin/privilegio" rendered="#{startMB.superAdmin}"/>
                                 <p:menuitem id="sm_cg_autorizacao" value="Autorizações" icon="lock_outline" outcome="/pages/superadmin/autorizacao" rendered="#{startMB.superAdmin}"/>
                             </p:submenu>
-                            
+
                             <p:submenu id="menu_relatorio" label="Relatórios" icon="assignment" rendered="#{!startMB.usuarioRelatorio}">
                                 <p:menuitem id="sm_r_aniversariante" value="Aniversariantes" icon="content_paste" outcome="/pages/user/relatorio-aniversariante"/>
                                 <p:menuitem id="sm_r_atividade" value="Atividades" icon="assignment" outcome="/pages/user/relatorio-atividade"/>
@@ -62,12 +62,12 @@
                                 <p:menuitem id="sm_r_bairro" value="Bairros" icon="content_paste" outcome="/pages/user/relatorio-bairro"/>
                                 <p:menuitem id="sm_r_b_quant" value="Bairro por quantidade" icon="assignment" outcome="/pages/user/relatorio-bairro-quantidade"/>
                             </p:submenu>
-                            
-                            
+
+
                             <p:submenu id="sub_menu_relatorio_aluno" label="Aluno" icon="person" rendered="#{startMB.usuarioRelatorio}">
                                 <p:menuitem id="sm_relatorio_aluno_listar_editar" value="Listar / Editar Aluno" icon="list" outcome="/pages/relatorio/listar-editar-aluno"/>
                             </p:submenu>
-                            
+
                             <p:submenu id="sub_menu_relatorio_usuario_relatorio" label="Relatório Gabinete" icon="assignment" rendered="#{startMB.usuarioRelatorio}">
                                 <p:menuitem id="sm_u_r_aniversariante" value="Aniversariantes" icon="content_paste" outcome="/pages/relatorio/relatorio-aniversariante"/>
                                 <p:menuitem id="sm_u_r_aniversariante_c_e" value="Aniversariantes com endereço" icon="content_paste" outcome="/pages/relatorio/relatorio-aniversariante-endereco"/>
@@ -81,9 +81,12 @@
                                 <p:menuitem id="sm_u_r_bairro" value="Bairros" icon="content_paste" outcome="/pages/relatorio/relatorio-bairro"/>
                                 <p:menuitem id="sm_r_r_b_quant" value="Bairro por quantidade" icon="assignment" outcome="/pages/relatorio/relatorio-bairro-quantidade"/>
                             </p:submenu>
-                            
-                            <p:menuitem id="menu_estatistica" value="Estatísticas " icon="pie_chart" outcome="/pages/user/estatistica" rendered="#{!startMB.usuarioRelatorio}"/>
-                            
+
+                            <p:submenu id="menu_estatistica" label="Estatísticas" icon="assignment" rendered="#{startMB.superAdmin}">
+                                <p:menuitem id="menu_estatistica_acesso" value="Estatísticas por acesso" icon="pie_chart" outcome="/pages/user/estatistica"/>
+                                <p:menuitem id="menu_estatistica_usuario" value="Estatísticas por usuário" icon="pie_chart" outcome="/pages/user/estatistica-usuario"/>
+                            </p:submenu>
+
                         </sm:menu>
                     </h:form>
                 </div>
