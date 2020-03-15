@@ -48,14 +48,14 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idSelectAtividade" value="#{turmaMB.idAtividade}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectAtividade" value="#{turmaMB.idAtividade}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione a atividade" noSelectionOption="true"/>
                                     <f:selectItems value="#{turmaMB.atividades}" var="varAtividade" itemValue="#{varAtividade.id}" itemLabel="#{varAtividade.descricao}" />
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idSelectHorario" value="#{turmaMB.idHorario}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectHorario" value="#{turmaMB.idHorario}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o horário" noSelectionOption="true"/>
                                     <f:selectItems value="#{turmaMB.horarios}" var="varHorario" itemValue="#{varHorario.id}" itemLabel="#{varHorario.descricao}" />
                                 </p:selectOneMenu>
@@ -114,14 +114,14 @@
                             <div class="ui-g-12 ui-md-6"/>
                             
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu id="idSelectIdadeMin" value="#{turmaMB.turma.idadeMinima}" required="true" requiredMessage="Campo obrigatório" >
+                                <p:selectOneMenu id="idSelectIdadeMin" value="#{turmaMB.turma.idadeMinima}" required="true" requiredMessage="Campo obrigatório" autoWidth="true" filter="true">
                                     <!--<f:selectItem itemLabel="Idade mínima" noSelectionOption="true"/>-->
                                     <f:selectItems value="#{turmaMB.idades}" var="varIdadeMinima" itemValue="#{varIdadeMinima.descricao}" itemLabel="#{varIdadeMinima.descricao}" />
                                 </p:selectOneMenu>
                             </div>
                             
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu id="idSelectIdadeMax" value="#{turmaMB.turma.idadeMaxima}" required="true" requiredMessage="Campo obrigatório" >
+                                <p:selectOneMenu id="idSelectIdadeMax" value="#{turmaMB.turma.idadeMaxima}" required="true" requiredMessage="Campo obrigatório" autoWidth="true" filter="true">
                                     <!--<f:selectItem itemLabel="Idade Máxima" noSelectionOption="true"/>-->
                                     <f:selectItems value="#{turmaMB.idades}" var="varIdadeMaxima" itemValue="#{varIdadeMaxima.descricao}" itemLabel="#{varIdadeMaxima.descricao}" />
                                 </p:selectOneMenu>

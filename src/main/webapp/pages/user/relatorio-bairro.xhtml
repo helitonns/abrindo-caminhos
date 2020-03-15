@@ -36,7 +36,7 @@
 
                             <!-- ############ PRIMEIRA LINHA #############-->
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.idMunicipio}" valueChangeListener="#{relatorioEspecificoMB.recarregarBairros}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idMunicipio}" valueChangeListener="#{relatorioEspecificoMB.recarregarBairros}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="idBairro" />
                                     <f:selectItem itemLabel="Municípios"  itemValue="#{-1}" noSelectionOption="true" />
                                     <f:selectItems value="#{relatorioEspecificoMB.municipios}" var="var_municipio" itemValue="#{var_municipio.id}" itemLabel="#{var_municipio.nome}"/>
@@ -44,14 +44,14 @@
                             </div>
                             
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idBairro" value="#{relatorioEspecificoMB.idBairro}" style="width: 100%" >
+                                <p:selectOneMenu id="idBairro" value="#{relatorioEspecificoMB.idBairro}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Bairro" itemValue="#{-1}" noSelectionOption="true"/>
                                     <f:selectItems value="#{relatorioEspecificoMB.bairros}" var="var_bairro" itemValue="#{var_bairro.id}" itemLabel="#{var_bairro.nome}"  />
                                 </p:selectOneMenu>
                             </div>
                             
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Tipo de relatório"  noSelectionOption="true"   />
                                     <f:selectItem itemLabel="Ativo" itemValue="porMatriculaAtiva" />
                                     <f:selectItem itemLabel="Inativo" itemValue="geral" />

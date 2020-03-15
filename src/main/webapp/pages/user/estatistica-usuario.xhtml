@@ -40,7 +40,7 @@
                             <div class="ui-g-12 ui-md-3"/>
                             
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu id="idSelectUsuario" value="#{estatisticaMB.idUsuario}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectUsuario" value="#{estatisticaMB.idUsuario}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o usuário" noSelectionOption="true"/>
                                     <f:selectItem itemLabel=" - Todos os usuários - " itemValue="#{0}"/>
                                     <f:selectItems value="#{estatisticaMB.usuarios}" var="varUsuario" itemValue="#{varUsuario.id}" itemLabel="#{varUsuario.login}" />

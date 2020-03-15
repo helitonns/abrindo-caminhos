@@ -62,14 +62,14 @@
 
                             <!-- ############ SEGUNDA LINHA #############-->
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idTipoUsuario" label="Tipo Usuário" value="#{usuarioMB.idPermissao}" required="true" >
+                                <p:selectOneMenu id="idTipoUsuario" label="Tipo Usuário" value="#{usuarioMB.idPermissao}" required="true" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o tipo de usuário" noSelectionOption="true"/>
                                     <f:selectItems value="#{usuarioMB.permissoes}" var="tu" itemLabel="#{tu.descricao}" itemValue="#{tu.id}" />                            
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneButton value="#{usuarioMB.usuario.status}">
+                                <p:selectOneButton value="#{usuarioMB.usuario.status}" >
                                     <f:selectItem itemLabel="Ativo" itemValue="#{true}" />
                                     <f:selectItem itemLabel="Inativo" itemValue="#{false}" />
                                 </p:selectOneButton>

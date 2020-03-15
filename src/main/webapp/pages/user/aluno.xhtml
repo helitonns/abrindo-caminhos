@@ -97,7 +97,7 @@
                             <div class="ui-g-12 ui-md-3">
                                 <h:panelGrid columns="2" style="width: 100%">
                                     <label>Sexo:</label>
-                                    <p:selectOneMenu id="slctSexo" value="#{alunoMB.aluno.sexo}">
+                                    <p:selectOneMenu id="slctSexo" value="#{alunoMB.aluno.sexo}" autoWidth="true" filter="true">
                                         <f:selectItems value="#{alunoMB.sexo.listaResumida}" var="s" itemLabel="#{s.value}" itemValue="#{s}" />
                                     </p:selectOneMenu> 
                                 </h:panelGrid>
@@ -157,7 +157,7 @@
                             <div class="ui-g-12 ui-md-3"/>
 
                             <div class="ui-g-12 ui-md-6" >
-                                <p:selectOneMenu id="slc_paises" value="#{alunoMB.idPais}" style="width: 100%" required="true" requiredMessage="Campo obrigatório">
+                                <p:selectOneMenu id="slc_paises" value="#{alunoMB.idPais}" style="width: 100%" required="true" requiredMessage="Campo obrigatório" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o país de origem *" noSelectionOption="true"/>
                                     <f:selectItems value="#{alunoMB.paises}" var="varPais" itemLabel="#{varPais.nome}" itemValue="#{varPais.id}" />
                                 </p:selectOneMenu>
@@ -193,21 +193,21 @@
                         <div class="ui-g ui-fluid form-group">
 
                             <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
-                                <p:selectOneMenu id="idEscolaridade" value="#{alunoMB.idEscolaridade}" style="width: 100%">
+                                <p:selectOneMenu id="idEscolaridade" value="#{alunoMB.idEscolaridade}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Escolaridade" itemValue="0" noSelectionOption="true"/>
                                     <f:selectItems value="#{alunoMB.escolaridades}" var="slc_escolaridade" itemValue="#{slc_escolaridade.id}" itemLabel="#{slc_escolaridade.descricao}"  />
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
-                                <p:selectOneMenu id="idSerie" value="#{alunoMB.idSerie}" style="width: 100%"  >
+                                <p:selectOneMenu id="idSerie" value="#{alunoMB.idSerie}" style="width: 100%"  autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Série" itemValue="0" noSelectionOption="true"/>
                                     <f:selectItems value="#{alunoMB.series}" var="slc_series" itemValue="#{slc_series.id}" itemLabel="#{slc_series.descricao}"  />
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
-                                <p:selectOneMenu id="idPeriodo" value="#{alunoMB.idPeriodo}" style="width: 100%">
+                                <p:selectOneMenu id="idPeriodo" value="#{alunoMB.idPeriodo}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Perído" itemValue="0" noSelectionOption="true"/>
                                     <f:selectItems value="#{alunoMB.periodos}" var="slc_periodo" itemValue="#{slc_periodo.id}" itemLabel="#{slc_periodo.descricao}"  />
                                 </p:selectOneMenu>
@@ -215,7 +215,7 @@
 
 
                             <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
-                                <p:selectOneMenu id="idDenominacao" value="#{alunoMB.idDenominacao}" valueChangeListener="#{alunoMB.valueChangedDenominacao}" >
+                                <p:selectOneMenu id="idDenominacao" value="#{alunoMB.idDenominacao}" valueChangeListener="#{alunoMB.valueChangedDenominacao}" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="idEscola" />
                                     <f:selectItem itemLabel="Esfera de atuação" />
                                     <f:selectItems value="#{alunoMB.denominacoes}" var="slc_denominacoes" itemValue="#{slc_denominacoes.id}" itemLabel="#{slc_denominacoes.descricao}"/>
@@ -223,7 +223,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-7" style="margin-top: 12px;">
-                                <p:selectOneMenu id="idEscola" value="#{alunoMB.idEscola}" style="width: 100%">
+                                <p:selectOneMenu id="idEscola" value="#{alunoMB.idEscola}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Escola" itemValue="0" noSelectionOption="true"/>
                                     <f:selectItems value="#{alunoMB.escolas}" var="slc_escola" itemValue="#{slc_escola.id}" itemLabel="#{slc_escola.nome}"  />
                                 </p:selectOneMenu>
@@ -300,7 +300,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
-                                <p:selectOneMenu id="idEnderecoMunicipio" value="#{alunoMB.idMunicipio}" valueChangeListener="#{alunoMB.valueChanged}" required="true" requiredMessage="Campo obrigatório">
+                                <p:selectOneMenu id="idEnderecoMunicipio" value="#{alunoMB.idMunicipio}" valueChangeListener="#{alunoMB.valueChanged}" required="true" requiredMessage="Campo obrigatório" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="idEnderecoBairro" />
                                     <f:selectItem itemLabel="Selecione o município *" />
                                     <f:selectItems value="#{alunoMB.municipios}"	var="slc_municipio" itemValue="#{slc_municipio.id}" itemLabel="#{slc_municipio.nome}"/>
@@ -308,7 +308,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-3" style="margin-top: 12px;">
-                                <p:selectOneMenu id="idEnderecoBairro" value="#{alunoMB.bairro}" required="true" style="width: 100%" requiredMessage="Campo obrigatório" converter="entityConverter">
+                                <p:selectOneMenu id="idEnderecoBairro" value="#{alunoMB.bairro}" required="true" style="width: 100%" requiredMessage="Campo obrigatório" converter="entityConverter" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o bairro *" itemValue="0" noSelectionOption="true"/>
                                     <f:selectItems value="#{alunoMB.bairros}" var="slc_bairro" itemValue="#{slc_bairro}" itemLabel="#{slc_bairro.nome}"  />
                                 </p:selectOneMenu>
@@ -478,7 +478,7 @@
                                 </p:selectOneRadio>
                             </div>
                             <div class="ui-g-12 ui-md-8">
-                                <p:selectOneMenu id="idMatricularTurmaALuno" value="#{alunoMB.turma}" converter="entityConverter">
+                                <p:selectOneMenu id="idMatricularTurmaALuno" value="#{alunoMB.turma}" converter="entityConverter" autoWidth="true" filter="true" style="width: 100%">
                                     <f:selectItem itemLabel=" - Turmas ativas -"/>
                                     <f:selectItems value="#{alunoMB.turmas}" var="varTurmaAluno" itemValue="#{varTurmaAluno}" itemLabel="#{varTurmaAluno.nomeExibicao}"  />
                                 </p:selectOneMenu>
@@ -498,7 +498,7 @@
                                 </p:selectOneRadio>
                             </div>
                             <div class="ui-g-12 ui-md-8">
-                                <p:selectOneMenu id="idInscricaoLista" value="#{alunoMB.listaDeEspera}" converter="entityConverter">
+                                <p:selectOneMenu id="idInscricaoLista" value="#{alunoMB.listaDeEspera}" converter="entityConverter" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel=" - Listas ativas -"/>
                                     <f:selectItems value="#{alunoMB.listas}" var="varListaAluno" itemValue="#{varListaAluno}" itemLabel="#{varListaAluno.nomeExibicao}"  />
                                 </p:selectOneMenu>
@@ -535,7 +535,7 @@
                         </div>
                     </h:panelGroup>
 
-                    <p:selectOneMenu id="idSelectDenominacao" value="#{alunoMB.idDenominacao}" required="true" style="margin-top: 20px; width: 100%">
+                    <p:selectOneMenu id="idSelectDenominacao" value="#{alunoMB.idDenominacao}" required="true" style="margin-top: 20px; width: 100%" autoWidth="true" filter="true">
                         <f:selectItem itemLabel="Selecione a denominação" noSelectionOption="true"/>
                         <f:selectItems value="#{alunoMB.denominacoes}" var="varDenominacao" itemValue="#{varDenominacao.id}" itemLabel="#{varDenominacao.descricao}" />
                     </p:selectOneMenu>
@@ -575,7 +575,7 @@
                         </div>
                     </h:panelGroup>
 
-                    <p:selectOneMenu id="idEnderecoMunicipio2" value="#{alunoMB.idMunicipio}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 20px; width: 100%">
+                    <p:selectOneMenu id="idEnderecoMunicipio2" value="#{alunoMB.idMunicipio}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 20px; width: 100%" autoWidth="true" filter="true">
                         <f:selectItem itemLabel="Selecione o município *" />
                         <f:selectItems value="#{alunoMB.municipios}" var="slc_municipio" itemValue="#{slc_municipio.id}" itemLabel="#{slc_municipio.nome}"/>
                     </p:selectOneMenu>

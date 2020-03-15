@@ -36,7 +36,7 @@
 
                             <!-- ############ PRIMEIRA LINHA #############-->
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}" valueChangeListener="#{relatorioEspecificoMB.recarregarAtividades}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}" valueChangeListener="#{relatorioEspecificoMB.recarregarAtividades}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="slt_atividades" />
                                     <f:selectItem itemLabel="Unidades"  itemValue="#{-1}"   noSelectionOption="true"/>
                                     <f:selectItems value="#{relatorioEspecificoMB.unidades}" var="var_unidade" itemValue="#{var_unidade.id}" itemLabel="#{var_unidade.nome}"/>
@@ -44,7 +44,7 @@
                             </div>
                             
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="slt_atividades" value="#{relatorioEspecificoMB.idAtividade}" required="true" style="width: 100%">
+                                <p:selectOneMenu id="slt_atividades" value="#{relatorioEspecificoMB.idAtividade}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Atividades"  noSelectionOption="true"   />
                                     <f:selectItem itemLabel="Todas" itemValue="#{0}" />
                                     <f:selectItems value="#{relatorioEspecificoMB.atividades}" var="var_atividade" itemValue="#{var_atividade.id}" itemLabel="#{var_atividade.descricao}"/>
@@ -52,7 +52,7 @@
                             </div>
                             
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idStatusTurma" value="#{relatorioEspecificoMB.statusTurma}" style="width: 100%" >
+                                <p:selectOneMenu id="idStatusTurma" value="#{relatorioEspecificoMB.statusTurma}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Status da turma" itemValue="#{-1}" noSelectionOption="true"/>
                                     <f:selectItem itemLabel="Ativas" itemValue="ativas"/>
                                     <f:selectItem itemLabel="Finalizadas" itemValue="finalizadas"/>

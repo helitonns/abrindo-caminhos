@@ -36,7 +36,7 @@
 
                             <!-- ############ PRIMEIRA LINHA #############-->
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}"  required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}"  required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Unidades"  noSelectionOption="true"   />
                                     <f:selectItem itemLabel="Todas" itemValue="#{0}" />
                                     <f:selectItems value="#{relatorioEspecificoMB.unidades}" var="var_unidade" itemValue="#{var_unidade.id}" itemLabel="#{var_unidade.nome}"/>
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idStatusTurma" value="#{relatorioEspecificoMB.statusTurma}" valueChangeListener="#{relatorioEspecificoMB.recarregarTurmas}" required="true" style="width: 100%" >
+                                <p:selectOneMenu id="idStatusTurma" value="#{relatorioEspecificoMB.statusTurma}" valueChangeListener="#{relatorioEspecificoMB.recarregarTurmas}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="idTurma" />
                                     <f:selectItem itemLabel="Status da turma" itemValue="#{-1}" noSelectionOption="true"/>
                                     <f:selectItem itemLabel="Ativas" itemValue="ativas"/>
@@ -54,7 +54,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idTurma" value="#{relatorioEspecificoMB.idTurma}" required="true" style="width: 100%" >
+                                <p:selectOneMenu id="idTurma" value="#{relatorioEspecificoMB.idTurma}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Turma" itemValue="#{-1}" noSelectionOption="true"/>
                                     <f:selectItems value="#{relatorioEspecificoMB.turmas}" var="var_turma" itemValue="#{var_turma.id}" itemLabel="#{var_turma.atividade.descricao} - #{var_turma.nome}"  />
                                 </p:selectOneMenu>

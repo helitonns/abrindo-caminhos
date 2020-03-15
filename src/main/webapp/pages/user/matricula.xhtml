@@ -29,7 +29,7 @@
 
                             <!--################# PRIMEIRA LINHA ################-->
                             <div class="ui-g-12 ui-md-12">
-                                <p:selectOneMenu id="idTurmasMatricula" required="true" value="#{matriculaMB.turma}" valueChangeListener="#{matriculaMB.selecionarTurma}" converter="entityConverter" style="width: 100%">
+                                <p:selectOneMenu id="idTurmasMatricula" required="true" value="#{matriculaMB.turma}" valueChangeListener="#{matriculaMB.selecionarTurma}" converter="entityConverter" style="width: 100%" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="form" />
                                     <f:selectItem itemLabel=" - Selecione a turma -" noSelectionOption="true"/>
                                     <f:selectItems value="#{matriculaMB.turmas}" var="var_turma" itemValue="#{var_turma}" itemLabel="#{var_turma.nomeExibicao}"/>

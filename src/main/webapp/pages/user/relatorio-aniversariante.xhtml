@@ -57,7 +57,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Tipo de relatório"  noSelectionOption="true"   />
                                     <f:selectItem itemLabel="Por matrícula ativa" itemValue="porMatriculaAtiva" />
                                     <f:selectItem itemLabel="Geral" itemValue="geral" />
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Unidades"  noSelectionOption="true"   />
                                     <f:selectItem itemLabel="Todas" itemValue="#{0}" />
                                     <f:selectItems value="#{relatorioEspecificoMB.unidades}" var="var_unidade" itemValue="#{var_unidade.id}" itemLabel="#{var_unidade.nome}"/>

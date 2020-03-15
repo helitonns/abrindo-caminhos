@@ -50,7 +50,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idSelectDenominacao" value="#{escolaMB.idDenominacao}" required="true" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectDenominacao" value="#{escolaMB.idDenominacao}" required="true" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione a esfera de atuação" noSelectionOption="true"/>
                                     <f:selectItems value="#{escolaMB.denominacoes}" var="varDenominacao" itemValue="#{varDenominacao.id}" itemLabel="#{varDenominacao.descricao}" />
                                 </p:selectOneMenu>

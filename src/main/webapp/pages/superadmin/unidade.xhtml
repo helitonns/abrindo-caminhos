@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idMunicipio" value="#{unidadeMB.idMunicipio}" valueChangeListener="#{unidadeMB.valueChanged}" required="true">
+                                <p:selectOneMenu id="idMunicipio" value="#{unidadeMB.idMunicipio}" valueChangeListener="#{unidadeMB.valueChanged}" required="true" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="idBairro" />
                                     <f:selectItem itemLabel="Selecione o município" />
                                     <f:selectItems value="#{unidadeMB.municipios}" var="var_municipio" itemValue="#{var_municipio.id}" itemLabel="#{var_municipio.nome}"/>
@@ -76,7 +76,7 @@
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idBairro" value="#{unidadeMB.bairro}" style="width: 100%">
+                                <p:selectOneMenu id="idBairro" value="#{unidadeMB.bairro}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o bairro" itemValue="0"/>
                                     <f:selectItems value="#{unidadeMB.bairros}" var="var_bairro" itemValue="#{var_bairro}" itemLabel="#{var_bairro.nome}"  />
                                     <f:converter converterId="entityConverter"/>

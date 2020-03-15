@@ -40,7 +40,7 @@
 
                             <!-- ############ PRIMEIRA LINHA #############-->
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu value="#{relatorioMB.parametroEscolhido}" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioMB.parametroEscolhido}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione..." itemValue="#{0}" />
                                     <f:selectItems value="#{relatorioMB.parametros}"/>
                                     <p:ajax update="@form"/>
@@ -84,7 +84,7 @@
                                 </p:calendar>
 
                                 <!--SEXO -->
-                                <p:selectOneMenu value="#{relatorioMB.sexo}" rendered="#{relatorioMB.parametroEscolhido eq 9 ? true : false}" required="false">
+                                <p:selectOneMenu value="#{relatorioMB.sexo}" rendered="#{relatorioMB.parametroEscolhido eq 9 ? true : false}" required="false" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o sexo" />
                                     <f:selectItems value="#{relatorioMB.sexoLista.lista}" var="varSexoLista" itemLabel="#{varSexoLista.value}" itemValue="#{varSexoLista.value}" />
                                 </p:selectOneMenu>
@@ -99,32 +99,32 @@
                                 </h:panelGrid>
 
                                 <!-- CURSO -->
-                                <p:selectOneMenu value="#{relatorioMB.idCS}" rendered="#{relatorioMB.parametroEscolhido eq 12 ? true : false}" required="false" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioMB.idCS}" rendered="#{relatorioMB.parametroEscolhido eq 12 ? true : false}" required="false" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione a turma" />
                                     <f:selectItems value="#{relatorioMB.turmas}" var="slc_turma" itemLabel="#{slc_turma.nomeExibicao}" itemValue="#{slc_turma.id}" />
                                 </p:selectOneMenu>
 
                                 <!-- MUNICIPIO -->
-                                <p:selectOneMenu value="#{relatorioMB.idMS}" rendered="#{relatorioMB.parametroEscolhido eq 13 ? true : false}" required="false">
+                                <p:selectOneMenu value="#{relatorioMB.idMS}" rendered="#{relatorioMB.parametroEscolhido eq 13 ? true : false}" required="false" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o município" />
                                     <f:selectItems value="#{relatorioMB.municipios}" var="slc_municipio" itemLabel="#{slc_municipio.nome}" itemValue="#{slc_municipio.id}" />
                                 </p:selectOneMenu>
 
                                 <!-- BAIRRO -->
                                 <h:panelGrid columns="1" rendered="#{relatorioMB.parametroEscolhido eq 14 ? true : false}" style="width: 100%">
-                                    <p:selectOneMenu id="e-municipio" value="#{relatorioMB.idMS}" valueChangeListener="#{relatorioMB.valueChanged}" class="form-group form-control">
+                                    <p:selectOneMenu id="e-municipio" value="#{relatorioMB.idMS}" valueChangeListener="#{relatorioMB.valueChanged}" class="form-group form-control" autoWidth="true" filter="true">
                                         <p:ajax event="change" update="e-bairro" />
                                         <f:selectItem itemLabel="Selecione o município" />
                                         <f:selectItems value="#{relatorioMB.municipios}"	var="slc_municipio" itemLabel="#{slc_municipio.nome}" itemValue="#{slc_municipio.id}" />
                                     </p:selectOneMenu>
-                                    <p:selectOneMenu id="e-bairro" value="#{relatorioMB.idBS}" class="form-group form-control">
+                                    <p:selectOneMenu id="e-bairro" value="#{relatorioMB.idBS}" class="form-group form-control" autoWidth="true" filter="true">
                                         <f:selectItem itemLabel="Selecione o bairro" />
                                         <f:selectItems value="#{relatorioMB.bairros}" var="slc_bairro" itemLabel="#{slc_bairro.nome}" itemValue="#{slc_bairro.id}" />
                                     </p:selectOneMenu>
                                 </h:panelGrid>
 
                                 <!-- PAIS -->
-                                <p:selectOneMenu value="#{relatorioMB.idPS}" rendered="#{relatorioMB.parametroEscolhido eq 15 ? true : false}" required="false">
+                                <p:selectOneMenu value="#{relatorioMB.idPS}" rendered="#{relatorioMB.parametroEscolhido eq 15 ? true : false}" required="false" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o país de origem" itemValue="0"/>
                                     <f:selectItems value="#{relatorioMB.paises}" var="varPais" itemLabel="#{varPais.nome}" itemValue="#{varPais.id}" />
                                 </p:selectOneMenu>
@@ -132,7 +132,7 @@
 
                             <div class="ui-g-12 ui-md-4">
                                 <h:panelGrid columns="2" style="width: 100%">
-                                    <p:selectOneMenu  value="#{relatorioMB.conectivoEscolhido}" style="width: 100%">
+                                    <p:selectOneMenu  value="#{relatorioMB.conectivoEscolhido}" style="width: 100%" autoWidth="true" filter="true">
                                         <!--<f:selectItem itemLabel="Conectivo" itemValue="0"/>-->
                                         <f:selectItems value="#{relatorioMB.conectivos}"    />
                                     </p:selectOneMenu>

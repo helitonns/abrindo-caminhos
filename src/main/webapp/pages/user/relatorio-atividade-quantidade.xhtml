@@ -36,14 +36,14 @@
 
                             <!-- ############ PRIMEIRA LINHA #############-->
                             <div class="ui-g-12 ui-md-6">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idUnidade}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Unidades"  itemValue="#{-1}"  noSelectionOption="true" />
                                     <f:selectItems value="#{relatorioEspecificoMB.unidades}" var="var_unidade" itemValue="#{var_unidade.id}" itemLabel="#{var_unidade.nome}"/>
                                 </p:selectOneMenu>
                             </div>
                             
                             <div class="ui-g-12 ui-md-6">
-                                <p:selectOneMenu id="idStatusTurma" value="#{relatorioEspecificoMB.statusTurma}" style="width: 100%" >
+                                <p:selectOneMenu id="idStatusTurma" value="#{relatorioEspecificoMB.statusTurma}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Status da turma" itemValue="#{-1}" noSelectionOption="true"/>
                                     <f:selectItem itemLabel="Ativas" itemValue="ativas"/>
                                     <f:selectItem itemLabel="Finalizadas" itemValue="finalizadas"/>

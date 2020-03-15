@@ -36,14 +36,14 @@
 
                             <!-- ############ PRIMEIRA LINHA #############-->
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.idMunicipio}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.idMunicipio}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Municípios"  itemValue="#{-1}" noSelectionOption="true" />
                                     <f:selectItems value="#{relatorioEspecificoMB.municipios}" var="var_municipio" itemValue="#{var_municipio.id}" itemLabel="#{var_municipio.nome}"/>
                                 </p:selectOneMenu>
                             </div>
                             
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%">
+                                <p:selectOneMenu value="#{relatorioEspecificoMB.tipoRelatorio}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Tipo de relatório"  noSelectionOption="true"   />
                                     <f:selectItem itemLabel="Ativo" itemValue="porMatriculaAtiva" />
                                     <f:selectItem itemLabel="Inativo" itemValue="geral" />

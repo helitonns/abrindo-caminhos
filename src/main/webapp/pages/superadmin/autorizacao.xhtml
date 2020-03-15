@@ -39,14 +39,14 @@
                             
                             
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idSelectUsuario" value="#{autorizacaoMB.idUsuario}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectUsuario" value="#{autorizacaoMB.idUsuario}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o usuário" noSelectionOption="true"/>
                                     <f:selectItems value="#{autorizacaoMB.usuarios}" var="varUsuario" itemValue="#{varUsuario.id}" itemLabel="#{varUsuario.login}" />
                                 </p:selectOneMenu>
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idSelectSistema" value="#{autorizacaoMB.idSistema}" valueChangeListener="#{autorizacaoMB.carregarPermissoes}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectSistema" value="#{autorizacaoMB.idSistema}" valueChangeListener="#{autorizacaoMB.carregarPermissoes}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <p:ajax event="change" update="idSelectPermissao" />
                                     <f:selectItem itemLabel="Selecione o sistema" noSelectionOption="true"/>
                                     <f:selectItems value="#{autorizacaoMB.sistemas}" var="varSistema" itemValue="#{varSistema.id}" itemLabel="#{varSistema.nome}" />
@@ -54,7 +54,7 @@
                             </div>
                             
                             <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idSelectPermissao" value="#{autorizacaoMB.idPermissao}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectPermissao" value="#{autorizacaoMB.idPermissao}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione o privilégio" noSelectionOption="true"/>
                                     <f:selectItems value="#{autorizacaoMB.permissoes}" var="varPermissao" itemValue="#{varPermissao.id}" itemLabel="#{varPermissao.descricao}" />
                                 </p:selectOneMenu>
@@ -66,7 +66,7 @@
                             <div class="ui-g-12 ui-md-9"/>
                             
                             <div class="ui-g-12 ui-md-3">
-                                <p:selectOneMenu id="idSelectUnidade" value="#{autorizacaoMB.idUnidade}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;">
+                                <p:selectOneMenu id="idSelectUnidade" value="#{autorizacaoMB.idUnidade}" required="true" requiredMessage="Campo obrigatório" style="margin-top: 10px;" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Selecione a unidade" noSelectionOption="true"/>
                                     <f:selectItems value="#{autorizacaoMB.unidades}" var="varUnidade" itemValue="#{varUnidade.id}" itemLabel="#{varUnidade.nome}" />
                                 </p:selectOneMenu>
