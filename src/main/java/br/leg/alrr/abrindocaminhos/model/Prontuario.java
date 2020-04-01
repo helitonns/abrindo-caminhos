@@ -40,11 +40,37 @@ public class Prontuario implements Serializable, BaseEntity{
     private long peso;
     
     private String observacoes;
+    
+    private boolean convulsoes;
+    private boolean faltaDeAr;
+    private boolean acompanhamentoDeDentista;
+    private boolean deficienciaFisica;
+    private boolean deficienciaIntelectual;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @AuditJoinTable(name="protuario_receitas_auditoria", schema = "abrindo_caminhos")
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @AuditJoinTable(name="protuario_alergias_auditoria", schema = "abrindo_caminhos")
     @JoinTable(schema = "abrindo_caminhos")
-    private List<Receita> receitas;
+    private List<Alergia> alergias;
+    
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @AuditJoinTable(name="protuario_medicacoes_auditoria", schema = "abrindo_caminhos")
+    @JoinTable(schema = "abrindo_caminhos")
+    private List<Medicacao> medicacoes;
+    
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @AuditJoinTable(name="protuario_especialidades_auditoria", schema = "abrindo_caminhos")
+    @JoinTable(schema = "abrindo_caminhos")
+    private List<EspecialidadeMedica> especialidades;
+    
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @AuditJoinTable(name="protuario_doencas_auditoria", schema = "abrindo_caminhos")
+    @JoinTable(schema = "abrindo_caminhos")
+    private List<Doenca> doencas;
+    
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @AuditJoinTable(name="protuario_sindromes_auditoria", schema = "abrindo_caminhos")
+    @JoinTable(schema = "abrindo_caminhos")
+    private List<Sindrome> sindromes;
 
 //==============================================================================
 
@@ -89,13 +115,84 @@ public class Prontuario implements Serializable, BaseEntity{
         this.observacoes = observacoes;
     }
 
-    public List<Receita> getReceitas() {
-        return receitas;
+    public List<Alergia> getAlergias() {
+        return alergias;
     }
 
-    public void setReceitas(List<Receita> receitas) {
-        this.receitas = receitas;
+    public void setAlergias(List<Alergia> alergias) {
+        this.alergias = alergias;
     }
     
+    public boolean isConvulsoes() {
+        return convulsoes;
+    }
+
+    public void setConvulsoes(boolean convulsoes) {
+        this.convulsoes = convulsoes;
+    }
+
+    public boolean isFaltaDeAr() {
+        return faltaDeAr;
+    }
+
+    public void setFaltaDeAr(boolean faltaDeAr) {
+        this.faltaDeAr = faltaDeAr;
+    }
+
+    public boolean isAcompanhamentoDeDentista() {
+        return acompanhamentoDeDentista;
+    }
+
+    public void setAcompanhamentoDeDentista(boolean acompanhamentoDeDentista) {
+        this.acompanhamentoDeDentista = acompanhamentoDeDentista;
+    }
+
+    public boolean isDeficienciaFisica() {
+        return deficienciaFisica;
+    }
+
+    public void setDeficienciaFisica(boolean deficienciaFisica) {
+        this.deficienciaFisica = deficienciaFisica;
+    }
+
+    public boolean isDeficienciaIntelectual() {
+        return deficienciaIntelectual;
+    }
+
+    public void setDeficienciaIntelectual(boolean deficienciaIntelectual) {
+        this.deficienciaIntelectual = deficienciaIntelectual;
+    }
+
+    public List<Medicacao> getMedicacoes() {
+        return medicacoes;
+    }
+
+    public void setMedicacoes(List<Medicacao> medicacoes) {
+        this.medicacoes = medicacoes;
+    }
+
+    public List<EspecialidadeMedica> getEspecialidades() {
+        return especialidades;
+    }
+
+    public void setEspecialidades(List<EspecialidadeMedica> especialidades) {
+        this.especialidades = especialidades;
+    }
+
+    public List<Doenca> getDoencas() {
+        return doencas;
+    }
+
+    public void setDoencas(List<Doenca> doencas) {
+        this.doencas = doencas;
+    }
+
+    public List<Sindrome> getSindromes() {
+        return sindromes;
+    }
+
+    public void setSindromes(List<Sindrome> sindromes) {
+        this.sindromes = sindromes;
+    }
     
 }

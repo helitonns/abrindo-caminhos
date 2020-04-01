@@ -65,8 +65,61 @@ public class ProntuarioDAO {
                     .setParameter("idAluno", a.getId())
                     .getSingleResult();
         } catch (Exception e) {
-            throw new DAOException("Erro ao buscar bairro por município.", e);
+            throw new DAOException("Erro ao buscar prontuário por aluno.", e);
         }
     }
+    
+    public Prontuario retornarAlergiasDoProntuarioDoAluno(Aluno a) throws DAOException{
+        try {
+            return (Prontuario) em.createQuery("select o from Prontuario o join fetch o.alergias where o.aluno.id =:idAluno")
+                    .setParameter("idAluno", a.getId())
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao buscar prontuário por aluno.", e);
+        }
+    }
+    
+    public Prontuario retornarMedicacoesDoProntuarioDoAluno(Aluno a) throws DAOException{
+        try {
+            return (Prontuario) em.createQuery("select o from Prontuario o join fetch o.medicacoes where o.aluno.id =:idAluno")
+                    .setParameter("idAluno", a.getId())
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao buscar prontuário por aluno.", e);
+        }
+    }
+    
+    public Prontuario retornarEspecialidadesDoProntuarioDoAluno(Aluno a) throws DAOException{
+        try {
+            return (Prontuario) em.createQuery("select o from Prontuario o join fetch o.especialidades where o.aluno.id =:idAluno")
+                    .setParameter("idAluno", a.getId())
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao buscar prontuário por aluno.", e);
+        }
+    }
+    
+    public Prontuario retornarDoencasDoProntuarioDoAluno(Aluno a) throws DAOException{
+        try {
+            return (Prontuario) em.createQuery("select o from Prontuario o join fetch o.doencas where o.aluno.id =:idAluno")
+                    .setParameter("idAluno", a.getId())
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao buscar prontuário por aluno.", e);
+        }
+    }
+    
+    public Prontuario retornarSindromesDoProntuarioDoAluno(Aluno a) throws DAOException{
+        try {
+            return (Prontuario) em.createQuery("select o from Prontuario o join fetch o.sindromes where o.aluno.id =:idAluno")
+                    .setParameter("idAluno", a.getId())
+                    .getSingleResult();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao buscar prontuário por aluno.", e);
+        }
+    }
+    
+    
+    
 
 }

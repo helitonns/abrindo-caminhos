@@ -26,7 +26,7 @@
 
                         <div style="margin-left: 20px">Pesquisar Aluno por Código, CPF ou Nome</div>
 
-                        <div class="ui-g ui-fluid form-group">
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
                             <div class="ui-g-12 ui-md-4">
                                 <div class="ui-inputgroup">
@@ -74,11 +74,13 @@
                         </div>
                     </div>
 
+                    <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ PRONTUÁRIO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+                    
                     <h:panelGroup id="pnl_prontuario" rendered="#{prontuarioMB.exibirProntuario}">
                         <div class="card card-w-title" style="margin-top: 5px">
-                            <div style="margin-left: 20px"><p:outputLabel value="PRONTUÁRIO:    "/></div>
+                            <div style="margin-left: 20px"><p:outputLabel value="PRONTUÁRIO:    " style="font-weight: 500"/></div>
 
-                            <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                            <div class="ui-g ui-fluid form-group" style="margin-top: 30px">
                                 <div class="ui-g-12 ui-md-4">
                                     <div class="ui-inputgroup">
                                         <h:panelGroup styleClass="md-inputfield">
@@ -87,7 +89,7 @@
                                         </h:panelGroup>     
                                     </div>
                                 </div>
-                                
+
                                 <div class="ui-g-12 ui-md-4">
                                     <div class="ui-inputgroup">
                                         <h:panelGroup styleClass="md-inputfield">
@@ -108,7 +110,51 @@
                                     </div>
                                 </div>
 
-                                <div class="ui-g-12 ui-md-12">
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <h:outputText value="Tem convulsões?"/>
+                                    <p:selectOneRadio value="#{prontuarioMB.prontuario.convulsoes}" style="width: 50%; margin-top: 5px">
+                                        <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                        <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                    </p:selectOneRadio>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <h:outputText value="Tem falta de ar?"/>
+                                    <p:selectOneRadio value="#{prontuarioMB.prontuario.faltaDeAr}" style="width: 50%; margin-top: 5px">
+                                        <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                        <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                    </p:selectOneRadio>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <h:outputText value="Tem acompanhamento de dentista?"/>
+                                    <p:selectOneRadio value="#{prontuarioMB.prontuario.acompanhamentoDeDentista}" style="width: 50%; margin-top: 5px">
+                                        <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                        <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                    </p:selectOneRadio>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <h:outputText value="Possui deficiência física?"/>
+                                    <p:selectOneRadio value="#{prontuarioMB.prontuario.deficienciaFisica}" style="width: 50%; margin-top: 5px">
+                                        <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                        <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                    </p:selectOneRadio>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <h:outputText value="Possui deficiência intelectual?"/>
+                                    <p:selectOneRadio value="#{prontuarioMB.prontuario.deficienciaIntelectual}" style="width: 50%; margin-top: 5px">
+                                        <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                        <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                    </p:selectOneRadio>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4"/>
+
+
+                                <div class="ui-g-12 ui-md-12" style="margin-top: 10px">
                                     <div class="ui-inputgroup">
                                         <h:panelGroup styleClass="md-inputfield">
                                             <p:inputText id="idObservacao" value="#{prontuarioMB.prontuario.observacoes}"/>
@@ -117,39 +163,149 @@
                                     </div>
                                 </div>
 
-                                <div class="ui-g-12 ui-md-12" style="margin-top: 20px;">
-                                    <p:dataTable id="tbl_receitas" value="#{prontuarioMB.receitas}" var="varReceita" reflow="true"  emptyMessage=" " style="width: 100%">
-                                        <f:facet name="header"></f:facet>
-                                        <p:column headerText="Alergia">
-                                            <h:outputText value="#{varReceita.alergia.nome}" />
-                                        </p:column>
-                                        <p:column headerText="Medicação">
-                                            <h:outputText value="#{varReceita.medicacao.nome}" />
-                                        </p:column>
-                                        <p:column headerText="Ação" style="width: 250px;">
-                                            <p:commandButton  value="Remover do prontuário" icon="ui-icon-delete" styleClass="red-btn" actionListener="#{prontuarioMB.setReceita(varReceita)}"  onclick="PF('modal_excluir').show();"/>
-                                        </p:column>
-                                    </p:dataTable>
+                                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CARDS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+                                
+                                <div class="card card-w-title" style="margin-top: 30px">
+                                    <div class="ui-g-12 ui-md-12">
+                                        <p:dataTable id="tbl_receitas" value="#{prontuarioMB.alergiasParaInclusao}" var="var_alergia" reflow="true"  emptyMessage=" " style="width: 100%">
+                                            <f:facet name="header"></f:facet>
+                                            <p:column headerText="Alergias">
+                                                <h:outputText value="#{var_alergia.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Ação" style="width: 250px;">
+                                                <p:commandButton  value="Remover do prontuário" icon="ui-icon-delete" styleClass="red-btn" onclick="PF('modal_excluir').show();">
+                                                    <f:setPropertyActionListener value="#{var_alergia}" target="#{prontuarioMB.recebeAlergia}"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:selectOneMenu id="idSelectAlergia" value="#{prontuarioMB.alergia}"  converter="entityConverter" style="margin-top: 10px;">
+                                            <f:selectItem itemLabel="Alergia" noSelectionOption="true"/>
+                                            <f:selectItems value="#{prontuarioMB.alergias}" var="varAlergia" itemValue="#{varAlergia}" itemLabel="#{varAlergia.nome}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_receitas idSelectAlergia" action="#{prontuarioMB.adicionarAlergia()}"/>
+                                    </div>
                                 </div>
 
-                                <div class="ui-g-12 ui-md-4">
-                                    <p:selectOneMenu id="idSelectAlergia" value="#{prontuarioMB.alergia}"  converter="entityConverter" style="margin-top: 10px;">
-                                        <f:selectItem itemLabel="Alergia" noSelectionOption="true"/>
-                                        <f:selectItems value="#{prontuarioMB.alergias}" var="varAlergia" itemValue="#{varAlergia}" itemLabel="#{varAlergia.nome}" />
-                                    </p:selectOneMenu>
-                                </div>
-                               
+                                
+                                <div class="card card-w-title" style="margin-top: 30px">
+                                    <div class="ui-g-12 ui-md-12" >
+                                        <p:dataTable id="tbl_medicamentos" value="#{prontuarioMB.medicacoesParaInclusao}" var="var_medicacoes" reflow="true"  emptyMessage=" " style="width: 100%">
+                                            <f:facet name="header"></f:facet>
+                                            <p:column headerText="Medicações autorizadas">
+                                                <h:outputText value="#{var_medicacoes.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Ação" style="width: 250px;">
+                                                <p:commandButton  value="Remover do prontuário" icon="ui-icon-delete" styleClass="red-btn" onclick="PF('modal_excluir_medicacao').show();">
+                                                    <f:setPropertyActionListener value="#{var_medicacoes}" target="#{prontuarioMB.recebeMedicacao}"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
 
-                                <div class="ui-g-12 ui-md-4">
-                                    <p:selectOneMenu id="idSelectMedicacao" value="#{prontuarioMB.medicacao}" converter="entityConverter" style="margin-top: 10px;">
-                                        <f:selectItem itemLabel="Medicação" noSelectionOption="true"/>
-                                        <f:selectItems value="#{prontuarioMB.medicacoes}" var="varMedicacao" itemValue="#{varMedicacao}" itemLabel="#{varMedicacao.nome}" />
-                                    </p:selectOneMenu>
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:selectOneMenu id="idSelectMedicacao" value="#{prontuarioMB.medicacao}" converter="entityConverter" style="margin-top: 10px;">
+                                            <f:selectItem itemLabel="Medicação" noSelectionOption="true"/>
+                                            <f:selectItems value="#{prontuarioMB.medicacoes}" var="varMedicacao" itemValue="#{varMedicacao}" itemLabel="#{varMedicacao.nome}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_medicamentos idSelectMedicacao" action="#{prontuarioMB.adicionarMedicacao()}"/>
+                                    </div>
                                 </div>
-                              
-                                <div class="ui-g-12 ui-md-4">
-                                    <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_receitas idSelectAlergia idSelectMedicacao" action="#{prontuarioMB.adicionarReceita()}"/>
+                                
+                                
+                                <div class="card card-w-title" style="margin-top: 30px">
+                                    <div class="ui-g-12 ui-md-12" >
+                                        <p:dataTable id="tbl_acompanhamento" value="#{prontuarioMB.especialidadesParaInclusao}" var="var_especialidade" reflow="true"  emptyMessage=" " style="width: 100%">
+                                            <f:facet name="header"></f:facet>
+                                            <p:column headerText="Acompanhamento médico">
+                                                <h:outputText value="#{var_especialidade.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Ação" style="width: 250px;">
+                                                <p:commandButton  value="Remover do prontuário" icon="ui-icon-delete" styleClass="red-btn" onclick="PF('modal_excluir_especialidade').show();">
+                                                    <f:setPropertyActionListener value="#{var_especialidade}" target="#{prontuarioMB.recebeEspecialidadeMedica}"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:selectOneMenu id="idSelectEspecialidade" value="#{prontuarioMB.especialidadeMedica}" converter="entityConverter" style="margin-top: 10px;">
+                                            <f:selectItem itemLabel="Especialidade médica" noSelectionOption="true"/>
+                                            <f:selectItems value="#{prontuarioMB.especialidades}" var="varEspecialidade" itemValue="#{varEspecialidade}" itemLabel="#{varEspecialidade.nome}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_acompanhamento idSelectEspecialidade" action="#{prontuarioMB.adicionarEspecialidade()}"/>
+                                    </div>
                                 </div>
+                                
+                                
+                                <div class="card card-w-title" style="margin-top: 30px">
+                                    <div class="ui-g-12 ui-md-12" >
+                                        <p:dataTable id="tbl_doenca" value="#{prontuarioMB.doencasParaInclusao}" var="var_doenca" reflow="true"  emptyMessage=" " style="width: 100%">
+                                            <f:facet name="header"></f:facet>
+                                            <p:column headerText="Doenças">
+                                                <h:outputText value="#{var_doenca.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Ação" style="width: 250px;">
+                                                <p:commandButton  value="Remover do prontuário" icon="ui-icon-delete" styleClass="red-btn" onclick="PF('modal_excluir_doenca').show();">
+                                                    <f:setPropertyActionListener value="#{var_doenca}" target="#{prontuarioMB.recebeDoenca}"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:selectOneMenu id="idSelectDoenca" value="#{prontuarioMB.doenca}" converter="entityConverter" style="margin-top: 10px;">
+                                            <f:selectItem itemLabel="Doenças" noSelectionOption="true"/>
+                                            <f:selectItems value="#{prontuarioMB.doencas}" var="varDoenca" itemValue="#{varDoenca}" itemLabel="#{varDoenca.nome}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_doenca idSelectDoenca" action="#{prontuarioMB.adicionarDoenca()}"/>
+                                    </div>
+                                </div>
+                                
+                                
+                                <div class="card card-w-title" style="margin-top: 30px">
+                                    <div class="ui-g-12 ui-md-12" >
+                                        <p:dataTable id="tbl_sindrome" value="#{prontuarioMB.sindromesParaInclusao}" var="var_sindrome" reflow="true"  emptyMessage=" " style="width: 100%">
+                                            <f:facet name="header"></f:facet>
+                                            <p:column headerText="Síndormes / transtornos">
+                                                <h:outputText value="#{var_sindrome.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Ação" style="width: 250px;">
+                                                <p:commandButton  value="Remover do prontuário" icon="ui-icon-delete" styleClass="red-btn" onclick="PF('modal_excluir_sindrome').show();">
+                                                    <f:setPropertyActionListener value="#{var_sindrome}" target="#{prontuarioMB.recebeSindrome}"/>
+                                                </p:commandButton>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:selectOneMenu id="idSelectSindrome" value="#{prontuarioMB.sindrome}" converter="entityConverter" style="margin-top: 10px;">
+                                            <f:selectItem itemLabel="Síndromes / transtornos" noSelectionOption="true"/>
+                                            <f:selectItems value="#{prontuarioMB.sindromes}" var="varSindrome" itemValue="#{varSindrome}" itemLabel="#{varSindrome.nome}" />
+                                        </p:selectOneMenu>
+                                    </div>
+
+                                    <div class="ui-g-12 ui-md-6">
+                                        <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_sindrome idSelectSindrome" action="#{prontuarioMB.adicionarSindrome()}"/>
+                                    </div>
+                                </div>
+
+
+                                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ BOTÕES @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
                                 <div class="ui-g-12 ui-md-12" style="margin-top: 20px;"/>
                                 <div class="ui-g-12 ui-md-4"/>
@@ -160,18 +316,67 @@
                                     <p:commandButton value="Cancelar" icon="ui-icon-cancel" styleClass="blue-grey-btn" action="#{prontuarioMB.cancelar()}"/>
                                 </div>
 
+
+                                <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ PAINEIS PARA EXCLUSÃO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
+
                                 <p:dialog header="Exclusão" widgetVar="modal_excluir" modal="true" height="100" width="550">
                                     <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
 
                                     <f:facet name="footer">
                                         <h:panelGrid columns="2" style="width: 100%">
-                                            <p:commandButton value="Excluir" icon="ui-icon-delete" action="#{prontuarioMB.removerReceita()}" update="tbl_receitas" onclick="PF('modal_excluir').hide();" style="width: 100%"/>
+                                            <p:commandButton value="Excluir" icon="ui-icon-delete" action="#{prontuarioMB.removerAlergia()}" update="tbl_receitas" onclick="PF('modal_excluir').hide();" style="width: 100%"/>
                                             <p:commandButton value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel" onclick="PF('modal_excluir').hide();"  style="width: 100%"/>
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:dialog>
                                 
+                                <p:dialog header="Exclusão" widgetVar="modal_excluir_medicacao" modal="true" height="100" width="550">
+                                    <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+
+                                    <f:facet name="footer">
+                                        <h:panelGrid columns="2" style="width: 100%">
+                                            <p:commandButton value="Excluir" icon="ui-icon-delete" action="#{prontuarioMB.removerMedicao()}" update="tbl_acompanhamento" onclick="PF('modal_excluir_medicacao').hide();" style="width: 100%"/>
+                                            <p:commandButton value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel" onclick="PF('modal_excluir_medicacao').hide();"  style="width: 100%"/>
+                                        </h:panelGrid>
+                                    </f:facet>
+                                </p:dialog>
                                 
+                                <p:dialog header="Exclusão" widgetVar="modal_excluir_especialidade" modal="true" height="100" width="550">
+                                    <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+
+                                    <f:facet name="footer">
+                                        <h:panelGrid columns="2" style="width: 100%">
+                                            <p:commandButton value="Excluir" icon="ui-icon-delete" action="#{prontuarioMB.removerEspecialidade()}" update="tbl_acompanhamento" onclick="PF('modal_excluir_especialidade').hide();" style="width: 100%"/>
+                                            <p:commandButton value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel" onclick="PF('modal_excluir_especialidade').hide();"  style="width: 100%"/>
+                                        </h:panelGrid>
+                                    </f:facet>
+                                </p:dialog>
+                                
+                                
+                                <p:dialog header="Exclusão" widgetVar="modal_excluir_doenca" modal="true" height="100" width="550">
+                                    <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+
+                                    <f:facet name="footer">
+                                        <h:panelGrid columns="2" style="width: 100%">
+                                            <p:commandButton value="Excluir" icon="ui-icon-delete" action="#{prontuarioMB.removerDoenca()}" update="tbl_doenca" onclick="PF('modal_excluir_doenca').hide();" style="width: 100%"/>
+                                            <p:commandButton value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel" onclick="PF('modal_excluir_doenca').hide();"  style="width: 100%"/>
+                                        </h:panelGrid>
+                                    </f:facet>
+                                </p:dialog>
+                                
+                                
+                                <p:dialog header="Exclusão" widgetVar="modal_excluir_sindrome" modal="true" height="100" width="550">
+                                    <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
+
+                                    <f:facet name="footer">
+                                        <h:panelGrid columns="2" style="width: 100%">
+                                            <p:commandButton value="Excluir" icon="ui-icon-delete" action="#{prontuarioMB.removerSindrome()}" update="tbl_sindrome" onclick="PF('modal_excluir_sindrome').hide();" style="width: 100%"/>
+                                            <p:commandButton value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel" onclick="PF('modal_excluir_sindrome').hide();"  style="width: 100%"/>
+                                        </h:panelGrid>
+                                    </f:facet>
+                                </p:dialog>
+
+
                             </div>
                         </div>
                     </h:panelGroup>   
