@@ -179,7 +179,7 @@ public class MatriculaMB implements Serializable {
 
             //SE NÃO CONTIVER LETRAS NO PARÂMETRO PASSADO SE FARÁ EFETIVAMENTE A MATRICULA DOS ALUNOS
             if (contemLetras) {
-                FacesUtils.addWarnMessageFlashScoped("A cadeia de códigos de alunos passada não pode conter letras ou outros símbolos. Deve-se digitar apenas números separados por vírgula!!!");
+                FacesUtils.addWarnMessageFlashScoped("A cadeia de códigos de alunos passada não pode conter letras ou outros símbolos. Deve-se digitar apenas números, separados por vírgula!!!");
             } else {
 
                 for (String id : ids) {
