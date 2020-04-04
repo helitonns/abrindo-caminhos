@@ -55,6 +55,8 @@ public class MatriculaMB implements Serializable {
 
     private boolean mostrarAlunosJaMatriculados;
     private boolean cancelaMatricula;
+    private boolean matriculaEmLote;
+    private String codigosDosAlunos;
 
 //==========================================================================
     @PostConstruct
@@ -158,6 +160,62 @@ public class MatriculaMB implements Serializable {
         return "matricula.xhtml" + "?faces-redirect=true";
     }
 
+    public String matricularEmLote() {
+        UsuarioComUnidade u = (UsuarioComUnidade) FacesUtils.getBean("usuario");
+        GregorianCalendar gc = new GregorianCalendar();
+
+            //SEPARA OS CÓDIGOS E OS COLOCA EM UM ARRAY
+            String[] ids = codigosDosAlunos.split(",");
+
+            boolean contemLetras = false;
+
+            //VERIFICA SE HÁ LETRAS NO PARÂMETRO PASSADO
+            for (String id : ids) {
+                if (!id.trim().matches("^[0-9]*$")) {
+                    contemLetras = true;
+                    break;
+                }
+            }
+
+            //SE NÃO CONTIVER LETRAS NO PARÂMETRO PASSADO SE FARÁ EFETIVAMENTE A MATRICULA DOS ALUNOS
+            if (contemLetras) {
+                FacesUtils.addWarnMessageFlashScoped("A cadeia de códigos de alunos passada não pode conter letras ou outros símbolos. Deve-se digitar apenas números separados por vírgula!!!");
+            } else {
+
+                for (String id : ids) {
+                    Matricula m = new Matricula();
+
+                    m.setUnidade(u.getUnidade());
+                    m.setAluno(new Aluno(Long.parseLong(id.trim())));
+                    m.setTurma(turma);
+                    m.setDataMatricula(gc.getTime());
+                    m.setStatus(true);
+
+                    try {
+
+                        boolean b = matriculaDAO.podeMatricular(turma.getId(), Long.parseLong(id.trim()));
+
+                        if (b) {
+                            matriculaDAO.salvar(m);
+                            FacesUtils.addInfoMessageFlashScoped("O aluno(a) de código " + id.trim() + " foi matrículado(a) com sucesso!!!");
+                        } else {
+                            FacesUtils.addWarnMessageFlashScoped("O aluno de código " + id.trim() + " já está matriculado neste curso!");
+                        }
+
+                        //VERIFICA SE O ALUNO ESTÁ DENTRO DA FAIXA ETÁRIA DA TURMA, SE NÃO ESTIVER, NÃO IMPEDE A MATRÍCULA, MAS AVISA
+                        if (!matricula.podeMatricular(turma, aluno)) {
+                            FacesUtils.addWarnMessageFlashScoped("Lembrando que o aluno de código " + id.trim() + " está fora da faxa etária da turma!");
+                        }
+
+                    } catch (Exception e) {
+                        FacesUtils.addErrorMessageFlashScoped("O aluno(a) de código " + id.trim() + " não foi matrículado(a) porque não consta na base de dados!!!");
+                    }
+
+                }
+            }
+        return "matricula.xhtml" + "?faces-redirect=true";
+    }
+
     public void cancelarMatricula() {
         try {
             if (cancelaMatricula) {
@@ -181,6 +239,8 @@ public class MatriculaMB implements Serializable {
         listarTurmasIniciadas();
         mostrarAlunosJaMatriculados = false;
         cancelaMatricula = false;
+        matriculaEmLote = false;
+        codigosDosAlunos = "";
     }
 
     public void selecionarTurma(ValueChangeEvent event) {
@@ -244,6 +304,22 @@ public class MatriculaMB implements Serializable {
 
     public void setCancelaMatricula(boolean cancelaMatricula) {
         this.cancelaMatricula = cancelaMatricula;
+    }
+
+    public boolean isMatriculaEmLote() {
+        return matriculaEmLote;
+    }
+
+    public void setMatriculaEmLote(boolean matriculaEmLote) {
+        this.matriculaEmLote = matriculaEmLote;
+    }
+
+    public String getCodigosDosAlunos() {
+        return codigosDosAlunos;
+    }
+
+    public void setCodigosDosAlunos(String codigosDosAlunos) {
+        this.codigosDosAlunos = codigosDosAlunos;
     }
 
 }

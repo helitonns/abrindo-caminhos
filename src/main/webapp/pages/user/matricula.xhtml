@@ -73,6 +73,34 @@
                                 </div>
                             </p:panel>
 
+
+                            <p:panel style="width: 100%; margin-left: 20px; margin-right: 20px; margin-top: 20px">
+                                <div class="ui-g-12 ui-md-2">
+                                    <h:outputText value="Fazer matrícula em lote?"/>
+                                    <p:selectOneRadio value="#{matriculaMB.matriculaEmLote}" style="width: 100%; margin-top: 5px">
+                                        <p:ajax update="idCodigosDosAlunos btnMatricularEmLote"/>
+                                        <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                                        <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                                    </p:selectOneRadio>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-inputgroup">
+                                        <h:panelGroup styleClass="md-inputfield">
+                                            <p:inputText id="idCodigosDosAlunos" label="Nome" value="#{matriculaMB.codigosDosAlunos}" required="true" converter="upper" disabled="#{!matriculaMB.matriculaEmLote}">
+                                                <p:tooltip for="idCodigosDosAlunos" value="Os códigos devem ser digitados separados por vírgula ou individualmente" />
+                                            </p:inputText>
+                                            <label>Códigos dos alunos</label>
+                                        </h:panelGroup>     
+                                    </div>
+                                </div>
+
+                                <div class="ui-g-12 ui-md-4">
+                                    <p:commandButton id="btnMatricularEmLote" value="Matricular em lote" icon="ui-icon-check" action="#{matriculaMB.matricularEmLote()}" update="idTabelaAlunos idMensagemGlobal" style="width: 100%" disabled="#{!matriculaMB.matriculaEmLote}"/>
+                                </div>
+                            </p:panel>
+
+
                             <div class="ui-g-12 ui-md-12" style="margin-top: 35px;">
                                 <p:dataTable id="idTabelaAlunos" value="#{matriculaMB.alunos}" var="var_aluno" reflow="true" rowKey="#{var_aluno.id}" emptyMessage="">
                                     <p:column headerText="Código" sortBy="#{var_aluno.id}" filterBy="#{var_aluno.id}" style="width: 130px;">
@@ -100,11 +128,7 @@
                     </div>
 
 
-
                     <h:panelGroup id="idPanelAlunoMatriculados" rendered="#{matriculaMB.mostrarAlunosJaMatriculados}">
-
-
-
                         <div class="card card-w-title" >
                             <div style="margin-left: 20px;">Alunos já matriculados no curso</div>
 
