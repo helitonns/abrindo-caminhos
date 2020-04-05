@@ -45,13 +45,13 @@ public class ProntuarioMB implements Serializable {
 
     @EJB
     private MedicacaoDAO medicacaoDAO;
-    
+
     @EJB
     private EspecialidadeMedicaDAO especialidadeMedicaDAO;
-    
+
     @EJB
     private DoencaDAO doencaDAO;
-    
+
     @EJB
     private SindromeDAO sindromeDAO;
 
@@ -70,7 +70,7 @@ public class ProntuarioMB implements Serializable {
     private Aluno aluno;
     private Aluno alunoProntuario;
     private Prontuario prontuario;
-    
+
     private Alergia alergia;
     private Alergia recebeAlergia;
     private Medicacao medicacao;
@@ -81,7 +81,6 @@ public class ProntuarioMB implements Serializable {
     private Doenca recebeDoenca;
     private Sindrome sindrome;
     private Sindrome recebeSindrome;
-    
 
     private boolean exibirProntuario;
 //==============================================================================
@@ -95,6 +94,20 @@ public class ProntuarioMB implements Serializable {
         listarEspecialidades();
         listarDoencas();
         listarSindromes();
+
+        try {
+            //PRONTUÁRIO DO ALUNO PASSADO COMO PARÂMETRO
+            if (FacesUtils.getBean("idAlunoParaProntuario") != null) {
+                aluno.setId((Long) FacesUtils.getBean("idAlunoParaProntuario"));
+                pesquisarAluno();
+                aluno = alunos.get(0);
+                preSalvar();
+                FacesUtils.removeBean("idAlunoParaProntuario");
+            }
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("Erro no construtor: \n" + e.getCause());
+        }
+
     }
 
     public void listarAlergias() {
@@ -110,21 +123,21 @@ public class ProntuarioMB implements Serializable {
         } catch (DAOException e) {
         }
     }
-    
+
     public void listarEspecialidades() {
         try {
             especialidades = (ArrayList<EspecialidadeMedica>) especialidadeMedicaDAO.listarAtivas();
         } catch (DAOException e) {
         }
     }
-    
+
     public void listarDoencas() {
         try {
             doencas = (ArrayList<Doenca>) doencaDAO.listarAtivas();
         } catch (DAOException e) {
         }
     }
-    
+
     public void listarSindromes() {
         try {
             sindromes = (ArrayList<Sindrome>) sindromeDAO.listarAtivas();
@@ -137,25 +150,25 @@ public class ProntuarioMB implements Serializable {
 
         alergia = new Alergia();
     }
-    
+
     public void adicionarMedicacao() {
         medicacoesParaInclusao.add(medicacao);
 
         medicacao = new Medicacao();
     }
-    
+
     public void adicionarEspecialidade() {
         especialidadesParaInclusao.add(especialidadeMedica);
 
         especialidadeMedica = new EspecialidadeMedica();
     }
-    
+
     public void adicionarDoenca() {
         doencasParaInclusao.add(doenca);
 
         doenca = new Doenca();
     }
-    
+
     public void adicionarSindrome() {
         sindromesParaInclusao.add(sindrome);
 
@@ -171,7 +184,7 @@ public class ProntuarioMB implements Serializable {
             }
         }
     }
-    
+
     public void removerMedicao() {
         for (Medicacao m : medicacoesParaInclusao) {
             if (m.getId().equals(recebeMedicacao.getId())) {
@@ -181,7 +194,7 @@ public class ProntuarioMB implements Serializable {
             }
         }
     }
-    
+
     public void removerEspecialidade() {
         for (EspecialidadeMedica e : especialidadesParaInclusao) {
             if (e.getId().equals(recebeEspecialidadeMedica.getId())) {
@@ -191,7 +204,7 @@ public class ProntuarioMB implements Serializable {
             }
         }
     }
-    
+
     public void removerDoenca() {
         for (Doenca d : doencasParaInclusao) {
             if (d.getId().equals(recebeDoenca.getId())) {
@@ -201,7 +214,7 @@ public class ProntuarioMB implements Serializable {
             }
         }
     }
-    
+
     public void removerSindrome() {
         for (Sindrome s : sindromesParaInclusao) {
             if (s.getId().equals(recebeSindrome.getId())) {
@@ -239,18 +252,18 @@ public class ProntuarioMB implements Serializable {
         prontuario.setAluno(alunoProntuario);
 
         Prontuario p = new Prontuario();
-        
+
         try {
             p = prontuarioDAO.buscarProntuarioPorAluno(alunoProntuario);
-            
+
             if (p.getId() != null) {
                 prontuario = p;
-                
-                alergiasParaInclusao       = prontuarioDAO.retornarAlergiasDoProntuarioDoAluno(alunoProntuario).getAlergias();
-                medicacoesParaInclusao     = prontuarioDAO.retornarMedicacoesDoProntuarioDoAluno(alunoProntuario).getMedicacoes();
+
+                alergiasParaInclusao = prontuarioDAO.retornarAlergiasDoProntuarioDoAluno(alunoProntuario).getAlergias();
+                medicacoesParaInclusao = prontuarioDAO.retornarMedicacoesDoProntuarioDoAluno(alunoProntuario).getMedicacoes();
                 especialidadesParaInclusao = prontuarioDAO.retornarEspecialidadesDoProntuarioDoAluno(alunoProntuario).getEspecialidades();
-                doencasParaInclusao        = prontuarioDAO.retornarDoencasDoProntuarioDoAluno(alunoProntuario).getDoencas();
-                sindromesParaInclusao      = prontuarioDAO.retornarSindromesDoProntuarioDoAluno(alunoProntuario).getSindromes();
+                doencasParaInclusao = prontuarioDAO.retornarDoencasDoProntuarioDoAluno(alunoProntuario).getDoencas();
+                sindromesParaInclusao = prontuarioDAO.retornarSindromesDoProntuarioDoAluno(alunoProntuario).getSindromes();
 
             }
         } catch (DAOException e) {
@@ -263,24 +276,24 @@ public class ProntuarioMB implements Serializable {
         try {
 
             if (prontuario.getId() != null) {
-                
+
                 prontuario.setAlergias(alergiasParaInclusao);
                 prontuario.setMedicacoes(medicacoesParaInclusao);
                 prontuario.setEspecialidades(especialidadesParaInclusao);
                 prontuario.setDoencas(doencasParaInclusao);
                 prontuario.setSindromes(sindromesParaInclusao);
-                
+
                 prontuarioDAO.atualizar(prontuario);
                 FacesUtils.addInfoMessageFlashScoped("Prontuário atualizado com sucesso!");
             } else {
                 prontuario.setAluno(alunoProntuario);
-                
+
                 prontuario.setAlergias(alergiasParaInclusao);
                 prontuario.setMedicacoes(medicacoesParaInclusao);
                 prontuario.setEspecialidades(especialidadesParaInclusao);
                 prontuario.setDoencas(doencasParaInclusao);
                 prontuario.setSindromes(sindromesParaInclusao);
-                
+
                 prontuarioDAO.salvar(prontuario);
                 FacesUtils.addInfoMessageFlashScoped("Prontuário salvo com sucesso!");
             }
@@ -298,7 +311,7 @@ public class ProntuarioMB implements Serializable {
         aluno = new Aluno();
         alunoProntuario = new Aluno();
         prontuario = new Prontuario();
-        
+
         alergia = new Alergia();
         recebeAlergia = new Alergia();
         medicacao = new Medicacao();
@@ -313,7 +326,7 @@ public class ProntuarioMB implements Serializable {
         alergiasParaInclusao = new ArrayList<>();
         medicacoes = new ArrayList<>();
         medicacoesParaInclusao = new ArrayList<>();
-        especialidades  = new ArrayList<>();
+        especialidades = new ArrayList<>();
         especialidadesParaInclusao = new ArrayList<>();
         doencas = new ArrayList<>();
         doencasParaInclusao = new ArrayList<>();
@@ -485,6 +498,5 @@ public class ProntuarioMB implements Serializable {
     public List<Sindrome> getSindromesParaInclusao() {
         return sindromesParaInclusao;
     }
-    
-    
+
 }

@@ -145,6 +145,9 @@ public class AlunoMB implements Serializable {
     private boolean inscreverNaLista;
     private boolean encontrouGenitores;
     private boolean exibirMinhasAtividades;
+    
+    private boolean exibirModalParaProntuario;
+    private Long idAlunoParaProntuario;
 
     private byte[] imagem;
 
@@ -180,6 +183,14 @@ public class AlunoMB implements Serializable {
                 preEditar();
                 FacesUtils.removeBean("aluno");
             }
+            
+            //EXIBIR POPUP PARA REDIRECIONAR PARA O PRONTÁRIO DO ALUNO
+            if (FacesUtils.getBean("idAlunoParaProntuario") != null) {
+                exibirModalParaProntuario = true;
+                idAlunoParaProntuario = (Long) FacesUtils.getBean("idAlunoParaProntuario");
+                FacesUtils.removeBean("idAlunoParaProntuario");
+            }
+            
         } catch (Exception e) {
             FacesUtils.addInfoMessage("Erro ao tentar editar aluno. \n" + e.getCause());
         }
@@ -326,6 +337,7 @@ public class AlunoMB implements Serializable {
 
             if (aluno.getId() != null) {
                 alunoDAO.atualizar(aluno);
+                FacesUtils.setBean("idAlunoParaProntuario", aluno.getId());
                 FacesUtils.addInfoMessageFlashScoped("Aluno atualizado com sucesso!!!");
 
                 //FAZENDO A MATRICULA NA TURMA
@@ -449,6 +461,7 @@ public class AlunoMB implements Serializable {
                 }
 
             }
+            
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage() + ": " + e.getCause());
             System.out.println(e.getCause());
@@ -639,6 +652,7 @@ public class AlunoMB implements Serializable {
         matricularNaTurma = false;
         encontrouGenitores = false;
         exibirMinhasAtividades = false;
+        exibirModalParaProntuario = false;
     }
 
     public String cancelar() {
@@ -655,6 +669,15 @@ public class AlunoMB implements Serializable {
             Aluno a = new Aluno(aluno.getId());
             FacesUtils.setBean("alunoAtividade", a);
             return "minhas-atividades.xhtml" + "?faces-redirect=true";
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
+    public String enviarParaProtuario() {
+        try {
+            FacesUtils.setBean("idAlunoParaProntuario", idAlunoParaProntuario);
+            return "prontuario.xhtml" + "?faces-redirect=true";
         } catch (Exception e) {
             return null;
         }
@@ -952,4 +975,20 @@ public class AlunoMB implements Serializable {
         this.pais = pais;
     }
 
+    public boolean isExibirModalParaProntuario() {
+        return exibirModalParaProntuario;
+    }
+
+    public void setExibirModalParaProntuario(boolean exibirModalParaProntuario) {
+        this.exibirModalParaProntuario = exibirModalParaProntuario;
+    }
+
+    public Long getIdAlunoParaProntuario() {
+        return idAlunoParaProntuario;
+    }
+
+    public void setIdAlunoParaProntuario(Long idAlunoParaProntuario) {
+        this.idAlunoParaProntuario = idAlunoParaProntuario;
+    }
+    
 }

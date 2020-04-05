@@ -518,6 +518,7 @@
                             <div class="ui-g-12 ui-md-2"/>
                         </div>
                     </div>
+
                 </div>
             </div>
         </h:form>
@@ -583,6 +584,23 @@
                     <p:commandButton value="Salvar" actionListener="#{alunoMB.salvarBairro()}" ajax="true" update="form:idEnderecoBairro" onclick="PF('modal_adicionar_bairro').hide();" icon="ui-icon-save" style="margin-top: 20px; width: 100%"/>
                 </h:panelGrid>
             </p:dialog>
+        </h:form>
+
+        <h:form id="form5">
+            <!--TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE-->
+            <p:dialog header="Prontuário" widgetVar="modal_prontuario" modal="true" width="400" visible="#{alunoMB.exibirModalParaProntuario}">
+                <h:panelGrid style="margin-top: 20px; width: 100%">
+                    <h:outputText value="Deseja ir para o prontuário do aluno?" style="width: 100%"/>
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <h:panelGrid columns="2" style="width: 100%">
+                        <p:commandButton value="Sim" icon="ui-icon-delete" ajax="false" action="#{alunoMB.enviarParaProtuario()}" style="width: 100%"/>
+                        <p:button value="Não" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
+                    </h:panelGrid>
+                </f:facet>
+            </p:dialog>
+            <!--TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE TESTE-->
         </h:form>
 
     </ui:define>
