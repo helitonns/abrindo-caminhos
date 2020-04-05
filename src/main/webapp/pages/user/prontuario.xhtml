@@ -22,7 +22,7 @@
                     <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Prontuário</label>
                     <div class="card card-w-title" style="margin-top: 5px">
 
-                        <p:messages globalOnly="true" closable="true"/>
+                        <p:messages id="id_msg_global" globalOnly="true" closable="true"/>
 
                         <div style="margin-left: 20px">Pesquisar Aluno por Código, CPF ou Nome</div>
 
@@ -75,7 +75,7 @@
                     </div>
 
                     <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ PRONTUÁRIO @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
-                    
+
                     <h:panelGroup id="pnl_prontuario" rendered="#{prontuarioMB.exibirProntuario}">
                         <div class="card card-w-title" style="margin-top: 5px">
                             <div style="margin-left: 20px"><p:outputLabel value="PRONTUÁRIO:    " style="font-weight: 500"/></div>
@@ -164,7 +164,7 @@
                                 </div>
 
                                 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CARDS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
-                                
+
                                 <div class="card card-w-title" style="margin-top: 30px">
                                     <div class="ui-g-12 ui-md-12">
                                         <p:dataTable id="tbl_receitas" value="#{prontuarioMB.alergiasParaInclusao}" var="var_alergia" reflow="true"  emptyMessage=" " style="width: 100%">
@@ -180,19 +180,25 @@
                                         </p:dataTable>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-12 ui-md-5">
                                         <p:selectOneMenu id="idSelectAlergia" value="#{prontuarioMB.alergia}"  converter="entityConverter" style="margin-top: 10px;">
                                             <f:selectItem itemLabel="Alergia" noSelectionOption="true"/>
                                             <f:selectItems value="#{prontuarioMB.alergias}" var="varAlergia" itemValue="#{varAlergia}" itemLabel="#{varAlergia.nome}" />
                                         </p:selectOneMenu>
                                     </div>
 
+                                    <div class="ui-g-12 ui-md-1">
+                                        <p:commandButton id="idAdicionarAlergia" icon="ui-icon-plus" ajax="true" onclick="PF('modal_nova_alergia').show();" immediate="true" >
+                                            <p:tooltip for="idAdicionarAlergia" value="Adicionar uma nova arlegia"/>
+                                        </p:commandButton>
+                                    </div>
+
                                     <div class="ui-g-12 ui-md-6">
-                                        <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_receitas idSelectAlergia" action="#{prontuarioMB.adicionarAlergia()}"/>
+                                        <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add"  actionListener="#{prontuarioMB.adicionarAlergia()}" update="tbl_receitas"/>
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="card card-w-title" style="margin-top: 30px">
                                     <div class="ui-g-12 ui-md-12" >
                                         <p:dataTable id="tbl_medicamentos" value="#{prontuarioMB.medicacoesParaInclusao}" var="var_medicacoes" reflow="true"  emptyMessage=" " style="width: 100%">
@@ -208,19 +214,25 @@
                                         </p:dataTable>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-12 ui-md-5">
                                         <p:selectOneMenu id="idSelectMedicacao" value="#{prontuarioMB.medicacao}" converter="entityConverter" style="margin-top: 10px;">
                                             <f:selectItem itemLabel="Medicação" noSelectionOption="true"/>
                                             <f:selectItems value="#{prontuarioMB.medicacoes}" var="varMedicacao" itemValue="#{varMedicacao}" itemLabel="#{varMedicacao.nome}" />
                                         </p:selectOneMenu>
+                                    </div>
+                                    
+                                    <div class="ui-g-12 ui-md-1">
+                                        <p:commandButton id="idAdicionarMedicacao" icon="ui-icon-plus" ajax="true" onclick="PF('modal_nova_medicacao').show();" immediate="true">
+                                            <p:tooltip for="idAdicionarMedicacao" value="Adicionar uma nova medicação"/>
+                                        </p:commandButton>
                                     </div>
 
                                     <div class="ui-g-12 ui-md-6">
                                         <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_medicamentos idSelectMedicacao" action="#{prontuarioMB.adicionarMedicacao()}"/>
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="card card-w-title" style="margin-top: 30px">
                                     <div class="ui-g-12 ui-md-12" >
                                         <p:dataTable id="tbl_acompanhamento" value="#{prontuarioMB.especialidadesParaInclusao}" var="var_especialidade" reflow="true"  emptyMessage=" " style="width: 100%">
@@ -236,19 +248,25 @@
                                         </p:dataTable>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-12 ui-md-5">
                                         <p:selectOneMenu id="idSelectEspecialidade" value="#{prontuarioMB.especialidadeMedica}" converter="entityConverter" style="margin-top: 10px;">
                                             <f:selectItem itemLabel="Especialidade médica" noSelectionOption="true"/>
                                             <f:selectItems value="#{prontuarioMB.especialidades}" var="varEspecialidade" itemValue="#{varEspecialidade}" itemLabel="#{varEspecialidade.nome}" />
                                         </p:selectOneMenu>
+                                    </div>
+                                    
+                                    <div class="ui-g-12 ui-md-1">
+                                        <p:commandButton id="idAdicionarEspecialidade" icon="ui-icon-plus" ajax="true" onclick="PF('modal_nova_especialidade').show();" immediate="true">
+                                            <p:tooltip for="idAdicionarEspecialidade" value="Adicionar uma nova especialidade médica"/>
+                                        </p:commandButton>
                                     </div>
 
                                     <div class="ui-g-12 ui-md-6">
                                         <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_acompanhamento idSelectEspecialidade" action="#{prontuarioMB.adicionarEspecialidade()}"/>
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="card card-w-title" style="margin-top: 30px">
                                     <div class="ui-g-12 ui-md-12" >
                                         <p:dataTable id="tbl_doenca" value="#{prontuarioMB.doencasParaInclusao}" var="var_doenca" reflow="true"  emptyMessage=" " style="width: 100%">
@@ -264,19 +282,25 @@
                                         </p:dataTable>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-12 ui-md-5">
                                         <p:selectOneMenu id="idSelectDoenca" value="#{prontuarioMB.doenca}" converter="entityConverter" style="margin-top: 10px;">
                                             <f:selectItem itemLabel="Doenças" noSelectionOption="true"/>
                                             <f:selectItems value="#{prontuarioMB.doencas}" var="varDoenca" itemValue="#{varDoenca}" itemLabel="#{varDoenca.nome}" />
                                         </p:selectOneMenu>
+                                    </div>
+                                    
+                                    <div class="ui-g-12 ui-md-1">
+                                        <p:commandButton id="idAdicionarDoenca" icon="ui-icon-plus" ajax="true" onclick="PF('modal_nova_doenca').show();" immediate="true">
+                                            <p:tooltip for="idAdicionarDoenca" value="Adicionar uma nova doença"/>
+                                        </p:commandButton>
                                     </div>
 
                                     <div class="ui-g-12 ui-md-6">
                                         <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add" update="tbl_doenca idSelectDoenca" action="#{prontuarioMB.adicionarDoenca()}"/>
                                     </div>
                                 </div>
-                                
-                                
+
+
                                 <div class="card card-w-title" style="margin-top: 30px">
                                     <div class="ui-g-12 ui-md-12" >
                                         <p:dataTable id="tbl_sindrome" value="#{prontuarioMB.sindromesParaInclusao}" var="var_sindrome" reflow="true"  emptyMessage=" " style="width: 100%">
@@ -292,11 +316,17 @@
                                         </p:dataTable>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-12 ui-md-5">
                                         <p:selectOneMenu id="idSelectSindrome" value="#{prontuarioMB.sindrome}" converter="entityConverter" style="margin-top: 10px;">
                                             <f:selectItem itemLabel="Síndromes / transtornos" noSelectionOption="true"/>
                                             <f:selectItems value="#{prontuarioMB.sindromes}" var="varSindrome" itemValue="#{varSindrome}" itemLabel="#{varSindrome.nome}" />
                                         </p:selectOneMenu>
+                                    </div>
+                                    
+                                    <div class="ui-g-12 ui-md-1">
+                                        <p:commandButton id="idAdicionarSindrome" icon="ui-icon-plus" ajax="true" onclick="PF('modal_nova_sindrome').show();" immediate="true">
+                                            <p:tooltip for="idAdicionarSindrome" value="Adicionar uma nova síndrome/trantorno"/>
+                                        </p:commandButton>
                                     </div>
 
                                     <div class="ui-g-12 ui-md-6">
@@ -329,7 +359,7 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:dialog>
-                                
+
                                 <p:dialog header="Exclusão" widgetVar="modal_excluir_medicacao" modal="true" height="100" width="550">
                                     <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
 
@@ -340,7 +370,7 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:dialog>
-                                
+
                                 <p:dialog header="Exclusão" widgetVar="modal_excluir_especialidade" modal="true" height="100" width="550">
                                     <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
 
@@ -351,8 +381,8 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:dialog>
-                                
-                                
+
+
                                 <p:dialog header="Exclusão" widgetVar="modal_excluir_doenca" modal="true" height="100" width="550">
                                     <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
 
@@ -363,8 +393,8 @@
                                         </h:panelGrid>
                                     </f:facet>
                                 </p:dialog>
-                                
-                                
+
+
                                 <p:dialog header="Exclusão" widgetVar="modal_excluir_sindrome" modal="true" height="100" width="550">
                                     <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
 
@@ -384,5 +414,96 @@
                 </div>
             </div>
         </h:form>
+        
+        <h:form id="form2">
+            <p:dialog header="Adicionar nova alergia" widgetVar="modal_nova_alergia" modal="true" width="400">
+                <h:panelGrid style="margin-top: 20px; width: 100%">
+                    <h:panelGroup>
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNovaAlergia" value="#{prontuarioMB.alergia.nome}" required="true"  converter="upper" style="width: 100%"/>
+                                <label>Alergia</label>
+                                <p:message for="idNovaAlergia" showSummary="false" showDetail="false"/>
+                            </h:panelGroup>     
+                        </div>
+                    </h:panelGroup>
+
+                    <p:commandButton value="Salvar" actionListener="#{prontuarioMB.salvarAlergia()}" ajax="true" update="form:idSelectAlergia form:id_msg_global" onclick="PF('modal_nova_alergia').hide();" icon="ui-icon-save" style="margin-top: 20px; width: 100%"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        <h:form id="form3">
+            <p:dialog header="Adicionar nova medicação" widgetVar="modal_nova_medicacao" modal="true" width="400">
+                <h:panelGrid style="margin-top: 20px; width: 100%">
+                    <h:panelGroup>
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNovaMedicacao" value="#{prontuarioMB.medicacao.nome}" required="true"  converter="upper" style="width: 100%"/>
+                                <label>Medicação</label>
+                                <p:message for="idNovaMedicacao" showSummary="false" showDetail="false"/>
+                            </h:panelGroup>     
+                        </div>
+                    </h:panelGroup>
+
+                    <p:commandButton value="Salvar" actionListener="#{prontuarioMB.salvarMedicacao()}" ajax="true" update="form:idSelectMedicacao form:id_msg_global" onclick="PF('modal_nova_medicacao').hide();" icon="ui-icon-save" style="margin-top: 20px; width: 100%"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        <h:form id="form4">
+            <p:dialog header="Adicionar nova especialidade" widgetVar="modal_nova_especialidade" modal="true" width="400">
+                <h:panelGrid style="margin-top: 20px; width: 100%">
+                    <h:panelGroup>
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNovaEspecialidade" value="#{prontuarioMB.especialidadeMedica.nome}" required="true"  converter="upper" style="width: 100%"/>
+                                <label>Especialidade médica</label>
+                                <p:message for="idNovaEspecialidade" showSummary="false" showDetail="false"/>
+                            </h:panelGroup>     
+                        </div>
+                    </h:panelGroup>
+
+                    <p:commandButton value="Salvar" actionListener="#{prontuarioMB.salvarEspecialidade()}" ajax="true" update="form:idSelectEspecialidade form:id_msg_global" onclick="PF('modal_nova_especialidade').hide();" icon="ui-icon-save" style="margin-top: 20px; width: 100%"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        <h:form id="form5">
+            <p:dialog header="Adicionar nova doença" widgetVar="modal_nova_doenca" modal="true" width="400">
+                <h:panelGrid style="margin-top: 20px; width: 100%">
+                    <h:panelGroup>
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNovaDoenca" value="#{prontuarioMB.doenca.nome}" required="true"  converter="upper" style="width: 100%"/>
+                                <label>Doença</label>
+                                <p:message for="idNovaDoenca" showSummary="false" showDetail="false"/>
+                            </h:panelGroup>     
+                        </div>
+                    </h:panelGroup>
+
+                    <p:commandButton value="Salvar" actionListener="#{prontuarioMB.salvarDoenca()}" ajax="true" update="form:idSelectDoenca form:id_msg_global" onclick="PF('modal_nova_doenca').hide();" icon="ui-icon-save" style="margin-top: 20px; width: 100%"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        
+        <h:form id="form6">
+            <p:dialog header="Adicionar nova síndrome/transtorno" widgetVar="modal_nova_sindrome" modal="true" width="400">
+                <h:panelGrid style="margin-top: 20px; width: 100%">
+                    <h:panelGroup>
+                        <div class="ui-inputgroup">
+                            <h:panelGroup styleClass="md-inputfield">
+                                <p:inputText id="idNovaSindrome" value="#{prontuarioMB.sindrome.nome}" required="true"  converter="upper" style="width: 100%"/>
+                                <label>Doença</label>
+                                <p:message for="idNovaSindrome" showSummary="false" showDetail="false"/>
+                            </h:panelGroup>     
+                        </div>
+                    </h:panelGroup>
+
+                    <p:commandButton value="Salvar" actionListener="#{prontuarioMB.salvarSindrome()}" ajax="true" update="form:idSelectSindrome form:id_msg_global" onclick="PF('modal_nova_sindrome').hide();" icon="ui-icon-save" style="margin-top: 20px; width: 100%"/>
+                </h:panelGrid>
+            </p:dialog>
+        </h:form>
+        
     </ui:define>
 </ui:composition>

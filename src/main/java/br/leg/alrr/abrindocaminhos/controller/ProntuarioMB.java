@@ -305,6 +305,81 @@ public class ProntuarioMB implements Serializable {
         return "prontuario.xhtml" + "?faces-redirect=true";
     }
 
+    public void salvarAlergia(){
+        try {
+            alergia.setStatus(true);
+            alergiaDAO.salvar(alergia);
+            FacesUtils.addInfoMessage("Alergia salva com sucesso!");
+
+            alergia = new Alergia();
+
+            listarAlergias();
+
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessageFlashScoped(e.getMessage());
+        }
+    }
+    
+    public void salvarMedicacao(){
+        try {
+            medicacao.setStatus(true);
+            medicacaoDAO.salvar(medicacao);
+            FacesUtils.addInfoMessage("Medicação salva com sucesso!");
+
+            medicacao = new Medicacao();
+
+            listarMedicacoes();
+
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessageFlashScoped(e.getMessage());
+        }
+    }
+    
+    public void salvarEspecialidade(){
+        try {
+            especialidadeMedica.setStatus(true);
+            especialidadeMedicaDAO.salvar(especialidadeMedica);
+            FacesUtils.addInfoMessage("Especialidade médica salva com sucesso!");
+
+            especialidadeMedica = new EspecialidadeMedica();
+
+            listarEspecialidades();
+
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessageFlashScoped(e.getMessage());
+        }
+    }
+    
+    public void salvarDoenca(){
+        try {
+            doenca.setStatus(true);
+            doencaDAO.salvar(doenca);
+            FacesUtils.addInfoMessage("Doença salva com sucesso!");
+
+            doenca = new Doenca();
+
+            listarDoencas();
+
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessageFlashScoped(e.getMessage());
+        }
+    }
+    
+    public void salvarSindrome(){
+        try {
+            sindrome.setStatus(true);
+            sindromeDAO.salvar(sindrome);
+            FacesUtils.addInfoMessage("Sídrome/transtorno salva com sucesso!");
+
+            sindrome = new Sindrome();
+
+            listarSindromes();
+
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessageFlashScoped(e.getMessage());
+        }
+    }
+    
     private void limparForm() {
         exibirProntuario = false;
 
