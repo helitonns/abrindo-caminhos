@@ -2,6 +2,7 @@ package br.leg.alrr.abrindocaminhos.model;
 
 import br.leg.alrr.abrindocaminhos.util.BaseEntity;
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -63,11 +64,37 @@ public class Turma implements Serializable, BaseEntity {
 
     @Transient
     private Long quantidadeDeAlunos;
+    
+    @Transient
+    private BigInteger rev;
+    
+    @Transient
+    private Short revtype;
+    
+    @Transient
+    private Date dataOperacao;
+    
+    @Transient
+    private String usuario;
+    
+    @Transient
+    private BigInteger idEntidade;
 //==============================================================================
 
     public Turma() {
     }
 
+    public Turma(BigInteger idEntidade, String nome, BigInteger rev, Short revtype, String usuario, Date dataOperacao) {
+        this.nome = nome;
+        this.rev = rev;
+        this.revtype = revtype;
+        this.dataOperacao = dataOperacao;
+        this.usuario = usuario;
+        this.idEntidade = idEntidade;
+    }
+    
+    
+    
     public Turma(Long id) {
         this.id = id;
     }
@@ -243,4 +270,56 @@ public class Turma implements Serializable, BaseEntity {
         this.idadeMaxima = idadeMaxima;
     }
 
+    public BigInteger getRev() {
+        return rev;
+    }
+
+    public void setRev(BigInteger rev) {
+        this.rev = rev;
+    }
+
+    public Short getRevtype() {
+        return revtype;
+    }
+
+    public void setRevtype(Short revtype) {
+        this.revtype = revtype;
+    }
+
+    public Date getDataOperacao() {
+        return dataOperacao;
+    }
+
+    public void setDataOperacao(Date dataOperacao) {
+        this.dataOperacao = dataOperacao;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public BigInteger getIdEntidade() {
+        return idEntidade;
+    }
+
+    public void setIdEntidade(BigInteger idEntidade) {
+        this.idEntidade = idEntidade;
+    }
+
+    public String getTipoDeOperacao() {
+        if (null == revtype) {
+            return "DELETE";
+        }else switch (revtype) {
+            case 0:
+                return "INSERT";
+            case 1:
+                return "UPDATE";
+            default:
+                return "DELETE";
+        }
+    }
 }

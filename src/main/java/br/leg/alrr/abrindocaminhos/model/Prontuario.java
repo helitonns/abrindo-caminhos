@@ -2,6 +2,8 @@ package br.leg.alrr.abrindocaminhos.model;
 
 import br.leg.alrr.abrindocaminhos.util.BaseEntity;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.envers.AuditJoinTable;
 
 import org.hibernate.envers.AuditTable;
@@ -72,11 +75,39 @@ public class Prontuario implements Serializable, BaseEntity{
     @JoinTable(schema = "abrindo_caminhos")
     private List<Sindrome> sindromes;
 
+    @Transient
+    private BigInteger rev;
+    
+    @Transient
+    private Short revtype;
+    
+    @Transient
+    private Date dataOperacao;
+    
+    @Transient
+    private String usuario;
+    
+    @Transient
+    private BigInteger idEntidade;
+    
+    @Transient
+    private BigInteger idAluno;
 //==============================================================================
 
     public Prontuario() {
     }
+
+    public Prontuario(BigInteger idEntidade, BigInteger idAluno, BigInteger rev, Short revtype, String usuario, Date dataOperacao) {
+        this.rev = rev;
+        this.revtype = revtype;
+        this.dataOperacao = dataOperacao;
+        this.usuario = usuario;
+        this.idEntidade = idEntidade;
+        this.idAluno = idAluno;
+    }
    
+    
+    
     public Prontuario(Long id) {
         this.id = id;
     }
@@ -194,5 +225,65 @@ public class Prontuario implements Serializable, BaseEntity{
     public void setSindromes(List<Sindrome> sindromes) {
         this.sindromes = sindromes;
     }
+
+    public BigInteger getRev() {
+        return rev;
+    }
+
+    public void setRev(BigInteger rev) {
+        this.rev = rev;
+    }
+
+    public Short getRevtype() {
+        return revtype;
+    }
+
+    public void setRevtype(Short revtype) {
+        this.revtype = revtype;
+    }
+
+    public Date getDataOperacao() {
+        return dataOperacao;
+    }
+
+    public void setDataOperacao(Date dataOperacao) {
+        this.dataOperacao = dataOperacao;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public BigInteger getIdEntidade() {
+        return idEntidade;
+    }
+
+    public void setIdEntidade(BigInteger idEntidade) {
+        this.idEntidade = idEntidade;
+    }
+
+    public BigInteger getIdAluno() {
+        return idAluno;
+    }
+
+    public void setIdAluno(BigInteger idAluno) {
+        this.idAluno = idAluno;
+    }
     
+    public String getTipoDeOperacao() {
+        if (null == revtype) {
+            return "DELETE";
+        }else switch (revtype) {
+            case 0:
+                return "INSERT";
+            case 1:
+                return "UPDATE";
+            default:
+                return "DELETE";
+        }
+    }
 }

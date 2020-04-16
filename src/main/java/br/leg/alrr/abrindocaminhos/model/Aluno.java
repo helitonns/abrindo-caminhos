@@ -88,10 +88,33 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
 
     @Transient
     private String idade;
+    
+    @Transient
+    private Long rev;
+    
+    @Transient
+    private Long revtype;
+    
+    @Transient
+    private Date dataOperacao;
+    
+    @Transient
+    private String usuario;
     //=========================================================================//
 
     public Aluno() {
     }
+    
+    public Aluno(Long id, String nome, Long rev, Long revtype, String usuario, Date dataOperacao) {
+        this.id = id;
+        this.nome = nome;
+        this.rev = rev;
+        this.revtype = revtype;
+        this.usuario = usuario;
+        this.dataOperacao = dataOperacao;
+    }
+    
+    
 
     public Aluno(Long id) {
         this.id = id;
@@ -298,4 +321,47 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
         }
     }
 
+    public Long getRev() {
+        return rev;
+    }
+
+    public void setRev(Long rev) {
+        this.rev = rev;
+    }
+
+    public Long getRevtype() {
+        return revtype;
+    }
+
+    public void setRevtype(Long revtype) {
+        this.revtype = revtype;
+    }
+    
+    public String getTipoDeOperacao() {
+        if (revtype == 0) {
+            return "INSERT";
+        }else if(revtype == 1){
+            return "UPDATE";
+        }else{
+            return "DELETE";
+        }
+    }
+
+    public Date getDataOperacao() {
+        return dataOperacao;
+    }
+
+    public void setDataOperacao(Date dataOperacao) {
+        this.dataOperacao = dataOperacao;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
+    
 }

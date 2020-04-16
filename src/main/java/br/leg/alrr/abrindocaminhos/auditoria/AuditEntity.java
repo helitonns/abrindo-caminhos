@@ -35,6 +35,19 @@ public class AuditEntity implements Serializable {
     private String ip;
     private LocalDateTime dataOperacao;
 
+    public AuditEntity() {
+    }
+
+    public AuditEntity(Long id, long timestamp, Long idUsuario, String usuario, String senha, String ip, LocalDateTime dataOperacao) {
+        this.id = id;
+        this.timestamp = timestamp;
+        this.idUsuario = idUsuario;
+        this.usuario = usuario;
+        this.senha = senha;
+        this.ip = ip;
+        this.dataOperacao = dataOperacao;
+    }
+    
     public Long getId() {
         return id;
     }

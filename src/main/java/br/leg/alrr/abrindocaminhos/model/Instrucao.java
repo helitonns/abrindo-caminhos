@@ -2,6 +2,8 @@ package br.leg.alrr.abrindocaminhos.model;
 
 import br.leg.alrr.abrindocaminhos.util.BaseEntity;
 import java.io.Serializable;
+import java.math.BigInteger;
+import java.util.Date;
 import java.util.Objects;
 
 import javax.persistence.Entity;
@@ -10,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
@@ -42,9 +45,32 @@ public class Instrucao implements Serializable, BaseEntity{
     @ManyToOne
     private Periodo periodo;
 
-    //========================================================================//
+    @Transient
+    private BigInteger rev;
+    
+    @Transient
+    private Short revtype;
+    
+    @Transient
+    private Date dataOperacao;
+    
+    @Transient
+    private String usuario;
+    
+    @Transient
+    private BigInteger idEntidade;
+    
 
+    //========================================================================//
     public Instrucao() {
+    }
+
+    public Instrucao(BigInteger idEntidade, BigInteger rev, Short revtype, String usuario, Date dataOperacao) {
+        this.rev = rev;
+        this.revtype = revtype;
+        this.dataOperacao = dataOperacao;
+        this.usuario = usuario;
+        this.idEntidade = idEntidade;
     }
 
     public Instrucao(Long id) {
@@ -121,5 +147,58 @@ public class Instrucao implements Serializable, BaseEntity{
         int hash = 7;
         hash = 41 * hash + Objects.hashCode(this.id);
         return hash;
+    }
+
+    public BigInteger getRev() {
+        return rev;
+    }
+
+    public void setRev(BigInteger rev) {
+        this.rev = rev;
+    }
+
+    public Short getRevtype() {
+        return revtype;
+    }
+
+    public void setRevtype(Short revtype) {
+        this.revtype = revtype;
+    }
+
+    public Date getDataOperacao() {
+        return dataOperacao;
+    }
+
+    public void setDataOperacao(Date dataOperacao) {
+        this.dataOperacao = dataOperacao;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public BigInteger getIdEntidade() {
+        return idEntidade;
+    }
+
+    public void setIdEntidade(BigInteger idEntidade) {
+        this.idEntidade = idEntidade;
+    }
+    
+    public String getTipoDeOperacao() {
+        if (null == revtype) {
+            return "DELETE";
+        }else switch (revtype) {
+            case 0:
+                return "INSERT";
+            case 1:
+                return "UPDATE";
+            default:
+                return "DELETE";
+        }
     }
 }

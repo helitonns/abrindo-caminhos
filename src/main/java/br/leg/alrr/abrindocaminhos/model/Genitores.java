@@ -1,6 +1,7 @@
 package br.leg.alrr.abrindocaminhos.model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -62,8 +63,33 @@ public class Genitores implements Serializable {
     
     @Transient
     String idadePai;
-    //=========================================================================//
+    
+     @Transient
+    private BigInteger rev;
+    
+    @Transient
+    private Short revtype;
+    
+    @Transient
+    private Date dataOperacao;
+    
+    @Transient
+    private String usuario;
+    
+    @Transient
+    private BigInteger idEntidade;
+    
+
+    //========================================================================//
     public Genitores() {
+    }
+
+    public Genitores(BigInteger idEntidade, BigInteger rev, Short revtype, String usuario, Date dataOperacao) {
+        this.rev = rev;
+        this.revtype = revtype;
+        this.dataOperacao = dataOperacao;
+        this.usuario = usuario;
+        this.idEntidade = idEntidade;
     }
 
     public Genitores(Long id) {
@@ -228,6 +254,60 @@ public class Genitores implements Serializable {
     public void setIdadePai(String idadePai) {
         this.idadePai = idadePai;
     }
+    
+    public String getTipoDeOperacao() {
+        if (null == revtype) {
+            return "DELETE";
+        }else switch (revtype) {
+            case 0:
+                return "INSERT";
+            case 1:
+                return "UPDATE";
+            default:
+                return "DELETE";
+        }
+    }
+
+    public BigInteger getRev() {
+        return rev;
+    }
+
+    public void setRev(BigInteger rev) {
+        this.rev = rev;
+    }
+
+    public Short getRevtype() {
+        return revtype;
+    }
+
+    public void setRevtype(Short revtype) {
+        this.revtype = revtype;
+    }
+
+    public Date getDataOperacao() {
+        return dataOperacao;
+    }
+
+    public void setDataOperacao(Date dataOperacao) {
+        this.dataOperacao = dataOperacao;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public BigInteger getIdEntidade() {
+        return idEntidade;
+    }
+
+    public void setIdEntidade(BigInteger idEntidade) {
+        this.idEntidade = idEntidade;
+    }
+    
     
     
 }
