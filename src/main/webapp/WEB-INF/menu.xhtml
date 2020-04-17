@@ -37,30 +37,47 @@
                             </p:submenu>
 
                             <p:submenu id="sub_menu_configuracoes_gerais" label="Configurações Gerais" icon="settings" rendered="#{!startMB.usuarioRelatorio}">
-                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_curso_horario" value="Horário" icon="access_time" outcome="/pages/user/horario"/>
-                                <p:menuitem id="sm_curso_atividade" value="Atividade" icon="bookmark" outcome="/pages/user/atividade"/>
-                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_cg_denominacao" value="Esfera de atuação" icon="sort_by_alpha" outcome="/pages/user/denominacao"/>
-                                <p:menuitem id="sm_cg_escola" value="Escola" icon="school" outcome="/pages/user/escola"/>
-                                <p:menuitem id="sm_cg_serie" value="Série" icon="clear_all" outcome="/pages/user/serie"/>
-                                <p:menuitem id="sm_cg_escolaridade" value="Escolaridade" icon="edit" outcome="/pages/user/escolaridade"/>
-                                <p:menuitem id="sm_cg_periodo" value="Período" icon="timer" outcome="/pages/user/periodo"/>
-                                <p:menuitem id="sm_cg_idade" value="Idade" icon="filter_9" outcome="/pages/user/idade"/>
-                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_cg_alergia" value="Alergia" icon="block" outcome="/pages/user/alergia"/>
-                                <p:menuitem id="sm_cg_medicacao" value="Medicação" icon="add_box" outcome="/pages/user/medicacao"/>
-                                <p:menuitem id="sm_cg_doenca" value="Doença" icon="colorize" outcome="/pages/user/doenca"/>
-                                <p:menuitem id="sm_cg_sindrome" value="Síndorme / Transtorno" icon="adjust" outcome="/pages/user/sindrome"/>
-                                <p:menuitem id="sm_cg_especialidade" value="Especialidade médica" icon="chrome_reader_mode" outcome="/pages/user/especialidade-medica"/>
-                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_cg_pais" value="País" icon="flag" outcome="/pages/user/pais"/>
-                                <p:menuitem id="sm_cg_municipio" value="Município" icon="people" outcome="/pages/admin/municipio" rendered="#{startMB.admin || startMB.superAdmin}"/>
-                                <p:menuitem id="sm_cg_bairro" value="Bairro" icon="person_pin_circle" outcome="/pages/user/bairro" />
-                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                <f:attribute name="mega" value="true" />
+
+                                <p:submenu id="t1" label="Dados de turma" icon="&#xE896;">
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                    <p:menuitem id="sm_curso_horario" value="Horário" icon="access_time" outcome="/pages/user/horario"/>
+                                    <p:menuitem id="sm_curso_atividade" value="Atividade" icon="bookmark" outcome="/pages/user/atividade"/>
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                </p:submenu>
+
+                                <p:submenu id="t2" label="Dados escolares" icon="&#xE896;">
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                    <p:menuitem id="sm_cg_denominacao" value="Esfera de atuação" icon="sort_by_alpha" outcome="/pages/user/denominacao"/>
+                                    <p:menuitem id="sm_cg_escola" value="Escola" icon="school" outcome="/pages/user/escola"/>
+                                    <p:menuitem id="sm_cg_serie" value="Série" icon="clear_all" outcome="/pages/user/serie"/>
+                                    <p:menuitem id="sm_cg_escolaridade" value="Escolaridade" icon="edit" outcome="/pages/user/escolaridade"/>
+                                    <p:menuitem id="sm_cg_periodo" value="Período" icon="timer" outcome="/pages/user/periodo"/>
+                                    <p:menuitem id="sm_cg_idade" value="Idade" icon="filter_9" outcome="/pages/user/idade"/>
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                </p:submenu>
+
+                                <p:submenu id="t3" label="Dados de saúde" icon="&#xE896;">
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                    <p:menuitem id="sm_cg_alergia" value="Alergia" icon="block" outcome="/pages/user/alergia"/>
+                                    <p:menuitem id="sm_cg_medicacao" value="Medicação" icon="add_box" outcome="/pages/user/medicacao"/>
+                                    <p:menuitem id="sm_cg_doenca" value="Doença" icon="colorize" outcome="/pages/user/doenca"/>
+                                    <p:menuitem id="sm_cg_sindrome" value="Síndorme / Transtorno" icon="adjust" outcome="/pages/user/sindrome"/>
+                                    <p:menuitem id="sm_cg_especialidade" value="Especialidade médica" icon="chrome_reader_mode" outcome="/pages/user/especialidade-medica"/>
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                </p:submenu>
+
+                                <p:submenu id="t4" label="Dados de endereço" icon="&#xE896;">
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                    <p:menuitem id="sm_cg_pais" value="País" icon="flag" outcome="/pages/user/pais"/>
+                                    <p:menuitem id="sm_cg_municipio" value="Município" icon="people" outcome="/pages/admin/municipio" rendered="#{startMB.admin || startMB.superAdmin}"/>
+                                    <p:menuitem id="sm_cg_bairro" value="Bairro" icon="person_pin_circle" outcome="/pages/user/bairro" />
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                </p:submenu>
                             </p:submenu>
-                            
+
                             <p:submenu id="sub_menu_sistema" label="Config. do Sistema" icon="desktop_windows" rendered="#{!startMB.usuarioRelatorio}">
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_cg_unidade" value="Unidade" icon="business" outcome="/pages/superadmin/unidade" rendered="#{startMB.superAdmin}"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_cg_usuario" value="Usuário" icon="person" outcome="/pages/admin/usuario" rendered="#{startMB.admin || startMB.superAdmin}"/>
@@ -75,15 +92,19 @@
                             <p:submenu id="menu_relatorio" label="Relatórios" icon="assignment" rendered="#{!startMB.usuarioRelatorio}">
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_r_aniversariante" value="Aniversariantes" icon="content_paste" outcome="/pages/user/relatorio-aniversariante"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_r_atividade" value="Atividades" icon="assignment" outcome="/pages/user/relatorio-atividade"/>
                                 <p:menuitem id="sm_r_atividade_quantidade" value="Atividades por quantidade" icon="content_paste" outcome="/pages/user/relatorio-atividade-quantidade"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_r_turma" value="Turmas" icon="assignment" outcome="/pages/user/relatorio-turma"/>
                                 <p:menuitem id="sm_r_turma_quantidade" value="Turmas por quantidade" icon="content_paste" outcome="/pages/user/relatorio-turma-quantidade"/>
-                                <p:menuitem id="sm_r_turma_telefone" value="Turmas / Telefone" icon="assignment" outcome="/pages/user/relatorio-turma-telefone"/>
-                                <p:menuitem id="sm_r_turma_mae" value="Turmas / Mãe" icon="content_paste" outcome="/pages/user/relatorio-turma-mae"/>
-                                <p:menuitem id="sm_r_turma_renovacao" value="Frequência / Renovação" icon="assignment" outcome="/pages/user/relatorio-turma-renovacao"/>
+                                <p:menuitem id="sm_r_turma_telefone" value="Turmas / Telefone" icon="assignment" outcome="/pages/user/relatorio-turma-telefone" rendered="false"/>
+                                <p:menuitem id="sm_r_turma_mae" value="Turmas / Mãe" icon="content_paste" outcome="/pages/user/relatorio-turma-mae" rendered="false"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_r_bairro" value="Bairros" icon="content_paste" outcome="/pages/user/relatorio-bairro"/>
                                 <p:menuitem id="sm_r_b_quant" value="Bairro por quantidade" icon="assignment" outcome="/pages/user/relatorio-bairro-quantidade"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                <p:menuitem id="sm_r_turma_renovacao" value="Frequência / Renovação" icon="assignment" outcome="/pages/user/relatorio-turma-renovacao"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 

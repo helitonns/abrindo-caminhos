@@ -92,22 +92,31 @@
                                     <p:column headerText="Atividade" sortBy="#{var_matricula.turma.atividade.descricao}">
                                         <h:outputText value="#{var_matricula.turma.atividade.descricao}"/>
                                     </p:column>
-                                    
                                     <p:column headerText="Turma" sortBy="#{var_matricula.turma.nome}">
                                         <h:outputText value="#{var_matricula.turma.nome}"/>
-                                    </p:column>
-                                    
-                                    <p:column headerText="Código" sortBy="#{var_matricula.aluno.id}" style="width: 80px">
-                                        <h:outputText value="#{var_matricula.aluno.id}"/>
-                                    </p:column>
-                                    <p:column headerText="Aluno" sortBy="#{var_matricula.aluno.nome}">
-                                        <h:outputText value="#{var_matricula.aluno.nome}"/>
                                     </p:column>
                                     <p:column headerText="Horário" sortBy="#{var_matricula.turma.horario.descricao}" style="width: 120px">
                                         <h:outputText value="#{var_matricula.turma.horario.descricao}"/>
                                     </p:column>
                                     <p:column headerText="Dias da semana">
                                         <h:outputText value="#{var_matricula.turma.exibirDiasDaSemana}"/>
+                                    </p:column>
+                                    
+                                    <p:column headerText="Código" sortBy="#{var_matricula.aluno.id}" style="width: 110px">
+                                        <h:outputText value="#{var_matricula.aluno.id}"/>
+                                    </p:column>
+                                    <p:column headerText="Aluno" sortBy="#{var_matricula.aluno.nome}">
+                                        <h:outputText value="#{var_matricula.aluno.nome}"/>
+                                    </p:column>
+                                    
+                                    <p:column headerText="Nome da mãe" sortBy="#{var_matricula.aluno.genitores.nomeMae}">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.nomeMae}"/>
+                                    </p:column>
+                                    
+                                    <p:column headerText="Telefone">
+                                        <h:outputText value="#{var_matricula.aluno.celular}" />
+                                        <h:outputText value=" - " rendered="#{(var_matricula.aluno.celular != '' and var_matricula.aluno.fixo != null) and (var_matricula.aluno.celular != '' and var_matricula.aluno.fixo != null)}"/>
+                                        <h:outputText value="#{var_matricula.aluno.fixo}" />
                                     </p:column>
                                     <f:facet name="footer">
                                         Total: #{fn:length(relatorioEspecificoMB.matriculas)}
