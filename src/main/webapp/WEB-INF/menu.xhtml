@@ -14,6 +14,7 @@
                         <sm:menu>
 
                             <p:submenu id="sub_menu_aluno" label="Aluno" icon="person" rendered="#{!startMB.usuarioRelatorio}">
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_aluno_listar_editar" value="Listar / Editar Aluno" icon="list" outcome="/pages/user/listar-editar-aluno"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_aluno_aluno"         value="Aluno" icon="person" outcome="/pages/user/aluno"/>
@@ -21,20 +22,25 @@
                                 <p:menuitem id="sm_aluno_prontuario"   value="Prontuário" icon="add_box" outcome="/pages/user/prontuario" />
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_aluno_meus_cursos"   value="Minhas Atividades" icon="books" outcome="/pages/user/minhas-atividades"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu> 
 
                             <p:submenu id="sub_menu_curso" label="Secretaria" icon="book" rendered="#{!startMB.usuarioRelatorio}">
-                                <p:menuitem id="sm_curso_horario" value="Horário" icon="access_time" outcome="/pages/user/horario"/>
-                                <p:menuitem id="sm_curso_atividade" value="Atividade" icon="bookmark" outcome="/pages/user/atividade"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_curso_turma" value="Turma" icon="group" outcome="/pages/user/turma"/>
                                 <p:menuitem id="sm_curso_matricula" value="Matrícula na turma" icon="contact_mail" outcome="/pages/user/matricula" />
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_curso_lista_de_espera" value="Lista de espera" icon="group" outcome="/pages/user/lista-de-espera"/>
                                 <p:menuitem id="sm_curso_inscricao" value="Inscrição na lista" icon="contact_mail" outcome="/pages/user/inscricao" />
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 
                             <p:submenu id="sub_menu_configuracoes_gerais" label="Configurações Gerais" icon="settings" rendered="#{!startMB.usuarioRelatorio}">
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                <p:menuitem id="sm_curso_horario" value="Horário" icon="access_time" outcome="/pages/user/horario"/>
+                                <p:menuitem id="sm_curso_atividade" value="Atividade" icon="bookmark" outcome="/pages/user/atividade"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_cg_denominacao" value="Esfera de atuação" icon="sort_by_alpha" outcome="/pages/user/denominacao"/>
                                 <p:menuitem id="sm_cg_escola" value="Escola" icon="school" outcome="/pages/user/escola"/>
                                 <p:menuitem id="sm_cg_serie" value="Série" icon="clear_all" outcome="/pages/user/serie"/>
@@ -51,6 +57,10 @@
                                 <p:menuitem id="sm_cg_pais" value="País" icon="flag" outcome="/pages/user/pais"/>
                                 <p:menuitem id="sm_cg_municipio" value="Município" icon="people" outcome="/pages/admin/municipio" rendered="#{startMB.admin || startMB.superAdmin}"/>
                                 <p:menuitem id="sm_cg_bairro" value="Bairro" icon="person_pin_circle" outcome="/pages/user/bairro" />
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                            </p:submenu>
+                            
+                            <p:submenu id="sub_menu_sistema" label="Config. do Sistema" icon="desktop_windows" rendered="#{!startMB.usuarioRelatorio}">
                                 <p:menuitem id="sm_cg_unidade" value="Unidade" icon="business" outcome="/pages/superadmin/unidade" rendered="#{startMB.superAdmin}"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_cg_usuario" value="Usuário" icon="person" outcome="/pages/admin/usuario" rendered="#{startMB.admin || startMB.superAdmin}"/>
@@ -59,9 +69,11 @@
                                 <p:menuitem id="sm_cg_sistema" value="Sistemas" icon="settings" outcome="/pages/superadmin/sistema" rendered="#{startMB.superAdmin}"/>
                                 <p:menuitem id="sm_cg_permissao" value="Privilégio" icon="lock" outcome="/pages/superadmin/privilegio" rendered="#{startMB.superAdmin}"/>
                                 <p:menuitem id="sm_cg_autorizacao" value="Autorizações" icon="lock_outline" outcome="/pages/superadmin/autorizacao" rendered="#{startMB.superAdmin}"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 
                             <p:submenu id="menu_relatorio" label="Relatórios" icon="assignment" rendered="#{!startMB.usuarioRelatorio}">
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_r_aniversariante" value="Aniversariantes" icon="content_paste" outcome="/pages/user/relatorio-aniversariante"/>
                                 <p:menuitem id="sm_r_atividade" value="Atividades" icon="assignment" outcome="/pages/user/relatorio-atividade"/>
                                 <p:menuitem id="sm_r_atividade_quantidade" value="Atividades por quantidade" icon="content_paste" outcome="/pages/user/relatorio-atividade-quantidade"/>
@@ -72,6 +84,7 @@
                                 <p:menuitem id="sm_r_turma_renovacao" value="Frequência / Renovação" icon="assignment" outcome="/pages/user/relatorio-turma-renovacao"/>
                                 <p:menuitem id="sm_r_bairro" value="Bairros" icon="content_paste" outcome="/pages/user/relatorio-bairro"/>
                                 <p:menuitem id="sm_r_b_quant" value="Bairro por quantidade" icon="assignment" outcome="/pages/user/relatorio-bairro-quantidade"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 
 
@@ -80,6 +93,7 @@
                             </p:submenu>
 
                             <p:submenu id="sub_menu_relatorio_usuario_relatorio" label="Relatório Gabinete" icon="assignment" rendered="#{startMB.usuarioRelatorio}">
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_u_r_aniversariante" value="Aniversariantes" icon="content_paste" outcome="/pages/relatorio/relatorio-aniversariante"/>
                                 <p:menuitem id="sm_u_r_aniversariante_c_e" value="Aniversariantes com endereço" icon="content_paste" outcome="/pages/relatorio/relatorio-aniversariante-endereco"/>
                                 <p:menuitem id="sm_u_r_atividade" value="Atividades" icon="assignment" outcome="/pages/relatorio/relatorio-atividade"/>
@@ -91,11 +105,13 @@
                                 <p:menuitem id="sm_u_r_turma_renovacao" value="Frequência / Renovação" icon="assignment" outcome="/pages/relatorio/relatorio-turma-renovacao"/>
                                 <p:menuitem id="sm_u_r_bairro" value="Bairros" icon="content_paste" outcome="/pages/relatorio/relatorio-bairro"/>
                                 <p:menuitem id="sm_r_r_b_quant" value="Bairro por quantidade" icon="assignment" outcome="/pages/relatorio/relatorio-bairro-quantidade"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 
                             <p:submenu id="menu_estatistica" label="Auditoria" icon="assignment" rendered="#{startMB.superAdmin}">
-                                <p:menuitem id="menu_estatistica_acesso" value="Estatísticas por acesso" icon="pie_chart" outcome="/pages/user/estatistica"/>
-                                <p:menuitem id="menu_estatistica_usuario" value="Estatísticas por usuário" icon="pie_chart" outcome="/pages/user/estatistica-usuario"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                <p:menuitem id="menu_estatistica_acesso" value="Estatísticas por acesso" icon="pie_chart" outcome="/pages/superadmin/estatistica"/>
+                                <p:menuitem id="menu_estatistica_usuario" value="Estatísticas por usuário" icon="pie_chart" outcome="/pages/superadmin/estatistica-usuario"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="menu_auditoria_auditityEntity" value="Auditoria AuditEntity" icon="pie_chart" outcome="/pages/superadmin/auditoria-revisao"/>
                                 <p:menuitem id="menu_auditoria_aluno" value="Auditoria Aluno" icon="pie_chart" outcome="/pages/superadmin/auditoria-aluno"/>
@@ -105,6 +121,7 @@
                                 <p:menuitem id="menu_auditoria_instrucao" value="Auditoria Instrução" icon="pie_chart" outcome="/pages/superadmin/auditoria-instrucao"/>
                                 <p:menuitem id="menu_auditoria_turma" value="Auditoria Turma" icon="pie_chart" outcome="/pages/superadmin/auditoria-turma"/>
                                 <p:menuitem id="menu_auditoria_matricula" value="Auditoria Matrícula" icon="pie_chart" outcome="/pages/superadmin/auditoria-matricula"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 
                         </sm:menu>
