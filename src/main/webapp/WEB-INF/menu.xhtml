@@ -91,6 +91,7 @@
 
                             <p:submenu id="menu_relatorio" label="Relatórios" icon="assignment" rendered="#{!startMB.usuarioRelatorio}">
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                <p:menuitem id="sm_r_aluno" value="Alunos" icon="assignment" outcome="/pages/user/relatorio-aluno"/>
                                 <p:menuitem id="sm_r_aniversariante" value="Aniversariantes" icon="content_paste" outcome="/pages/user/relatorio-aniversariante"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_r_atividade" value="Atividades" icon="assignment" outcome="/pages/user/relatorio-atividade"/>

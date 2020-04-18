@@ -190,6 +190,40 @@ public class RelatorioEspecificoMB implements Serializable {
         }
 
     }
+    
+    public void pesquisarAlunos() {
+        try {
+            exibirTabelaAluno = false;
+            exibirTabelaMatricula = false;
+            blocosParametros = new ArrayList<>();
+            StringBuilder query = new StringBuilder();
+
+            if (tipoRelatorio.equals("geral")) {
+                query.append("SELECT a FROM Aluno a WHERE ");
+
+                if (idUnidade > 0) {
+                    query.append("a.unidade.id=:idUnidade ORDER BY nome");
+                    blocosParametros.add(new BlocoParametro("idUnidade", idUnidade));
+                }
+                alunos = (ArrayList<Aluno>) relatorioDAO.gerarRelatorioEspecificoPorAluno(query.toString(), blocosParametros);
+                exibirTabelaAluno = true;
+
+            } else if (tipoRelatorio.equals("porMatriculaAtiva")) {
+                query.append("SELECT m FROM Matricula m WHERE ");
+
+                if (idUnidade > 0) {
+                    query.append("m.unidade.id=:idUnidade ORDER BY m.aluno.nome");
+                    blocosParametros.add(new BlocoParametro("idUnidade", idUnidade));
+                }
+                matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
+                exibirTabelaMatricula = true;
+            }
+        } catch (DAOException e) {
+            System.out.println(e.getCause());
+            FacesUtils.addErrorMessage(e.getMessage());
+        }
+
+    }
 
     public void pesquisarPaisAniversariantes() {
         try {
@@ -791,6 +825,10 @@ public class RelatorioEspecificoMB implements Serializable {
 
     public String cancelarAniversariante() {
         return "relatorio-aniversariante.xhtml" + "?faces-redirect=true";
+    }
+    
+    public String cancelarAluno() {
+        return "relatorio-aluno.xhtml" + "?faces-redirect=true";
     }
 
     public String cancelarTurma() {
