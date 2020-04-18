@@ -101,10 +101,10 @@
 
                                     <p:column headerText="Ação" style="width: 250px">
                                         <h:panelGrid columns="2">
-                                            <p:commandButton value="Editar"  icon="ui-icon-edit" ajax="true" update="form" style="width: 100%"  actionListener="#{privilegioMsetPrivilegioao(permissao_var)}">
+                                            <p:commandButton value="Editar"  icon="ui-icon-edit" ajax="true" update="form" style="width: 100%"  actionListener="#{privilegioMB.setPrivilegio(permissao_var)}">
                                                 <f:setPropertyActionListener value="#{permissao_var.sistema.id}" target="#{privilegioMB.idSistema}"/>
                                             </p:commandButton>
-                                            <p:commandButton value="Excluir" icon="ui-icon-cancel"  style="width: 100%" styleClass="red-btn" actionListener="#{privilegiosetPrivilegiosao(permissao_var)}" onclick="PF('modal_excluir').show();"/>
+                                            <p:commandButton value="Excluir" icon="ui-icon-cancel"  style="width: 100%" styleClass="red-btn" actionListener="#{privilegioMB.setPrivilegio(permissao_var)}" onclick="PF('modal_excluir').show();"/>
                                         </h:panelGrid>
                                     </p:column>
                                 </p:dataTable>

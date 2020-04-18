@@ -2,18 +2,20 @@ package br.leg.alrr.abrindocaminhos.controller;
 
 import br.leg.alrr.abrindocaminhos.model.Acesso;
 import br.leg.alrr.abrindocaminhos.model.Autorizacao;
+import br.leg.alrr.abrindocaminhos.model.Mensagem;
 import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
 import br.leg.alrr.abrindocaminhos.persistence.AcessoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.AutorizacaoDAO;
+import br.leg.alrr.abrindocaminhos.persistence.MensagemDAO;
 import br.leg.alrr.abrindocaminhos.persistence.UsuarioComUnidadeDAO;
 import br.leg.alrr.abrindocaminhos.util.Criptografia;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -35,9 +37,14 @@ public class StartMB implements Serializable {
 
     @EJB
     private AcessoDAO acessoDAO;
+    
+    @EJB
+    private MensagemDAO mensagemDAO;
 
     private UsuarioComUnidade usuario;
     private Autorizacao autorizacao;
+    
+    private ArrayList<Mensagem> mensagens;
 
     private String login = "";
     private String senha = "";
@@ -47,6 +54,16 @@ public class StartMB implements Serializable {
     @PostConstruct
     private void init() {
         usuario = new UsuarioComUnidade();
+        listarMensagens();
+    }
+    
+    private void listarMensagens() {
+        try {
+            mensagens = new ArrayList<>();
+            mensagens = (ArrayList<Mensagem>) mensagemDAO.listarTodasAsMensagensAtivasParaAData(LocalDate.now());
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessage(e.getMessage());
+        }
     }
 
     public String logar() {
@@ -244,4 +261,8 @@ public class StartMB implements Serializable {
         this.autorizacao = autorizacao;
     }
 
+    public ArrayList<Mensagem> getMensagens() {
+        return mensagens;
+    }
+    
 }
