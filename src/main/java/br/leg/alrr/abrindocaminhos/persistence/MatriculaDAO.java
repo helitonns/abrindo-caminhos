@@ -114,6 +114,17 @@ public class MatriculaDAO {
             throw new DAOException("Erro ao buscar matrícula por ID.", e);
         }
     }
+    
+    public boolean haMatriculaNaTurma(Long id) throws DAOException {
+        try {
+            Long i = (Long) em.createQuery("select COUNT(o) from Matricula o where o.status = true and o.turma.id = :idTurma")
+                    .setParameter("idTurma", id)
+                    .getSingleResult();
+            return i > 0;
+        } catch (Exception e) {
+            throw new DAOException("Erro ao contar matrículas na turma", e);
+        }
+    }
 
     public List<Matricula> gerarRelatorioDinamico(String consulta, List<BlocoParametro> parametros) throws DAOException {
         try {

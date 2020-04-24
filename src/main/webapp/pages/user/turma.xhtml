@@ -188,7 +188,7 @@
                                                 <f:setPropertyActionListener value="#{turma_var}" target="#{turmaMB.turma}"/>
                                                 <f:setPropertyActionListener value="#{true}" target="#{turmaMB.finalizarTurma}"/>
                                             </p:commandButton>
-                                            <p:commandButton id="btnExcluir" icon="ui-icon-delete"  styleClass="red-btn" actionListener="#{turmaMB.setTurma(turma_var)}" onclick="PF('modal_excluir').show();">
+                                            <p:commandButton id="btnExcluir" icon="ui-icon-delete"  styleClass="red-btn" actionListener="#{turmaMB.setTurma(turma_var)}" onclick="PF('modal_excluir').show();" disabled="#{!(startMB.admin || startMB.superAdmin)}">
                                                 <p:tooltip value="Excluir" for="btnExcluir"/>
                                             </p:commandButton>
                                         </h:panelGrid>

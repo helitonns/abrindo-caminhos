@@ -32,19 +32,18 @@ public class TurmaMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-
     @EJB
     private HorarioDAO horarioDAO;
 
     @EJB
     private TurmaDAO turmaDAO;
-    
+
     @EJB
     private MatriculaDAO matriculaDAO;
-    
+
     @EJB
     private AtividadeDAO atividadeDAO;
-    
+
     @EJB
     private IdadeDAO idadeDAO;
 
@@ -66,7 +65,7 @@ public class TurmaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
-        
+
         diasDaSemana.add("SEG");
         diasDaSemana.add("TER");
         diasDaSemana.add("QUA");
@@ -83,7 +82,7 @@ public class TurmaMB implements Serializable {
             FacesUtils.addErrorMessage(e.getMessage());
         }
     }
-    
+
     private void listarAtividades() {
         try {
             UsuarioComUnidade u = (UsuarioComUnidade) FacesUtils.getBean("usuario");
@@ -92,7 +91,7 @@ public class TurmaMB implements Serializable {
             FacesUtils.addErrorMessage(e.getMessage());
         }
     }
-    
+
     private void listarTurmasIniciadasPorUnidade() {
         try {
             UsuarioComUnidade u = (UsuarioComUnidade) FacesUtils.getBean("usuario");
@@ -101,7 +100,7 @@ public class TurmaMB implements Serializable {
             FacesUtils.addErrorMessage(e.getMessage());
         }
     }
-    
+
     private void listarIdadesAtivas() {
         try {
             idades = (ArrayList<Idade>) idadeDAO.listarAtivas();
@@ -109,19 +108,19 @@ public class TurmaMB implements Serializable {
             FacesUtils.addErrorMessage(e.getMessage());
         }
     }
-    
+
     public String salvarTurma() {
         try {
             UsuarioComUnidade u = (UsuarioComUnidade) FacesUtils.getBean("usuario");
-            
+
             Horario h = horarioDAO.buscarPorID(idHorario);
             Atividade a = atividadeDAO.buscarPorID(idAtividade);
-            
+
             turma.setUnidade(u.getUnidade());
             turma.setHorario(h);
             turma.setAtividade(a);
             turma.setDiasDaSemana(prepararInclusaoDiasDaSemana());
-            
+
             if (turma.getId() != null) {
                 turmaDAO.atualizar(turma);
                 FacesUtils.addInfoMessageFlashScoped("Turma atulizada com sucesso!");
@@ -158,7 +157,7 @@ public class TurmaMB implements Serializable {
         idades = new ArrayList<>();
 
         removerTurma = false;
-        
+
         listarHorarios();
         listarAtividades();
         listarTurmasIniciadasPorUnidade();
@@ -196,15 +195,21 @@ public class TurmaMB implements Serializable {
     public void removerTurma() {
         try {
             if (removerTurma) {
-                turmaDAO.remover(turma);
-                FacesUtils.addInfoMessage("Turma removida com sucesso!");
+                if (!matriculaDAO.haMatriculaNaTurma(turma.getId())) {
+                    turmaDAO.remover(turma);
+                    FacesUtils.addInfoMessage("Turma removida com sucesso!");
+                }else{
+                    FacesUtils.addWarnMessage("A turma não pode ser apagada porque há matrículas a ela vinculadas!!!");
+                }
+
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage());
+            System.out.println(e.getCause());
         }
         limparForm();
     }
-    
+
     public void finalizarTurma() {
         try {
             if (finalizarTurma) {
@@ -297,5 +302,5 @@ public class TurmaMB implements Serializable {
     public ArrayList<Idade> getIdades() {
         return idades;
     }
-    
+
 }

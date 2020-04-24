@@ -203,7 +203,8 @@ public class MatriculaMB implements Serializable {
                         }
 
                         //VERIFICA SE O ALUNO ESTÁ DENTRO DA FAIXA ETÁRIA DA TURMA, SE NÃO ESTIVER, NÃO IMPEDE A MATRÍCULA, MAS AVISA
-                        if (!matricula.podeMatricular(turma, aluno)) {
+                        Aluno alunoParaVerificarIdade = alunoDAO.pesquisarPorID(Long.parseLong(id.trim()));
+                        if (!matricula.podeMatricular(turma, alunoParaVerificarIdade)) {
                             FacesUtils.addWarnMessageFlashScoped("Lembrando que o aluno de código " + id.trim() + " está fora da faxa etária da turma!");
                         }
 
