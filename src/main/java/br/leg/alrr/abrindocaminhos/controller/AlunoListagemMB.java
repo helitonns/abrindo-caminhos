@@ -131,10 +131,12 @@ public class AlunoListagemMB implements Serializable {
                 if (removerAluno) {
                     if (alunoDAO.genitorTemMaisDeUmFilho(new Genitores(idGenitor))) {
                         alunoDAO.DeleteProntuario(idAluno);
+                        alunoDAO.DeleteInscricao(idAluno);
                         alunoDAO.DeleteAluno(new Aluno(idAluno));
                         alunoDAO.DeleteEndereco(idEndereco);
                     } else {
                         alunoDAO.DeleteProntuario(idAluno);
+                        alunoDAO.DeleteInscricao(idAluno);
                         alunoDAO.DeleteAluno(new Aluno(idAluno));
                         alunoDAO.DeleteEndereco(idEndereco);
                         alunoDAO.removerGenitor(alunoDAO.buscarGenitor(idGenitor));
@@ -154,6 +156,7 @@ public class AlunoListagemMB implements Serializable {
                         }
 
                         alunoDAO.DeleteProntuario(idAluno);
+                        alunoDAO.DeleteInscricao(idAluno);
                         alunoDAO.DeleteAluno(new Aluno(idAluno));
                         alunoDAO.DeleteEndereco(idEndereco);
                     } else {
@@ -162,6 +165,7 @@ public class AlunoListagemMB implements Serializable {
                         }
 
                         alunoDAO.DeleteProntuario(idAluno);
+                        alunoDAO.DeleteInscricao(idAluno);
                         alunoDAO.DeleteAluno(new Aluno(idAluno));
                         alunoDAO.DeleteEndereco(idEndereco);
                         alunoDAO.removerGenitor(alunoDAO.buscarGenitor(idGenitor));
