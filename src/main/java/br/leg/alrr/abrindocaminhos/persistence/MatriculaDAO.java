@@ -87,6 +87,16 @@ public class MatriculaDAO {
             throw new DAOException("Erro ao listar matrículas concluidas por aluno.", e);
         }
     }
+    
+    public List listarMatriculasPorAluno(Aluno a) throws DAOException {
+        try {
+            return em.createQuery("select o from Matricula o where o.aluno.id = :idAluno order by o.turma.nome asc")
+                    .setParameter("idAluno", a.getId())
+                    .getResultList();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao listar matrículas por aluno.", e);
+        }
+    }
 
     public void remover(Matricula o) throws DAOException {
         try {

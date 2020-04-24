@@ -281,4 +281,24 @@ public class AlunoDAO {
             throw new DAOException("Erro ao deletar aluno.", e);
         }
     }
+    
+    public void DeleteMatricula(Long idMatricula) throws DAOException {
+        try {
+            em.createQuery("Delete from Matricula e where e.id=:idMatricula")
+                    .setParameter("idMatricula", idMatricula)
+                    .executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao deletar aluno.", e);
+        }
+    }
+    
+    public void DeleteProntuario(Long idAluno) throws DAOException {
+        try {
+            em.createQuery("Delete from Prontuario e where e.aluno.id = :idAluno")
+                    .setParameter("idAluno", idAluno)
+                    .executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao deletar aluno.", e);
+        }
+    }
 }
