@@ -166,8 +166,9 @@
                                 <!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ CARDS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@-->
 
                                 <div class="card card-w-title" style="margin-top: 30px">
+                                    <div><p:outputLabel value="ALERGIAS:" style="font-weight: 500;"/></div>
                                     <div class="ui-g-12 ui-md-12">
-                                        <p:dataTable id="tbl_receitas" value="#{prontuarioMB.alergiasParaInclusao}" var="var_alergia" reflow="true"  emptyMessage=" " style="width: 100%">
+                                        <p:dataTable id="tbl_receitas" value="#{prontuarioMB.alergiasParaInclusao}" var="var_alergia" reflow="true"  emptyMessage=" " style="width: 100%; margin-top: 10px">
                                             <f:facet name="header"></f:facet>
                                             <p:column headerText="Categoria" sortBy="#{var_alergia.categoria.nome}">
                                                 <h:outputText value="#{var_alergia.categoria.nome}" />
@@ -211,8 +212,9 @@
 
 
                                 <div class="card card-w-title" style="margin-top: 30px">
+                                    <div><p:outputLabel value="MEDICAÇÕES AUTORIZADAS:" style="font-weight: 500;"/></div>
                                     <div class="ui-g-12 ui-md-12" >
-                                        <p:dataTable id="tbl_medicamentos" value="#{prontuarioMB.medicacoesParaInclusao}" var="var_medicacoes" reflow="true"  emptyMessage=" " style="width: 100%">
+                                        <p:dataTable id="tbl_medicamentos" value="#{prontuarioMB.medicacoesParaInclusao}" var="var_medicacoes" reflow="true"  emptyMessage=" " style="width: 100%; margin-top: 10px">
                                             <f:facet name="header"></f:facet>
                                             <p:column headerText="Medicações autorizadas">
                                                 <h:outputText value="#{var_medicacoes.nome}" />
@@ -245,10 +247,11 @@
 
 
                                 <div class="card card-w-title" style="margin-top: 30px">
+                                    <div><p:outputLabel value="ACOMPANHAMENTO MÉDICO" style="font-weight: 500;"/></div>
                                     <div class="ui-g-12 ui-md-12" >
-                                        <p:dataTable id="tbl_acompanhamento" value="#{prontuarioMB.especialidadesParaInclusao}" var="var_especialidade" reflow="true"  emptyMessage=" " style="width: 100%">
+                                        <p:dataTable id="tbl_acompanhamento" value="#{prontuarioMB.especialidadesParaInclusao}" var="var_especialidade" reflow="true"  emptyMessage=" " style="width: 100%; margin-top: 10px;">
                                             <f:facet name="header"></f:facet>
-                                            <p:column headerText="Acompanhamento médico">
+                                            <p:column headerText="Especialidade">
                                                 <h:outputText value="#{var_especialidade.nome}" />
                                             </p:column>
                                             <p:column headerText="Ação" style="width: 250px;">
@@ -279,8 +282,9 @@
 
 
                                 <div class="card card-w-title" style="margin-top: 30px">
+                                    <div><p:outputLabel value="DOENÇAS:" style="font-weight: 500;"/></div>
                                     <div class="ui-g-12 ui-md-12" >
-                                        <p:dataTable id="tbl_doenca" value="#{prontuarioMB.doencasParaInclusao}" var="var_doenca" reflow="true"  emptyMessage=" " style="width: 100%">
+                                        <p:dataTable id="tbl_doenca" value="#{prontuarioMB.doencasParaInclusao}" var="var_doenca" reflow="true"  emptyMessage=" " style="width: 100%; margin-top: 10px">
                                             <f:facet name="header"></f:facet>
                                             <p:column headerText="Doenças">
                                                 <h:outputText value="#{var_doenca.nome}" />
@@ -313,8 +317,9 @@
 
 
                                 <div class="card card-w-title" style="margin-top: 30px">
+                                    <div><p:outputLabel value="SÍNDROMES / TRANSTORNOS:" style="font-weight: 500;"/></div>
                                     <div class="ui-g-12 ui-md-12" >
-                                        <p:dataTable id="tbl_sindrome" value="#{prontuarioMB.sindromesParaInclusao}" var="var_sindrome" reflow="true"  emptyMessage=" " style="width: 100%">
+                                        <p:dataTable id="tbl_sindrome" value="#{prontuarioMB.sindromesParaInclusao}" var="var_sindrome" reflow="true"  emptyMessage=" " style="width: 100%; margin-top: 10px">
                                             <f:facet name="header"></f:facet>
                                             <p:column headerText="Síndormes / transtornos">
                                                 <h:outputText value="#{var_sindrome.nome}" />
