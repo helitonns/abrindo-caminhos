@@ -18,46 +18,36 @@
 
             <div class="ui-g">
                 <div class="ui-g-12">
-                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Alergia</label>
+                    <label class="overview-numbers" style="color: #ff9800;font-size: 30px">Cetegoria de Alergisa</label>
                     <div class="card card-w-title" style="margin-top: 5px">
 
                         <p:messages globalOnly="true" closable="true"/>
 
-                        <div style="margin-left: 20px;">Gerenciar alergias</div>
+                        <div style="margin-left: 20px;">Gerenciar categorias</div>
 
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
-                            
-                            <div class="ui-g-12 ui-md-4">
-                                <p:selectOneMenu id="idCategoria" value="#{alergiaMB.categoriaSelecionada}" required="true" style="margin-top: 10px;" autoWidth="true" filter="true" converter="entityConverter">
-                                    <f:selectItem itemLabel="Selecione a categoria" noSelectionOption="true"/>
-                                    <f:selectItems value="#{alergiaMB.categorias}" var="varCategoria" itemValue="#{varCategoria}" itemLabel="#{varCategoria.nome}" />
-                                </p:selectOneMenu>
-                            </div>
-                            
-                            
-                            <div class="ui-g-12 ui-md-4">
+                            <div class="ui-g-12 ui-md-3">
                                 <div class="ui-inputgroup">
                                     <h:panelGroup styleClass="md-inputfield">
-                                        <p:inputText id="idAlergiaNome" value="#{alergiaMB.alergia.nome}" required="true"  converter="upper"/>
-                                        <label>Alergia</label>
-                                        <p:message for="idAlergiaNome" showSummary="false" showDetail="false"/>
+                                        <p:inputText id="idCategoriaNome" value="#{categoriaDeAlergiaMB.categoriaDeAlergia.nome}" required="true"  converter="upper"/>
+                                        <label>Categoria</label>
+                                        <p:message for="idCategoriaNome" showSummary="false" showDetail="false"/>
                                     </h:panelGroup>     
                                 </div>
                             </div>
 
-                            <div class="ui-g-12 ui-md-4">
-                                <p:selectBooleanButton id="idAlergiaStatus" value="#{alergiaMB.alergia.status}"  onLabel="Ativa" offLabel="Inativa" label="Status" onIcon="ui-icon-check" offIcon="ui-icon-close">
-                                    <p:tooltip value="Clique para selecoinar o Status" for="idAlergiaStatus"/>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:selectBooleanButton id="idCategoriaStatus" value="#{categoriaDeAlergiaMB.categoriaDeAlergia.status}"  onLabel="Ativa" offLabel="Inativa" label="Status" onIcon="ui-icon-check" offIcon="ui-icon-close">
+                                    <p:tooltip value="Clique para selecoinar o Status" for="idCategoriaStatus"/>
                                 </p:selectBooleanButton>
                             </div>
 
-                            <div class="ui-g-12 ui-md-4"/>
-                            <div class="ui-g-12 ui-md-4">
-                                <p:commandButton value="Salvar" action="#{alergiaMB.salvarAlergia}" ajax="false" icon="ui-icon-save"/>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Salvar" action="#{categoriaDeAlergiaMB.salvarCategoria}" ajax="false" icon="ui-icon-save"/>
                             </div>
 
-                            <div class="ui-g-12 ui-md-4">
-                                <p:commandButton value="Cancelar" action="#{alergiaMB.cancelar()}" styleClass="blue-grey-btn" icon="ui-icon-cancel" immediate="true"/>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="Cancelar" action="#{categoriaDeAlergiaMB.cancelar()}" styleClass="blue-grey-btn" icon="ui-icon-cancel" immediate="true"/>
                             </div>
                         </div>
                     </div>
@@ -69,31 +59,27 @@
             <div class="ui-g">
                 <div class="ui-g-12">
                     <div class="card card-w-title"> 
-                        <div style="margin-left: 20px;">Alergias cadastradas</div>
+                        <div style="margin-left: 20px;">Categorias de Alergias cadastradas</div>
 
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable var="alergia_var" value="#{alergiaMB.alergiaes}" reflow="true" rowKey="#{alergia_var.id}" paginator="true" rows="10" emptyMessage=" ">
-                                    <p:column headerText="Categoria" sortBy="#{alergia_var.categoria.nome}" filterBy="#{alergia_var.categoria.nome}">
-                                        <h:outputText value="#{alergia_var.categoria.nome}" />
+                                <p:dataTable var="alergia_var" value="#{categoriaDeAlergiaMB.categoriasDeAlergias}" reflow="true" rowKey="#{alergia_var.id}" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Id" style="width: 50px">
+                                        <h:outputText value="#{alergia_var.id}" />
                                     </p:column>
 
                                     <p:column headerText="Nome" sortBy="#{alergia_var.nome}" filterBy="#{alergia_var.nome}">
                                         <h:outputText value="#{alergia_var.nome}" />
                                     </p:column>
 
-                                    <p:column headerText="Id" style="width: 50px">
-                                        <h:outputText value="#{alergia_var.id}" />
-                                    </p:column>
-                                    
                                     <p:column headerText="Status" sortBy="#{alergia_var.status}" style="width: 100px">
                                         <h:outputText value="#{alergia_var.status ? 'Ativo' : 'Inativo'}" />
                                     </p:column>
 
                                     <p:column headerText="Ação" style="width: 250px">
                                         <h:panelGrid columns="2">
-                                            <p:commandButton value="Editar"  icon="ui-icon-edit" ajax="true" update="form" style="width: 100%"  actionListener="#{alergiaMB.setAlergia(alergia_var)}" />
-                                            <p:commandButton value="Excluir" icon="ui-icon-cancel"  style="width: 100%" styleClass="red-btn" actionListener="#{alergiaMB.setAlergiaSelecionado(alergia_var)}" onclick="PF('modal_excluir_alergia').show();"/>
+                                            <p:commandButton value="Editar"  icon="ui-icon-edit" ajax="true" update="form" style="width: 100%"  actionListener="#{categoriaDeAlergiaMB.setCategoriaDeAlergia(alergia_var)}" />
+                                            <p:commandButton value="Excluir" icon="ui-icon-cancel"  style="width: 100%" styleClass="red-btn" actionListener="#{categoriaDeAlergiaMB.setCategoriaDeAlergiaSelecionada(alergia_var)}" onclick="PF('modal_excluir_alergia').show();"/>
                                         </h:panelGrid>
                                     </p:column>
                                 </p:dataTable>
@@ -103,7 +89,7 @@
                         <p:dialog header="Exclusão" widgetVar="modal_excluir_alergia" modal="true" height="100" width="550">
                             <h:panelGrid columns="2" style="width: 100%">
                                 <h:outputText value="Tem certeza que deseja excluir o item selecionado?" style="width: 100%"/>
-                                <p:selectOneButton value="#{alergiaMB.removerAlergiaSelecionado}">
+                                <p:selectOneButton value="#{categoriaDeAlergiaMB.removerCategoriaDeAlergiaSelecionada}">
                                     <f:selectItem itemLabel="Sim" itemValue="#{true}" />
                                     <f:selectItem itemLabel="Não" itemValue="#{false}" />
                                 </p:selectOneButton>
@@ -111,7 +97,7 @@
 
                             <f:facet name="footer">
                                 <h:panelGrid columns="2" style="width: 100%">
-                                    <p:commandButton value="Excluir" icon="ui-icon-delete" ajax="false" action="#{alergiaMB.removerAlergia()}" style="width: 100%"/>
+                                    <p:commandButton value="Excluir" icon="ui-icon-delete" ajax="false" action="#{categoriaDeAlergiaMB.removerCategoria()}" style="width: 100%"/>
                                     <p:button value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
                                 </h:panelGrid>
                             </f:facet>

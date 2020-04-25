@@ -2,6 +2,7 @@ package br.leg.alrr.abrindocaminhos.controller;
 
 import br.leg.alrr.abrindocaminhos.model.Alergia;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
+import br.leg.alrr.abrindocaminhos.model.CategoriaDeAlergia;
 import br.leg.alrr.abrindocaminhos.model.Doenca;
 import br.leg.alrr.abrindocaminhos.model.EspecialidadeMedica;
 import br.leg.alrr.abrindocaminhos.model.Medicacao;
@@ -9,6 +10,7 @@ import br.leg.alrr.abrindocaminhos.model.Prontuario;
 import br.leg.alrr.abrindocaminhos.model.Sindrome;
 import br.leg.alrr.abrindocaminhos.persistence.AlergiaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.AlunoDAO;
+import br.leg.alrr.abrindocaminhos.persistence.CategoriaDeAlergiaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.DoencaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.EspecialidadeMedicaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MedicacaoDAO;
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 
@@ -54,6 +57,9 @@ public class ProntuarioMB implements Serializable {
 
     @EJB
     private SindromeDAO sindromeDAO;
+    
+    @EJB
+    private CategoriaDeAlergiaDAO categoriaDeAlergiaDAO;
 
     private List<Aluno> alunos;
     private List<Alergia> alergias;
@@ -66,6 +72,7 @@ public class ProntuarioMB implements Serializable {
     private List<Doenca> doencasParaInclusao;
     private List<Sindrome> sindromes;
     private List<Sindrome> sindromesParaInclusao;
+    private List<CategoriaDeAlergia> categorias;
 
     private Aluno aluno;
     private Aluno alunoProntuario;
@@ -81,6 +88,7 @@ public class ProntuarioMB implements Serializable {
     private Doenca recebeDoenca;
     private Sindrome sindrome;
     private Sindrome recebeSindrome;
+    private Long categoriaSelecionada;
 
     private boolean exibirProntuario;
 //==============================================================================
@@ -89,7 +97,7 @@ public class ProntuarioMB implements Serializable {
     public void init() {
         limparForm();
 
-        listarAlergias();
+        listarCategorias();
         listarMedicacoes();
         listarEspecialidades();
         listarDoencas();
@@ -112,8 +120,24 @@ public class ProntuarioMB implements Serializable {
 
     public void listarAlergias() {
         try {
-            alergias = (ArrayList<Alergia>) alergiaDAO.listarAtivas();
+            alergias = (ArrayList<Alergia>) alergiaDAO.listarAtivasPorCategoria(new CategoriaDeAlergia(categoriaSelecionada));
         } catch (DAOException e) {
+        }
+    }
+    
+    public void listarCategorias() {
+        try {
+            categorias = categoriaDeAlergiaDAO.listarAtivas();
+        } catch (DAOException e) {
+        }
+    }
+    
+    public void valueChanged(ValueChangeEvent event) {
+        try {
+            categoriaSelecionada = Long.parseLong(event.getNewValue().toString());
+            listarAlergias();
+        } catch (NumberFormatException e) {
+            FacesUtils.addInfoMessage(e.getMessage());
         }
     }
 
@@ -574,4 +598,16 @@ public class ProntuarioMB implements Serializable {
         return sindromesParaInclusao;
     }
 
+    public List<CategoriaDeAlergia> getCategorias() {
+        return categorias;
+    }
+
+    public Long getCategoriaSelecionada() {
+        return categoriaSelecionada;
+    }
+
+    public void setCategoriaSelecionada(Long categoriaSelecionada) {
+        this.categoriaSelecionada = categoriaSelecionada;
+    }
+    
 }

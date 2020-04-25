@@ -1,7 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
 import br.leg.alrr.abrindocaminhos.model.Alergia;
+import br.leg.alrr.abrindocaminhos.model.CategoriaDeAlergia;
 import br.leg.alrr.abrindocaminhos.persistence.AlergiaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.CategoriaDeAlergiaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -24,12 +26,17 @@ public class AlergiaMB implements Serializable {
 
     @EJB
     private AlergiaDAO alergiaDAO;
+    
+    @EJB
+    private CategoriaDeAlergiaDAO categoriaDeAlergiaDAO;
 
     private Alergia alergia;
 
     private ArrayList<Alergia> alergias;
+    private ArrayList<CategoriaDeAlergia> categorias;
 
     private Alergia alergiaSelecionada;
+    private CategoriaDeAlergia categoriaSelecionada;
 
     private boolean removerAlergiaSelecionada = false;
 
@@ -37,13 +44,16 @@ public class AlergiaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        listarCategorias();
     }
 
     public String salvarAlergia() {
         try {
+            alergia.setCategoria(categoriaSelecionada);
             if (alergia.getId() != null) {
                 alergiaDAO.atualizar(alergia);
-                FacesUtils.addInfoMessageFlashScoped("Alergia atualizado com sucesso!");
+                FacesUtils.addInfoMessageFlashScoped("Alergia atualizada com sucesso!");
             } else {
                 alergiaDAO.salvar(alergia);
                 FacesUtils.addInfoMessageFlashScoped("Alergia salva com sucesso!");
@@ -57,6 +67,14 @@ public class AlergiaMB implements Serializable {
     public void listarAlergiaes() {
         try {
             alergias = (ArrayList<Alergia>) alergiaDAO.listarTodos();
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessage(e.getMessage());
+        }
+    }
+    
+    public void listarCategorias() {
+        try {
+            categorias = (ArrayList<CategoriaDeAlergia>) categoriaDeAlergiaDAO.listarAtivas();
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
@@ -115,4 +133,16 @@ public class AlergiaMB implements Serializable {
         this.removerAlergiaSelecionada = removerAlergiaSelecionada;
     }
 
+    public ArrayList<CategoriaDeAlergia> getCategorias() {
+        return categorias;
+    }
+
+    public CategoriaDeAlergia getCategoriaSelecionada() {
+        return categoriaSelecionada;
+    }
+
+    public void setCategoriaSelecionada(CategoriaDeAlergia categoriaSelecionada) {
+        this.categoriaSelecionada = categoriaSelecionada;
+    }
+    
 }

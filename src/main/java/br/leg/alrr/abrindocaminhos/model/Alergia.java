@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.AuditTable;
@@ -31,6 +32,9 @@ public class Alergia implements Serializable, BaseEntity{
     private String nome;
     
     private boolean status;
+    
+    @ManyToOne
+    private CategoriaDeAlergia categoria;
 
 //==============================================================================
 
@@ -66,6 +70,15 @@ public class Alergia implements Serializable, BaseEntity{
     public void setStatus(boolean status) {
         this.status = status;
     }
+
+    public CategoriaDeAlergia getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(CategoriaDeAlergia categoria) {
+        this.categoria = categoria;
+    }
+    
     
     
 }

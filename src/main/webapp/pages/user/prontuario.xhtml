@@ -169,7 +169,10 @@
                                     <div class="ui-g-12 ui-md-12">
                                         <p:dataTable id="tbl_receitas" value="#{prontuarioMB.alergiasParaInclusao}" var="var_alergia" reflow="true"  emptyMessage=" " style="width: 100%">
                                             <f:facet name="header"></f:facet>
-                                            <p:column headerText="Alergias">
+                                            <p:column headerText="Categoria" sortBy="#{var_alergia.categoria.nome}">
+                                                <h:outputText value="#{var_alergia.categoria.nome}" />
+                                            </p:column>
+                                            <p:column headerText="Alergias" sortBy="#{var_alergia.nome}">
                                                 <h:outputText value="#{var_alergia.nome}" />
                                             </p:column>
                                             <p:column headerText="Ação" style="width: 250px;">
@@ -180,7 +183,15 @@
                                         </p:dataTable>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-5">
+                                    <div class="ui-g-12 ui-md-4">
+                                        <p:selectOneMenu id="idSelectCategoria" value="#{prontuarioMB.categoriaSelecionada}" valueChangeListener="#{prontuarioMB.valueChanged}"  style="margin-top: 10px;">
+                                            <p:ajax event="change" update="idSelectAlergia" />
+                                            <f:selectItem itemLabel="Categoria" noSelectionOption="true"/>
+                                            <f:selectItems value="#{prontuarioMB.categorias}" var="varCategoria" itemValue="#{varCategoria.id}" itemLabel="#{varCategoria.nome}" />
+                                        </p:selectOneMenu>
+                                    </div>
+                                    
+                                    <div class="ui-g-12 ui-md-3">
                                         <p:selectOneMenu id="idSelectAlergia" value="#{prontuarioMB.alergia}"  converter="entityConverter" style="margin-top: 10px;">
                                             <f:selectItem itemLabel="Alergia" noSelectionOption="true"/>
                                             <f:selectItems value="#{prontuarioMB.alergias}" var="varAlergia" itemValue="#{varAlergia}" itemLabel="#{varAlergia.nome}" />
@@ -193,7 +204,7 @@
                                         </p:commandButton>
                                     </div>
 
-                                    <div class="ui-g-12 ui-md-6">
+                                    <div class="ui-g-12 ui-md-4">
                                         <p:commandButton value="Adicionar ao prontuário" icon="ui-icon-add"  actionListener="#{prontuarioMB.adicionarAlergia()}" update="tbl_receitas"/>
                                     </div>
                                 </div>

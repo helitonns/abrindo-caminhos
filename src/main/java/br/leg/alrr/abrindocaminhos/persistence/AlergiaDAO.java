@@ -1,6 +1,7 @@
 package br.leg.alrr.abrindocaminhos.persistence;
 
 import br.leg.alrr.abrindocaminhos.model.Alergia;
+import br.leg.alrr.abrindocaminhos.model.CategoriaDeAlergia;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -44,6 +45,16 @@ public class AlergiaDAO {
     public List listarAtivas() throws DAOException {
         try {
             return em.createQuery("select o from Alergia o where o.status = TRUE order by o.nome asc").getResultList();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao listar paíss.", e);
+        }
+    }
+    
+    public List listarAtivasPorCategoria(CategoriaDeAlergia c) throws DAOException {
+        try {
+            return em.createQuery("select o from Alergia o where o.status = TRUE and o.categoria.id =:idCategoria order by o.nome asc")
+                    .setParameter("idCategoria", c.getId())
+                    .getResultList();
         } catch (Exception e) {
             throw new DAOException("Erro ao listar paíss.", e);
         }

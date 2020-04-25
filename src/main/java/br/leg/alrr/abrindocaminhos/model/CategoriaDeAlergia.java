@@ -6,21 +6,21 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
 
 /**
- *
+ * @Organization ALRR
  * @author Heliton
+ * @Matricula 14583
  */
 @Audited
-@AuditTable(value="receita_auditoria", schema = "abrindo_caminhos")
+@AuditTable(value="categoria_de_alergia_auditoria", schema = "abrindo_caminhos")
 @Table(schema = "abrindo_caminhos")
 @Entity
-public class Receita implements Serializable, BaseEntity{
+public class CategoriaDeAlergia implements Serializable, BaseEntity{
 
     private static final long serialVersionUID = 1L;
     
@@ -28,18 +28,16 @@ public class Receita implements Serializable, BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
    
-    @ManyToOne
-    private CategoriaDeAlergia alergia;
+    private String nome;
     
-    @ManyToOne
-    private Medicacao medicacao;
+    private boolean status;
 
 //==============================================================================
 
-    public Receita() {
+    public CategoriaDeAlergia() {
     }
-   
-    public Receita(Long id) {
+    
+    public CategoriaDeAlergia(Long id) {
         this.id = id;
     }
     
@@ -48,25 +46,26 @@ public class Receita implements Serializable, BaseEntity{
         return id;
     }
 
-    public CategoriaDeAlergia getAlergia() {
-        return alergia;
-    }
-
-    public void setAlergia(CategoriaDeAlergia alergia) {
-        this.alergia = alergia;
-    }
-
-    public Medicacao getMedicacao() {
-        return medicacao;
-    }
-
-    public void setMedicacao(Medicacao medicacao) {
-        this.medicacao = medicacao;
-    }
-
     @Override
     public void setId(Long id) {
-         this.id = id;
+        this.id = id;
     }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+    
     
 }
