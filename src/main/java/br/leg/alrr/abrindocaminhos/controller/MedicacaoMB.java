@@ -68,8 +68,8 @@ public class MedicacaoMB implements Serializable {
                 medicacaoDAO.remover(medicacaoSelecionada);
                 FacesUtils.addInfoMessage("Medicação removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A medicação não pode ser excluída pois ainda está referenciada em prontuário.");
         }
         limparForm();
     }

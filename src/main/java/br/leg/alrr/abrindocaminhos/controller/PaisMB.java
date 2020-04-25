@@ -68,8 +68,8 @@ public class PaisMB implements Serializable {
                 paisDAO.remover(paisSelecionado);
                 FacesUtils.addInfoMessage("País removido com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("O país não pode ser excluído pois ainda está refenciado em aluno.");
         }
         limparForm();
     }

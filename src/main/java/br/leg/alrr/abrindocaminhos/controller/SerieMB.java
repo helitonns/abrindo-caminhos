@@ -68,8 +68,8 @@ public class SerieMB implements Serializable {
                 serieDAO.remover(serieSelecionada);
                 FacesUtils.addInfoMessage("Série removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A série não pode ser excluída pois ainda está referenciada em instrução.");
         }
         limparForm();
     }

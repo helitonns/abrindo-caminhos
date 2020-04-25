@@ -93,7 +93,7 @@ public class MensagemMB implements Serializable {
                 mensagemDAO.remover(mensagem);
                 FacesUtils.addInfoMessageFlashScoped("Mensagem excluída com sucesso!");
             }
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
         return "mensagem.xhtml" + "?faces-redirect=true";

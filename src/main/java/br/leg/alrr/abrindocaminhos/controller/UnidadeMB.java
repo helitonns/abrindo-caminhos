@@ -82,8 +82,8 @@ public class UnidadeMB implements Serializable {
                 unidadeDAO.remover(unidade);
                 FacesUtils.addInfoMessage("Unidade removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A unidade não pode ser excluída pois ainda está sendo referenciada.");
         }
         limparForm();
     }

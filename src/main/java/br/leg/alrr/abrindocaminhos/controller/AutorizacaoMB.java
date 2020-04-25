@@ -186,7 +186,7 @@ public class AutorizacaoMB implements Serializable {
                 FacesUtils.addInfoMessage("Autorização removida com sucesso!");
             }
             limparForm();
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
     }

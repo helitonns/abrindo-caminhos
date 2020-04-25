@@ -109,8 +109,8 @@ public class EscolaMB implements Serializable {
                 FacesUtils.addInfoMessage("Escola removida com sucesso!");
             }
             limparForm();
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A escola não pode ser excluída pois ainda está referenciada em instrução.");
         }
     }
 

@@ -119,8 +119,8 @@ public class ListaDeEsperaMB implements Serializable {
                 listaDeEsperaDAO.remover(listaDeEspera);
                 FacesUtils.addInfoMessage("Lista de espera removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A lista de espera não pode ser excluída pois ainda está sendo referenciada em inscrição.");
         }
         limparForm();
     }

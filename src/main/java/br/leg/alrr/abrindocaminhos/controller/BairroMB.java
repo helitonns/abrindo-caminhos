@@ -86,8 +86,8 @@ public class BairroMB implements Serializable {
                 FacesUtils.addInfoMessage("Bairro removido com sucesso!");
             }
             limparForm();
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("O bairro não pode ser excluído pois ainda estáreferenciado em endereço.");
         }
     }
 

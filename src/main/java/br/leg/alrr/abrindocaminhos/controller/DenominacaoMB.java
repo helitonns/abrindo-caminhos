@@ -68,8 +68,8 @@ public class DenominacaoMB implements Serializable {
                 denominacaoDAO.remover(denominacaoSelecionada);
                 FacesUtils.addInfoMessage("Denominação removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A esfera de atuação não pode ser excluída pois ainda está referenciada em escola.");
         }
         limparForm();
     }

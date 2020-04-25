@@ -213,7 +213,7 @@ public class UsuarioMB implements Serializable {
                 usuarioDAO.remover(usuario);
                 FacesUtils.addInfoMessage("Usuário removido com sucesso!");
             }
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
         limparForm();

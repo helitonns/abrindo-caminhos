@@ -68,8 +68,8 @@ public class EspecialidadeMedicaMB implements Serializable {
                 especialidadeMedicaDAO.remover(especialidadeMedicaSelecionada);
                 FacesUtils.addInfoMessage("EspecialidadeMedica removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A especialidade não pode ser excluída pois ainda está referenciada em prontuário.");
         }
         limparForm();
     }

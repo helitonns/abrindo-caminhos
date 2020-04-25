@@ -68,8 +68,8 @@ public class SindromeMB implements Serializable {
                 sindromeDAO.remover(sindromeSelecionada);
                 FacesUtils.addInfoMessage("Sindrome removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A síndorme não pode ser excluída pois ainda está referenciada em prontuário.");
         }
         limparForm();
     }

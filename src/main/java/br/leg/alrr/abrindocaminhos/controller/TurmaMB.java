@@ -203,7 +203,7 @@ public class TurmaMB implements Serializable {
                 }
 
             }
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
             System.out.println(e.getCause());
         }

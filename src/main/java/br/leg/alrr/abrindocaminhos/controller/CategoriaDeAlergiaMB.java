@@ -68,8 +68,8 @@ public class CategoriaDeAlergiaMB implements Serializable {
                 categoriaDeAlergiaDAO.remover(categoriaDeAlergiaSelecionada);
                 FacesUtils.addInfoMessage("Categoria removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A categoria não pode ser excluída porque há ainda está referenciada em alergias.");
         }
         limparForm();
     }

@@ -68,8 +68,8 @@ public class IdadeMB implements Serializable {
                 idadeDAO.remover(idadeSelecionada);
                 FacesUtils.addInfoMessage("Idade removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("Ocorreu um erro ao excluir idade.");
         }
         limparForm();
     }

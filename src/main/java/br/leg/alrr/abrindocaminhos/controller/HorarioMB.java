@@ -81,8 +81,8 @@ public class HorarioMB implements Serializable {
             }
             removerHorario = false;
             limparForm();
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("O horário não pode ser excluído pois ainda está referenciado em turma.");
         }
     }
 

@@ -86,8 +86,8 @@ public class AlergiaMB implements Serializable {
                 alergiaDAO.remover(alergiaSelecionada);
                 FacesUtils.addInfoMessage("Alergia removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A alergia não pode ser excluída pois ainda está referencia em prontuário.");
         }
         limparForm();
     }

@@ -68,7 +68,7 @@ public class SistemaMB implements Serializable {
                 sistemaDAO.remover(sistemaSelecionado);
                 FacesUtils.addInfoMessage("Sistema removido com sucesso!");
             }
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
         limparForm();

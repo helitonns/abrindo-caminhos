@@ -68,8 +68,8 @@ public class MunicipioMB implements Serializable {
                 municipioDAO.remover(municipioSelecionado);
                 FacesUtils.addInfoMessage("Município removido com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("O município não pode ser excluído pois ainda está referenciado em bairro.");
         }
         limparForm();
     }

@@ -73,8 +73,8 @@ public class AtividadeMB implements Serializable {
                 atividadeDAO.remover(atividadeSelecionada);
                 FacesUtils.addInfoMessage("Atividade removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A atividade não pode ser excluída pois ainda está referenciada em turma.");
         }
         limparForm();
     }

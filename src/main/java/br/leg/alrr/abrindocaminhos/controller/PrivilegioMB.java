@@ -93,7 +93,7 @@ public class PrivilegioMB implements Serializable {
                 FacesUtils.addInfoMessage("Privilégio removida com sucesso!");
             }
             limparForm();
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
     }

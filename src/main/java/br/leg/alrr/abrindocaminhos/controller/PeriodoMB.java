@@ -68,8 +68,8 @@ public class PeriodoMB implements Serializable {
                 periodoDAO.remover(periodoSelecionado);
                 FacesUtils.addInfoMessage("Período removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("O período não pode ser excluído pois ainda está referenciado em instrução.");
         }
         limparForm();
     }

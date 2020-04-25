@@ -68,8 +68,8 @@ public class EscolaridadeMB implements Serializable {
                 escolaridadeDAO.remover(escolaridadeSelecionada);
                 FacesUtils.addInfoMessage("Escolaridade removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A escolaridade não pode ser excluída pois ainda está referenciada em instrução.");
         }
         limparForm();
     }

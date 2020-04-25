@@ -68,7 +68,7 @@ public class SituacaoMB implements Serializable {
                 situacaoDAO.remover(situacaoSelecionada);
                 FacesUtils.addInfoMessage("Situação removida com sucesso!");
             }
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
         limparForm();

@@ -68,8 +68,8 @@ public class DoencaMB implements Serializable {
                 doencaDAO.remover(doencaSelecionada);
                 FacesUtils.addInfoMessage("Doenca removida com sucesso!");
             }
-        } catch (DAOException e) {
-            FacesUtils.addErrorMessage(e.getMessage());
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("A doença não pode ser excluída pois ainda está referenciada em prontuário.");
         }
         limparForm();
     }

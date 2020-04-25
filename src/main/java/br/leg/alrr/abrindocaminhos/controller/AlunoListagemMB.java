@@ -175,7 +175,7 @@ public class AlunoListagemMB implements Serializable {
                 exibirModalAlunoMatricula = false;
             }
 
-        } catch (DAOException e) {
+        } catch (Exception e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
             System.out.println(e.getCause());
         }
