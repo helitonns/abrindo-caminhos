@@ -84,7 +84,7 @@
                                     </p:column>
                                     <p:column headerText="Data da operação" sortBy="#{auditEntity_var.data}">
                                         <h:outputText value="#{auditEntity_var.data}">
-                                            <f:convertDateTime type="localDate" pattern="dd/MM/yyyy hh:mm:ss" />
+                                            <f:convertDateTime type="localDateTime" pattern="dd/MM/yyyy hh:mm:ss" />
                                         </h:outputText>
                                     </p:column>
                                     <p:column headerText="IP" sortBy="#{auditEntity_var.ip}">
