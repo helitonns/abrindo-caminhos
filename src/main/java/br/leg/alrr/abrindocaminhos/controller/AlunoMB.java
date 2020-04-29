@@ -35,7 +35,6 @@ import br.leg.alrr.abrindocaminhos.persistence.SituacaoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.TurmaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
-import com.sun.xml.internal.ws.api.pipe.Tube;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
