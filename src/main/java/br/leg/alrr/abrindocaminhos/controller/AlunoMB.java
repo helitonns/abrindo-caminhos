@@ -35,6 +35,7 @@ import br.leg.alrr.abrindocaminhos.persistence.SituacaoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.TurmaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
+import com.sun.xml.internal.ws.api.pipe.Tube;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -129,6 +130,7 @@ public class AlunoMB implements Serializable {
     private ListaDeEspera listaDeEspera;
     private Escola escola;
     private Pais pais;
+    private Matricula matriculaSelecionada;
 
     private Sexo sexo = Sexo.MASCULINO;
     private Long idMunicipio;
@@ -145,9 +147,11 @@ public class AlunoMB implements Serializable {
     private boolean inscreverNaLista;
     private boolean encontrouGenitores;
     private boolean exibirMinhasAtividades;
-    
+    private boolean cancelaMatricula;
+
     private boolean exibirModalParaProntuario;
     private Long idAlunoParaProntuario;
+    private Long idTurma;
 
     private byte[] imagem;
 
@@ -181,16 +185,24 @@ public class AlunoMB implements Serializable {
             // VERIFICA SE HÁ ALGUM ALUNO NA SESSÃO PARA SER EDITADO, SE HOUVER SETA OS VALORES CORRESPONDENTES
             if (FacesUtils.getBean("aluno") != null) {
                 preEditar();
+
+                //EXECUTADO QUANDO O ALUNO É ENVIADO PARA EXIBIÇÃO
+                if (FacesUtils.getBean("verificarMinhasAtividade") != null) {
+                    exibirMinhasAtividades = (boolean) FacesUtils.getBean("verificarMinhasAtividade");
+                    verificarMinhasAtividades();
+                    FacesUtils.removeBean("verificarMinhasAtividade");
+                }
+
                 FacesUtils.removeBean("aluno");
             }
-            
+
             //EXIBIR POPUP PARA REDIRECIONAR PARA O PRONTÁRIO DO ALUNO
             if (FacesUtils.getBean("idAlunoParaProntuario") != null) {
                 exibirModalParaProntuario = true;
                 idAlunoParaProntuario = (Long) FacesUtils.getBean("idAlunoParaProntuario");
                 FacesUtils.removeBean("idAlunoParaProntuario");
             }
-            
+
         } catch (Exception e) {
             FacesUtils.addInfoMessage("Erro ao tentar editar aluno. \n" + e.getCause());
         }
@@ -461,7 +473,7 @@ public class AlunoMB implements Serializable {
                 }
 
             }
-            
+
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage() + ": " + e.getCause());
             System.out.println(e.getCause());
@@ -637,6 +649,8 @@ public class AlunoMB implements Serializable {
         instrucao = new Instrucao();
         escola = new Escola();
         pais = new Pais();
+        matriculaSelecionada = new Matricula();
+        turma = new Turma();
 
         cpfPesquisa = "";
 
@@ -653,6 +667,7 @@ public class AlunoMB implements Serializable {
         encontrouGenitores = false;
         exibirMinhasAtividades = false;
         exibirModalParaProntuario = false;
+        cancelaMatricula = false;
     }
 
     public String cancelar() {
@@ -673,7 +688,7 @@ public class AlunoMB implements Serializable {
             return null;
         }
     }
-    
+
     public String enviarParaProtuario() {
         try {
             FacesUtils.setBean("idAlunoParaProntuario", idAlunoParaProntuario);
@@ -742,7 +757,64 @@ public class AlunoMB implements Serializable {
         }
     }
 
+    public void cancelarMatricula() {
+        try {
+            if (cancelaMatricula) {
+                matriculaDAO.remover(matriculaSelecionada);
+                FacesUtils.addInfoMessage("Matrícula cancelada com sucesso!!!");
+                verificarMinhasAtividades();
+            }
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("Erro ao cacelar matrícula!!!");
+        }
+    }
+
+    public void pegarIdDaTurma(ValueChangeEvent event) {
+        try {
+            idTurma = Long.parseLong(event.getNewValue().toString());
+        } catch (NumberFormatException e) {
+            FacesUtils.addInfoMessage(e.getMessage());
+        }
+    }
+    
+    public void matricular() {
+        try {
+            turma = new Turma();
+            turma.setId(idTurma);
+            
+            //FAZENDO A MATRICULA NA TURMA
+            if (turma.getId() != null) {
+                if (!turmaDAO.verificarSeAlunoJaEstaMatriculadoNaTurma(aluno, turma)) {
+                    UsuarioComUnidade u = (UsuarioComUnidade) FacesUtils.getBean("usuario");
+
+                    //FAZENDO A MATRÍCULA NO CURSO
+                    Matricula matricula = new Matricula();
+                    GregorianCalendar gc = new GregorianCalendar();
+                    matricula.setDataMatricula(gc.getTime());
+                    matricula.setAluno(aluno);
+                    matricula.setTurma(turma);
+
+                    matricula.setUnidade(u.getUnidade());
+                    matricula.setStatus(true);
+                    matriculaDAO.salvar(matricula);
+                    FacesUtils.addInfoMessageFlashScoped("Aluno(a) matriculado(a) na turma com sucesso!!!");
+                    
+                    verificarMinhasAtividades();
+
+                } else {
+                    FacesUtils.addWarnMessageFlashScoped("Aluno(a) já está matriculado(a) na turma!!!");
+                }
+            } else {
+                FacesUtils.addWarnMessage("Selecione uma turma antes de realizar a matrícula!!!");
+            }
+        } catch (Exception e) {
+            FacesUtils.addErrorMessage("Ocorreu um erro ao matricular o aluno(a) na turma!!!");
+            System.out.println(e.toString());
+        }
+
+    }
 //==========================================================================
+
     public Aluno getAluno() {
         return aluno;
     }
@@ -989,6 +1061,30 @@ public class AlunoMB implements Serializable {
 
     public void setIdAlunoParaProntuario(Long idAlunoParaProntuario) {
         this.idAlunoParaProntuario = idAlunoParaProntuario;
+    }
+
+    public Matricula getMatriculaSelecionada() {
+        return matriculaSelecionada;
+    }
+
+    public void setMatriculaSelecionada(Matricula matriculaSelecionada) {
+        this.matriculaSelecionada = matriculaSelecionada;
+    }
+
+    public boolean isCancelaMatricula() {
+        return cancelaMatricula;
+    }
+
+    public void setCancelaMatricula(boolean cancelaMatricula) {
+        this.cancelaMatricula = cancelaMatricula;
+    }
+
+    public Long getIdTurma() {
+        return idTurma;
+    }
+
+    public void setIdTurma(Long idTurma) {
+        this.idTurma = idTurma;
     }
     
 }

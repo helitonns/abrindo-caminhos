@@ -211,6 +211,7 @@ public class AlunoListagemMB implements Serializable {
 
     public String exibirAluno() {
         FacesUtils.setBean("aluno", aluno);
+        FacesUtils.setBean("verificarMinhasAtividade", true);
         return "exibir-aluno.xhtml" + "?faces-redirect=true";
     }
 

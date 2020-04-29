@@ -21,8 +21,8 @@
                                 <p:menuitem id="sm_aluno_familia"       value="Família" icon="group" outcome="/pages/user/familia"/>
                                 <p:menuitem id="sm_aluno_prontuario"   value="Prontuário" icon="add_box" outcome="/pages/user/prontuario" />
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_aluno_meus_cursos"   value="Minhas Atividades" icon="books" outcome="/pages/user/minhas-atividades"/>
-                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                <p:menuitem id="sm_aluno_meus_cursos"   value="Minhas Atividades" icon="books" outcome="/pages/user/minhas-atividades" rendered="false"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;" rendered="false"/>
                             </p:submenu> 
 
                             <p:submenu id="sub_menu_curso" label="Secretaria" icon="book" rendered="#{!startMB.usuarioRelatorio}">

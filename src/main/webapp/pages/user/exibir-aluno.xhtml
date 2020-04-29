@@ -401,41 +401,74 @@
                     </div>
 
                 </div>
-            </div>        
+            </div>  
+        </h:form> 
+        <h:form id="form2">
             <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
             <h:panelGroup id="idTabelaCursoDoAlunos">
                 <div class="card card-w-title">
                     <div style="margin-left: 20px">Minhas atividades</div>
                     <div class="ui-g ui-fluid form-group">
-                        <p:dataTable value="#{alunoMB.matriculas}" var="varTurma" emptyMessage=" " rendered="#{alunoMB.exibirMinhasAtividades}" style="width: 100%">
+                        <p:dataTable id="id_tbl_atividades" value="#{alunoMB.matriculas}" var="varTurma" emptyMessage=" "  style="width: 100%">
                             <p:column headerText="Turma">
                                 <h:outputText value="#{varTurma.turma.nomeExibicao}" />
                             </p:column>
 
-                            <p:column headerText="Status" style="width: 140px;">
+                            <p:column headerText="Status" style="width: 200px;">
                                 <h:outputText value="#{varTurma.turma.iniciada ? 'Em andamento' : 'Concluída'}"/>
                             </p:column>
+
+                            <p:column headerText="Ação" style="width: 200px;">
+                                <p:commandButton id="btnCancelarMatricula" value="Cancelar Matrícula" icon="ui-icon-close" styleClass="red-btn" ajax="true" onclick="PF('modal_excluir').show();" actionListener="#{alunoMB.setMatriculaSelecionada(varTurma)}">
+                                    <p:tooltip value="Irá cancelar a matrícula do aluno na turma" for="btnCancelarMatricula"/>
+                                </p:commandButton>
+                            </p:column>
                         </p:dataTable>
+
+
+                        <div class="ui-g-12 ui-md-8">
+                            <p:selectOneMenu id="idMatricularTurmaALuno" valueChangeListener="#{alunoMB.pegarIdDaTurma}" autoWidth="true" filter="true" style="width: 100%; margin-top: 18px;">
+                                <f:selectItem itemLabel=" - Turmas ativas -"/>
+                                <f:selectItems value="#{alunoMB.turmas}" var="varTurmaAluno" itemValue="#{varTurmaAluno.id}" itemLabel="#{varTurmaAluno.nomeExibicao}"  />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="ui-g-12 ui-md-4">
+                            <p:commandButton value="Matricular" action="#{alunoMB.matricular()}" ajax="false" styleClass="green-btn" icon="ui-icon-trending-flat" style="width: 100%; margin-top: 10px;" />
+                        </div>
+
                     </div>
                 </div>
             </h:panelGroup>
             <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
             <div class="card card-w-title">
                 <div class="ui-g ui-fluid form-group">
+                    <div class="ui-g-12 ui-md-3"/>
                     <div class="ui-g-12 ui-md-3">
                         <p:commandButton value="Voltar" action="listar-editar-aluno" styleClass="orange-btn" immediate="true" icon="ui-icon-navigate-before" style="width: 100%" />
                     </div>
                     <div class="ui-g-12 ui-md-3">
-                        <p:commandButton value="Minhas atividades" actionListener="#{alunoMB.verificarMinhasAtividades()}" update="idTabelaCursoDoAlunos"  styleClass="purple-btn" icon="ui-icon-directions-run" style="width: 100%"/>
-                    </div>
-                    <div class="ui-g-12 ui-md-3">
                         <p:commandButton value="Editar" action="#{alunoMB.editarAluno()}" ajax="false" icon="ui-icon-edit" style="width: 100%"/>
                     </div>
-                    <div class="ui-g-12 ui-md-3">
-                        <p:commandButton value="Matricular" action="#{alunoMB.enviarAlunoParaMatricula()}" styleClass="green-btn" immediate="true" icon="ui-icon-trending-flat" style="width: 100%" />
-                    </div>
+                    <div class="ui-g-12 ui-md-3"/>
                 </div>
             </div>
+
+            <p:dialog header="Cancelar Matrícula" widgetVar="modal_excluir" modal="true" height="100" width="550">
+                <h:panelGrid columns="2" style="width: 100%">
+                    <h:outputText value="Deseja cancelar a matrícula do aluno(a) ?" style="width: 100%"/>
+                    <p:selectOneButton value="#{alunoMB.cancelaMatricula}">
+                        <f:selectItem itemLabel="Sim" itemValue="#{true}" />
+                        <f:selectItem itemLabel="Não" itemValue="#{false}" />
+                    </p:selectOneButton>
+                </h:panelGrid>
+
+                <f:facet name="footer">
+                    <h:panelGrid columns="2" style="width: 100%">
+                        <p:commandButton value="Excluir" icon="ui-icon-delete" ajax="false" action="#{alunoMB.cancelarMatricula()}" update="id_tbl_atividades" style="width: 100%"/>
+                        <p:button value="Cancelar" styleClass="blue-grey-btn" icon="ui-icon-cancel"  style="width: 100%"/>
+                    </h:panelGrid>
+                </f:facet>
+            </p:dialog>
 
         </h:form>
     </ui:define>
