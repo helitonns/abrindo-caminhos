@@ -99,28 +99,85 @@
 
                             <div class="ui-g-12 ui-md-12">
                                 <p:dataTable id="tbl_aluno" var="var_aluno" value="#{relatorioEspecificoMB.alunos}" rendered="#{relatorioEspecificoMB.exibirTabelaAluno}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                    
+                                    <p:column headerText="Aluno" sortBy="#{var_aluno.nome}">
+                                        <h:outputText value="#{var_aluno.nome}"/>
+                                    </p:column>
                                     <p:column headerText="Data de Aniversário" sortBy="#{var_aluno.dataNascimento}">
                                         <h:outputText value="#{var_aluno.dataNascimento}">
                                             <f:convertDateTime pattern="dd/MM"/>
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="Aluno" sortBy="#{var_aluno.nome}">
-                                        <h:outputText value="#{var_aluno.nome}"/>
+                                    <p:column headerText="Mãe">
+                                        <h:outputText value="#{var_aluno.genitores.nomeMae}"/>
                                     </p:column>
+                                    <p:column headerText="Pai">
+                                        <h:outputText value="#{var_aluno.genitores.nomePai}"/>
+                                    </p:column>
+                                    <p:column headerText="Telefone">
+                                        <h:outputText value="#{var_aluno.celular}" />
+                                        <h:outputText value=" - " rendered="#{(var_aluno.celular != '' and var_aluno.fixo != null) and (var_aluno.celular != '' and var_aluno.fixo != null)}"/>
+                                        <h:outputText value="#{var_aluno.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Município" sortBy="#{var_aluno.endereco.bairro.municipio.nome}">
+                                        <h:outputText value="#{var_aluno.endereco.bairro.municipio.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Bairro" sortBy="#{var_aluno.endereco.bairro.nome}">
+                                        <h:outputText value="#{var_aluno.endereco.bairro.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Rua">
+                                        <h:outputText value="#{var_aluno.endereco.rua}"/>
+                                    </p:column>
+                                    <p:column headerText="Nº">
+                                        <h:outputText value="#{var_aluno.endereco.numero}"/>
+                                    </p:column>
+                                    <p:column headerText="CEP">
+                                        <h:outputText value="#{var_aluno.endereco.cep}"/>
+                                    </p:column>
+                                    
                                     <f:facet name="footer">
                                         Total: #{fn:length(relatorioEspecificoMB.alunos)}
                                     </f:facet>
                                 </p:dataTable>
 
+                                
                                 <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                    
+                                    <p:column headerText="Aluno" sortBy="#{var_matricula.aluno.nome}">
+                                        <h:outputText value="#{var_matricula.aluno.nome}"/>
+                                    </p:column>
                                     <p:column headerText="Data de Aniversário" sortBy="#{var_matricula.aluno.dataNascimento}">
                                         <h:outputText value="#{var_matricula.aluno.dataNascimento}">
                                             <f:convertDateTime pattern="dd/MM"/>
                                         </h:outputText>
                                     </p:column>
-                                    <p:column headerText="Aluno" sortBy="#{var_matricula.aluno.nome}">
-                                        <h:outputText value="#{var_matricula.aluno.nome}"/>
+                                    <p:column headerText="Mãe">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.nomeMae}"/>
                                     </p:column>
+                                    <p:column headerText="Pai">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.nomePai}"/>
+                                    </p:column>
+                                    <p:column headerText="Telefone">
+                                        <h:outputText value="#{var_matricula.aluno.celular}" />
+                                        <h:outputText value=" - " rendered="#{(var_matricula.aluno.celular != '' and var_matricula.aluno.fixo != null) and (var_matricula.aluno.celular != '' and var_matricula.aluno.fixo != null)}"/>
+                                        <h:outputText value="#{var_matricula.aluno.fixo}" />
+                                    </p:column>
+                                    <p:column headerText="Município" sortBy="#{var_matricula.aluno.endereco.bairro.municipio.nome}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.bairro.municipio.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Bairro" sortBy="#{var_matricula.aluno.endereco.bairro.nome}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.bairro.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Rua">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.rua}"/>
+                                    </p:column>
+                                    <p:column headerText="Nº">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.numero}"/>
+                                    </p:column>
+                                    <p:column headerText="CEP">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.cep}"/>
+                                    </p:column>
+                                    
                                     <f:facet name="footer">
                                         Total: #{fn:length(relatorioEspecificoMB.matriculas)}
                                     </f:facet>
