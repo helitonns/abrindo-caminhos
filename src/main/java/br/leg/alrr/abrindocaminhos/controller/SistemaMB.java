@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Sistema;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.SistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -24,6 +27,9 @@ public class SistemaMB implements Serializable {
 
     @EJB
     private SistemaDAO sistemaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Sistema sistema;
 
@@ -37,6 +43,8 @@ public class SistemaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarSistema() {
@@ -44,9 +52,11 @@ public class SistemaMB implements Serializable {
             if (sistema.getId() != null) {
                 sistemaDAO.atualizar(sistema);
                 FacesUtils.addInfoMessageFlashScoped("Sistema atualizado com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método SistemaMB.salvarSistema() para atualizar o sistema "+ sistema.getId()+".");
             } else {
                 sistemaDAO.salvar(sistema);
                 FacesUtils.addInfoMessageFlashScoped("Sistema salvo com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método SistemaMB.salvarSistema() para salvar o sistema "+ sistema.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class SistemaMB implements Serializable {
             if (removerSistema) {
                 sistemaDAO.remover(sistemaSelecionado);
                 FacesUtils.addInfoMessage("Sistema removido com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método SistemaMB.removerSistema() para excluir o sistema "+ sistema.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());

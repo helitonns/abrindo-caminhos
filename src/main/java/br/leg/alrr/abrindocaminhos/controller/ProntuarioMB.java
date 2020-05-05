@@ -1,5 +1,7 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Alergia;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
 import br.leg.alrr.abrindocaminhos.model.CategoriaDeAlergia;
@@ -13,6 +15,7 @@ import br.leg.alrr.abrindocaminhos.persistence.AlunoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.CategoriaDeAlergiaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.DoencaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.EspecialidadeMedicaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MedicacaoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.ProntuarioDAO;
 import br.leg.alrr.abrindocaminhos.persistence.SindromeDAO;
@@ -60,6 +63,9 @@ public class ProntuarioMB implements Serializable {
     
     @EJB
     private CategoriaDeAlergiaDAO categoriaDeAlergiaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private List<Aluno> alunos;
     private List<Alergia> alergias;
@@ -116,6 +122,7 @@ public class ProntuarioMB implements Serializable {
             FacesUtils.addErrorMessage("Erro no construtor: \n" + e.getCause());
         }
 
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public void listarAlergias() {
@@ -309,6 +316,7 @@ public class ProntuarioMB implements Serializable {
 
                 prontuarioDAO.atualizar(prontuario);
                 FacesUtils.addInfoMessageFlashScoped("Prontuário atualizado com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método ProntuarioMB.salvarProntuario() para atualizar prontuário do aluno "+ alunoProntuario.getId()+".");
             } else {
                 prontuario.setAluno(alunoProntuario);
 
@@ -320,6 +328,7 @@ public class ProntuarioMB implements Serializable {
 
                 prontuarioDAO.salvar(prontuario);
                 FacesUtils.addInfoMessageFlashScoped("Prontuário salvo com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método ProntuarioMB.salvarProntuario() para salvar prontuário do aluno "+ alunoProntuario.getId()+".");
             }
             limparForm();
         } catch (DAOException e) {
@@ -334,6 +343,7 @@ public class ProntuarioMB implements Serializable {
             alergia.setStatus(true);
             alergiaDAO.salvar(alergia);
             FacesUtils.addInfoMessage("Alergia salva com sucesso!");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método ProntuarioMB.salvarAlergia() para salvar a alegia "+ alergia.getNome()+".");
 
             alergia = new Alergia();
 
@@ -349,6 +359,7 @@ public class ProntuarioMB implements Serializable {
             medicacao.setStatus(true);
             medicacaoDAO.salvar(medicacao);
             FacesUtils.addInfoMessage("Medicação salva com sucesso!");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método ProntuarioMB.salvarMedicacao() para salvar a medicação "+ medicacao.getNome()+".");
 
             medicacao = new Medicacao();
 
@@ -364,6 +375,7 @@ public class ProntuarioMB implements Serializable {
             especialidadeMedica.setStatus(true);
             especialidadeMedicaDAO.salvar(especialidadeMedica);
             FacesUtils.addInfoMessage("Especialidade médica salva com sucesso!");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método ProntuarioMB.salvarEspecialidade() para salvar a especialidade "+ especialidadeMedica.getNome()+".");
 
             especialidadeMedica = new EspecialidadeMedica();
 
@@ -379,6 +391,7 @@ public class ProntuarioMB implements Serializable {
             doenca.setStatus(true);
             doencaDAO.salvar(doenca);
             FacesUtils.addInfoMessage("Doença salva com sucesso!");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método ProntuarioMB.salvarDoenca() para salvar a doenca "+ doenca.getNome()+".");
 
             doenca = new Doenca();
 
@@ -394,6 +407,7 @@ public class ProntuarioMB implements Serializable {
             sindrome.setStatus(true);
             sindromeDAO.salvar(sindrome);
             FacesUtils.addInfoMessage("Sídrome/transtorno salva com sucesso!");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método ProntuarioMB.salvarSindrome() para salvar a sídrome "+ sindrome.getNome()+".");
 
             sindrome = new Sindrome();
 

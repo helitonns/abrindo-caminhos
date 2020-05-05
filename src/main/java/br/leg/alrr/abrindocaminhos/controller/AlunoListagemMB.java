@@ -1,9 +1,13 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
 import br.leg.alrr.abrindocaminhos.model.Genitores;
 import br.leg.alrr.abrindocaminhos.model.Matricula;
+import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
 import br.leg.alrr.abrindocaminhos.persistence.AlunoDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MatriculaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.TurmaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
@@ -33,6 +37,9 @@ public class AlunoListagemMB implements Serializable {
 
     @EJB
     private MatriculaDAO matriculaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private ArrayList<Aluno> alunos;
     private ArrayList<Aluno> irmaos;
@@ -78,8 +85,9 @@ public class AlunoListagemMB implements Serializable {
                 FacesUtils.removeBean("idGenitor");
                 FacesUtils.removeBean("exibirModalAlunoMatricula");
                 FacesUtils.removeBean("matriculasParaExcluir");
-
             }
+
+            Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
 
         } catch (Exception e) {
             FacesUtils.addInfoMessage("Erro ao tentar editar aluno.");
@@ -108,6 +116,8 @@ public class AlunoListagemMB implements Serializable {
             FacesUtils.addWarnMessageFlashScoped("Sem resultado!");
         }
         aluno = new Aluno();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método AlunoListagem.pesquisarAluno().");
     }
 
     public String removerAluno() {
@@ -143,6 +153,7 @@ public class AlunoListagemMB implements Serializable {
                     }
                     FacesUtils.addInfoMessageFlashScoped("Aluno removido com sucesso!");
                     exibirModalAlunoMatricula = false;
+                    Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método AlunoListagem.removerAluno() para deletar o aluno de ID: "+idAluno,"Aluno removido com sucesso.");
                 }
             } //O ALUNO TEM MATRICLA
             else {
@@ -171,10 +182,11 @@ public class AlunoListagemMB implements Serializable {
                         alunoDAO.removerGenitor(alunoDAO.buscarGenitor(idGenitor));
                     }
                     FacesUtils.addInfoMessageFlashScoped("Aluno removido com sucesso!");
+                    Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método AlunoListagem.removerAluno() para deletar o aluno de ID: "+idAluno,"Aluno removido com sucesso.");
                 }
                 exibirModalAlunoMatricula = false;
             }
-
+            
         } catch (Exception e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
             System.out.println(e.getCause());

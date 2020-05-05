@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Serie;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.SerieDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -24,6 +27,9 @@ public class SerieMB implements Serializable {
 
     @EJB
     private SerieDAO serieDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Serie serie;
 
@@ -37,6 +43,8 @@ public class SerieMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarSerie() {
@@ -44,9 +52,11 @@ public class SerieMB implements Serializable {
             if (serie.getId() != null) {
                 serieDAO.atualizar(serie);
                 FacesUtils.addInfoMessageFlashScoped("Série atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método SerieMB.salvarSerie() para atualizar a série "+ serie.getId()+".");
             } else {
                 serieDAO.salvar(serie);
                 FacesUtils.addInfoMessageFlashScoped("Série salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método SerieMB.salvarSerie() para salvar a série "+ serie.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class SerieMB implements Serializable {
             if (removerSerieSelecionada) {
                 serieDAO.remover(serieSelecionada);
                 FacesUtils.addInfoMessage("Série removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método SerieMB.removerSerie() para excluir série a série "+ serie.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A série não pode ser excluída pois ainda está referenciada em instrução.");

@@ -1,8 +1,15 @@
 package br.leg.alrr.abrindocaminhos.filter;
 
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Autorizacao;
+import br.leg.alrr.abrindocaminhos.model.LogSistema;
 import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
+import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import javax.ejb.EJB;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -27,7 +34,7 @@ public class NavegacaoFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
-            
+
             HttpSession httpSession = ((HttpServletRequest) request).getSession();
             HttpServletRequest httpServletRequest = (HttpServletRequest) request;
             HttpServletResponse httpServletResponse = (HttpServletResponse) response;
@@ -49,7 +56,6 @@ public class NavegacaoFilter implements Filter {
                     } else {
                         chain.doFilter(request, response);
                     }
-
                 }
             } else {
                 chain.doFilter(request, response);

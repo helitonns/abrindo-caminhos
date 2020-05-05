@@ -1,7 +1,10 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.CategoriaDeAlergia;
 import br.leg.alrr.abrindocaminhos.persistence.CategoriaDeAlergiaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -24,6 +27,9 @@ public class CategoriaDeAlergiaMB implements Serializable {
 
     @EJB
     private CategoriaDeAlergiaDAO categoriaDeAlergiaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private CategoriaDeAlergia categoriaDeAlergia;
 
@@ -37,6 +43,8 @@ public class CategoriaDeAlergiaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarCategoria() {
@@ -44,9 +52,11 @@ public class CategoriaDeAlergiaMB implements Serializable {
             if (categoriaDeAlergia.getId() != null) {
                 categoriaDeAlergiaDAO.atualizar(categoriaDeAlergia);
                 FacesUtils.addInfoMessageFlashScoped("Categoria atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método CategoriaAtividadeMB.salvarCategoria() para atualizar a categoria de alergia "+ categoriaDeAlergia.getId()+".");
             } else {
                 categoriaDeAlergiaDAO.salvar(categoriaDeAlergia);
                 FacesUtils.addInfoMessageFlashScoped("Categoria salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método CategoriaAtividadeMB.salvarCategoria() para salvar a categoria de alergia "+ categoriaDeAlergia.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class CategoriaDeAlergiaMB implements Serializable {
             if (removerCategoriaDeAlergiaSelecionada) {
                 categoriaDeAlergiaDAO.remover(categoriaDeAlergiaSelecionada);
                 FacesUtils.addInfoMessage("Categoria removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método CategoriaAtividadeMB.removerCategoria() para excluir a categoria de alergia "+ categoriaDeAlergia.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A categoria não pode ser excluída porque há ainda está referenciada em alergias.");

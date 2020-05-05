@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Sindrome;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.SindromeDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -24,6 +27,9 @@ public class SindromeMB implements Serializable {
 
     @EJB
     private SindromeDAO sindromeDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Sindrome sindrome;
 
@@ -37,6 +43,8 @@ public class SindromeMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarSindrome() {
@@ -44,9 +52,11 @@ public class SindromeMB implements Serializable {
             if (sindrome.getId() != null) {
                 sindromeDAO.atualizar(sindrome);
                 FacesUtils.addInfoMessageFlashScoped("Sindrome atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método SindromeMB.salvarSindrome() para atualizar a síndrome "+ sindrome.getId()+".");
             } else {
                 sindromeDAO.salvar(sindrome);
                 FacesUtils.addInfoMessageFlashScoped("Sindrome salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método SindromeMB.salvarSindrome() para apagar a síndrome "+ sindrome.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class SindromeMB implements Serializable {
             if (removerSindromeSelecionada) {
                 sindromeDAO.remover(sindromeSelecionada);
                 FacesUtils.addInfoMessage("Sindrome removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método SindromeMB.salvarSindrome() para excluir a síndrome "+ sindrome.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A síndorme não pode ser excluída pois ainda está referenciada em prontuário.");

@@ -1,7 +1,10 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Denominacao;
 import br.leg.alrr.abrindocaminhos.persistence.DenominacaoDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -24,6 +27,9 @@ public class DenominacaoMB implements Serializable {
 
     @EJB
     private DenominacaoDAO denominacaoDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Denominacao denominacao;
 
@@ -37,6 +43,8 @@ public class DenominacaoMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarDenominacao() {
@@ -44,9 +52,11 @@ public class DenominacaoMB implements Serializable {
             if (denominacao.getId() != null) {
                 denominacaoDAO.atualizar(denominacao);
                 FacesUtils.addInfoMessageFlashScoped("Denominação atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método DenominacaoMB.salvarDenominacao() para atualizar a denominação "+ denominacao.getId()+".");
             } else {
                 denominacaoDAO.salvar(denominacao);
                 FacesUtils.addInfoMessageFlashScoped("Denominação salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método DenominacaoMB.salvarDenominacao() para salvar a denominação "+ denominacao.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class DenominacaoMB implements Serializable {
             if (removerDenominacaoSelecionada) {
                 denominacaoDAO.remover(denominacaoSelecionada);
                 FacesUtils.addInfoMessage("Denominação removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método DenominacaoMB.removerDenominacao() para excluir a denominação "+ denominacao.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A esfera de atuação não pode ser excluída pois ainda está referenciada em escola.");

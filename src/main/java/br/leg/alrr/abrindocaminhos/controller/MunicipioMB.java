@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Municipio;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MunicipioDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -24,6 +27,9 @@ public class MunicipioMB implements Serializable {
 
     @EJB
     private MunicipioDAO municipioDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Municipio municipio;
 
@@ -37,6 +43,8 @@ public class MunicipioMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarMunicipio() {
@@ -44,9 +52,11 @@ public class MunicipioMB implements Serializable {
             if (municipio.getId() != null) {
                 municipioDAO.atualizar(municipio);
                 FacesUtils.addInfoMessageFlashScoped("Município atualizado com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método MunicipioMB.salvarMunicipio() para atualizar o município "+ municipio.getId()+".");
             } else {
                 municipioDAO.salvar(municipio);
                 FacesUtils.addInfoMessageFlashScoped("Município salvo com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método MunicipioMB.salvarMunicipio() para salvar o município "+ municipio.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class MunicipioMB implements Serializable {
             if (removerMunicipio) {
                 municipioDAO.remover(municipioSelecionado);
                 FacesUtils.addInfoMessage("Município removido com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método MunicipioMB.removerMunicipio() para excluir o município "+ municipio.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("O município não pode ser excluído pois ainda está referenciado em bairro.");

@@ -1,7 +1,10 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Idade;
 import br.leg.alrr.abrindocaminhos.persistence.IdadeDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -24,6 +27,9 @@ public class IdadeMB implements Serializable {
 
     @EJB
     private IdadeDAO idadeDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Idade idade;
 
@@ -37,6 +43,8 @@ public class IdadeMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarIdade() {
@@ -44,9 +52,11 @@ public class IdadeMB implements Serializable {
             if (idade.getId() != null) {
                 idadeDAO.atualizar(idade);
                 FacesUtils.addInfoMessageFlashScoped("Idade atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método IdadeMB.salvarIdade() para atualizar a idade "+ idade.getId()+".");
             } else {
                 idadeDAO.salvar(idade);
                 FacesUtils.addInfoMessageFlashScoped("Idade salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método IdadeMB.salvarIdade() para salvar a idade "+ idade.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class IdadeMB implements Serializable {
             if (removerIdadeSelecionada) {
                 idadeDAO.remover(idadeSelecionada);
                 FacesUtils.addInfoMessage("Idade removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método IdadeMB.removerIdade() para excluir a idade "+ idade.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("Ocorreu um erro ao excluir idade.");

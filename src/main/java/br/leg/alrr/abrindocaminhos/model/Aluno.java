@@ -2,9 +2,6 @@ package br.leg.alrr.abrindocaminhos.model;
 
 import br.leg.alrr.abrindocaminhos.business.Sexo;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import javax.persistence.Basic;
@@ -27,7 +24,6 @@ import javax.persistence.Transient;
 
 import org.hibernate.envers.AuditTable;
 import org.hibernate.envers.Audited;
-import org.hibernate.type.LocalDateTimeType;
 
 /**
  *

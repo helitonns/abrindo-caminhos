@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Mensagem;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MensagemDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -31,6 +34,8 @@ public class MensagemMB implements Serializable {
     @EJB
     private MensagemDAO mensagemDAO;
     
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
     
     private List<Mensagem> mensagens;
 
@@ -43,8 +48,9 @@ public class MensagemMB implements Serializable {
     @PostConstruct
     public void init() {
         iniciar();
-        
         listarTodasAsMensgens();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     private void iniciar() {
@@ -67,9 +73,11 @@ public class MensagemMB implements Serializable {
             if (mensagem.getId() != null) {
                 mensagemDAO.atualizar(mensagem);
                 FacesUtils.addInfoMessageFlashScoped("Mensagem atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método MensagemMB.salvarMensagem() para atualizar a mensagem "+ mensagem.getId()+".");
             } else {
                 mensagemDAO.salvar(mensagem);
                 FacesUtils.addInfoMessageFlashScoped("Mensagem salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método MensagemMB.salvarMensagem() para salvr a mensagem "+ mensagem.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -92,6 +100,7 @@ public class MensagemMB implements Serializable {
             if (excluirMensagem) {
                 mensagemDAO.remover(mensagem);
                 FacesUtils.addInfoMessageFlashScoped("Mensagem excluída com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método MensagemMB.excluirMensagem() para apagar a mensagem "+ mensagem.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage(e.getMessage());

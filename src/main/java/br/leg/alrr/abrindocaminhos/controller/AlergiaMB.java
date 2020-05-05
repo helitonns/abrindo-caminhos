@@ -1,9 +1,12 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Alergia;
 import br.leg.alrr.abrindocaminhos.model.CategoriaDeAlergia;
 import br.leg.alrr.abrindocaminhos.persistence.AlergiaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.CategoriaDeAlergiaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -29,6 +32,9 @@ public class AlergiaMB implements Serializable {
     
     @EJB
     private CategoriaDeAlergiaDAO categoriaDeAlergiaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Alergia alergia;
 
@@ -44,8 +50,9 @@ public class AlergiaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
-        
         listarCategorias();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarAlergia() {
@@ -54,9 +61,11 @@ public class AlergiaMB implements Serializable {
             if (alergia.getId() != null) {
                 alergiaDAO.atualizar(alergia);
                 FacesUtils.addInfoMessageFlashScoped("Alergia atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método AlergiaMB.salvarAlergia() para atualizar a alergia "+ alergia.getId()+".");
             } else {
                 alergiaDAO.salvar(alergia);
                 FacesUtils.addInfoMessageFlashScoped("Alergia salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlergiaMB.salvarAlergia() para salvar a alergia "+ alergia.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -85,6 +94,7 @@ public class AlergiaMB implements Serializable {
             if (removerAlergiaSelecionada) {
                 alergiaDAO.remover(alergiaSelecionada);
                 FacesUtils.addInfoMessage("Alergia removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método AlergiaMB.remoeverAlergia() para excluir a alergia "+ alergia.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A alergia não pode ser excluída pois ainda está referencia em prontuário.");

@@ -1,7 +1,10 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.EspecialidadeMedica;
 import br.leg.alrr.abrindocaminhos.persistence.EspecialidadeMedicaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -24,6 +27,9 @@ public class EspecialidadeMedicaMB implements Serializable {
 
     @EJB
     private EspecialidadeMedicaDAO especialidadeMedicaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private EspecialidadeMedica especialidadeMedica;
 
@@ -37,6 +43,8 @@ public class EspecialidadeMedicaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarEspecialidadeMedica() {
@@ -44,9 +52,11 @@ public class EspecialidadeMedicaMB implements Serializable {
             if (especialidadeMedica.getId() != null) {
                 especialidadeMedicaDAO.atualizar(especialidadeMedica);
                 FacesUtils.addInfoMessageFlashScoped("EspecialidadeMedica atualizado com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método EspecialidadeMedicaMB.salvarEspecialidadeMedica() para atualizar a especialidade "+ especialidadeMedica.getId()+".");
             } else {
                 especialidadeMedicaDAO.salvar(especialidadeMedica);
                 FacesUtils.addInfoMessageFlashScoped("EspecialidadeMedica salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método EspecialidadeMedicaMB.salvarEspecialidadeMedica() para salvar a especialidade "+ especialidadeMedica.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class EspecialidadeMedicaMB implements Serializable {
             if (removerEspecialidadeMedicaSelecionada) {
                 especialidadeMedicaDAO.remover(especialidadeMedicaSelecionada);
                 FacesUtils.addInfoMessage("EspecialidadeMedica removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método EspecialidadeMedicaMB.removerEspecialidadeMedica() para excluir a especialidade "+ especialidadeMedica.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A especialidade não pode ser excluída pois ainda está referenciada em prontuário.");

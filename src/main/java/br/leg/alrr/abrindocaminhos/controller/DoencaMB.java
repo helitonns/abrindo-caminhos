@@ -1,7 +1,10 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Doenca;
 import br.leg.alrr.abrindocaminhos.persistence.DoencaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -24,6 +27,9 @@ public class DoencaMB implements Serializable {
 
     @EJB
     private DoencaDAO doencaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Doenca doenca;
 
@@ -37,6 +43,8 @@ public class DoencaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarDoenca() {
@@ -44,9 +52,11 @@ public class DoencaMB implements Serializable {
             if (doenca.getId() != null) {
                 doencaDAO.atualizar(doenca);
                 FacesUtils.addInfoMessageFlashScoped("Doença atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método DoencaMB.salvarDoenca() para atualizar a doença "+ doenca.getId()+".");
             } else {
                 doencaDAO.salvar(doenca);
                 FacesUtils.addInfoMessageFlashScoped("Doença salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método DoencaMB.salvarDoenca() para salvar a doença "+ doenca.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class DoencaMB implements Serializable {
             if (removerDoencaSelecionada) {
                 doencaDAO.remover(doencaSelecionada);
                 FacesUtils.addInfoMessage("Doenca removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método DoencaMB.removerDoenca() para excluir a doença "+ doenca.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A doença não pode ser excluída pois ainda está referenciada em prontuário.");

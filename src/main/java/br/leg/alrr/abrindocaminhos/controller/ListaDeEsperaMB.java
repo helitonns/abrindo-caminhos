@@ -1,15 +1,20 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Atividade;
 import br.leg.alrr.abrindocaminhos.model.ListaDeEspera;
-import br.leg.alrr.abrindocaminhos.model.Usuario;
+import br.leg.alrr.abrindocaminhos.model.LogSistema;
 import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
 import br.leg.alrr.abrindocaminhos.persistence.AtividadeDAO;
 import br.leg.alrr.abrindocaminhos.persistence.InscricaoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.ListaDeEsperaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
@@ -29,12 +34,15 @@ public class ListaDeEsperaMB implements Serializable {
 
     @EJB
     private ListaDeEsperaDAO listaDeEsperaDAO;
-    
+
     @EJB
     private InscricaoDAO inscricaoDAO;
 
     @EJB
     private AtividadeDAO atividadeDAO;
+
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private ArrayList<Atividade> atividades;
     private ArrayList<ListaDeEspera> listas;
@@ -49,6 +57,8 @@ public class ListaDeEsperaMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL() + ".");
     }
 
     private void listarAtividades() {
@@ -69,7 +79,7 @@ public class ListaDeEsperaMB implements Serializable {
         }
     }
 
-    public String salvarTurma() {
+    public String salvarLista() {
         try {
             UsuarioComUnidade u = (UsuarioComUnidade) FacesUtils.getBean("usuario");
 
@@ -81,9 +91,11 @@ public class ListaDeEsperaMB implements Serializable {
             if (listaDeEspera.getId() != null) {
                 listaDeEsperaDAO.atualizar(listaDeEspera);
                 FacesUtils.addInfoMessageFlashScoped("Lista de espera atulizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método ListaDesEsperaMB.salvarLista() para atualizar a lista "+ listaDeEspera.getId()+".");
             } else {
                 listaDeEsperaDAO.salvar(listaDeEspera);
                 FacesUtils.addInfoMessageFlashScoped("Lista de espera salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método ListaDesEsperaMB.salvarLista() para salvar a lista "+ listaDeEspera.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -118,6 +130,7 @@ public class ListaDeEsperaMB implements Serializable {
             if (removerLista) {
                 listaDeEsperaDAO.remover(listaDeEspera);
                 FacesUtils.addInfoMessage("Lista de espera removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método ListaDesEsperaMB.removerLista() para remover a lista "+ listaDeEspera.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A lista de espera não pode ser excluída pois ainda está sendo referenciada em inscrição.");
@@ -130,11 +143,12 @@ public class ListaDeEsperaMB implements Serializable {
             if (finalizarLista) {
                 //Primeiro finlaiza as incrições da lista
                 inscricaoDAO.finalizarInscricaoPorLista(listaDeEspera);
-                
+
                 //Depois finaliza a turma
                 listaDeEspera.setIniciada(false);
                 listaDeEsperaDAO.atualizar(listaDeEspera);
                 FacesUtils.addInfoMessage("Lista finalizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método ListaDesEsperaMB.finalizarLista() para atualizar a lista "+ listaDeEspera.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage());

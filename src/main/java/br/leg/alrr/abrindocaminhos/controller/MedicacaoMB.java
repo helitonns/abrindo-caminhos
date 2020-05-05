@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Medicacao;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MedicacaoDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -24,6 +27,9 @@ public class MedicacaoMB implements Serializable {
 
     @EJB
     private MedicacaoDAO medicacaoDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Medicacao medicacao;
 
@@ -37,6 +43,8 @@ public class MedicacaoMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarMedicacao() {
@@ -44,9 +52,11 @@ public class MedicacaoMB implements Serializable {
             if (medicacao.getId() != null) {
                 medicacaoDAO.atualizar(medicacao);
                 FacesUtils.addInfoMessageFlashScoped("Medicação atualizado com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método MedicacaoMB.salvarMedicacao() para atualizar a medicação "+ medicacao.getId()+".");
             } else {
                 medicacaoDAO.salvar(medicacao);
                 FacesUtils.addInfoMessageFlashScoped("Medicação salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método MedicacaoMB.salvarMedicacao() para salvar a medicação "+ medicacao.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class MedicacaoMB implements Serializable {
             if (removerMedicacaoSelecionada) {
                 medicacaoDAO.remover(medicacaoSelecionada);
                 FacesUtils.addInfoMessage("Medicação removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método MedicacaoMB.removerMedicacao() para excluir a medicação "+ medicacao.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A medicação não pode ser excluída pois ainda está referenciada em prontuário.");

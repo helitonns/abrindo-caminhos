@@ -1,7 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
 import br.leg.alrr.abrindocaminhos.business.BlocoParametro;
+import br.leg.alrr.abrindocaminhos.business.Loger;
 import br.leg.alrr.abrindocaminhos.business.RetornoConsultaQuantidade;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
 import br.leg.alrr.abrindocaminhos.model.Atividade;
 import br.leg.alrr.abrindocaminhos.model.Bairro;
@@ -12,6 +14,7 @@ import br.leg.alrr.abrindocaminhos.model.Turma;
 import br.leg.alrr.abrindocaminhos.model.Unidade;
 import br.leg.alrr.abrindocaminhos.persistence.AtividadeDAO;
 import br.leg.alrr.abrindocaminhos.persistence.BairroDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MunicipioDAO;
 import br.leg.alrr.abrindocaminhos.persistence.RelatorioDAO;
 import br.leg.alrr.abrindocaminhos.persistence.TurmaDAO;
@@ -55,6 +58,9 @@ public class RelatorioEspecificoMB implements Serializable {
 
     @EJB
     private BairroDAO bairroDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private ArrayList<Aluno> alunos;
     private ArrayList<Matricula> matriculas;
@@ -84,9 +90,10 @@ public class RelatorioEspecificoMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
-
         listarUnidades();
         listarMunicipio();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     private void listarMunicipio() {
@@ -185,6 +192,8 @@ public class RelatorioEspecificoMB implements Serializable {
                 matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
                 exibirTabelaMatricula = true;
             }
+            
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarPorAniversariantes().");
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
@@ -218,6 +227,7 @@ public class RelatorioEspecificoMB implements Serializable {
                 matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
                 exibirTabelaMatricula = true;
             }
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarAlunos().");
         } catch (DAOException e) {
             System.out.println(e.getCause());
             FacesUtils.addErrorMessage(e.getMessage());
@@ -262,6 +272,7 @@ public class RelatorioEspecificoMB implements Serializable {
                 matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
                 exibirTabelaMatricula = true;
             }
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarPaisAniversariantes().");
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
@@ -339,6 +350,7 @@ public class RelatorioEspecificoMB implements Serializable {
                 matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
             }
             exibirTabelaMatricula = true;
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarPorAtividades().");
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
@@ -395,6 +407,7 @@ public class RelatorioEspecificoMB implements Serializable {
             }
             retornoConsultaQuantidades.add(new RetornoConsultaQuantidade("TOTAL DE ALUNOS", totalDeAlunos));
             exibirTabelaMatricula = true;
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarPorAtividadePorQuantidade().");
         } catch (DAOException e) {
             System.out.println(e.getCause());
             FacesUtils.addErrorMessage(e.getMessage());
@@ -448,6 +461,7 @@ public class RelatorioEspecificoMB implements Serializable {
                 matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
             }
             exibirTabelaMatricula = true;
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarPorTurma().");
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage());
         }
@@ -546,6 +560,7 @@ public class RelatorioEspecificoMB implements Serializable {
                 exibirTabelaAluno = true;
 
             }
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarPorBairros().");
         } catch (DAOException e) {
             FacesUtils.addErrorMessage(e.getMessage() + ": " + e.getCause());
         }
@@ -633,6 +648,7 @@ public class RelatorioEspecificoMB implements Serializable {
                 }
                 retornoConsultaQuantidades.add(new RetornoConsultaQuantidade("TOTAL DE ALUNOS", totalDeAlunos));
             }
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarBairroPorQuantidade().");
         } catch (DAOException e) {
             System.out.println(e.getCause());
             FacesUtils.addErrorMessage(e.getMessage());

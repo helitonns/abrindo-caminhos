@@ -1,9 +1,11 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Atividade;
-import br.leg.alrr.abrindocaminhos.model.Usuario;
 import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
 import br.leg.alrr.abrindocaminhos.persistence.AtividadeDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -26,6 +28,9 @@ public class AtividadeMB implements Serializable {
 
     @EJB
     private AtividadeDAO atividadeDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Atividade atividade;
 
@@ -39,6 +44,8 @@ public class AtividadeMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarAtividade() {
@@ -46,11 +53,13 @@ public class AtividadeMB implements Serializable {
             if (atividade.getId() != null) {
                 atividadeDAO.atualizar(atividade);
                 FacesUtils.addInfoMessageFlashScoped("Atividade atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método AtividadeMB.salvarAtividade() para atualizar a atividade "+ atividade.getId()+".");
             } else {
                 UsuarioComUnidade u = (UsuarioComUnidade) FacesUtils.getBean("usuario");
                 atividade.setUnidade(u.getUnidade());
                 atividadeDAO.salvar(atividade);
                 FacesUtils.addInfoMessageFlashScoped("Atividade salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AtividadeMB.salvarAtividade() para salvar a atividade "+ atividade.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -72,6 +81,7 @@ public class AtividadeMB implements Serializable {
             if (removerAtividadeSelecionada) {
                 atividadeDAO.remover(atividadeSelecionada);
                 FacesUtils.addInfoMessage("Atividade removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método AtividadeMB.removerAtividade() para excluir a atividade "+ atividade.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A atividade não pode ser excluída pois ainda está referenciada em turma.");

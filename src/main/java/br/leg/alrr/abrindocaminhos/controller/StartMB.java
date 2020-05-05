@@ -1,11 +1,12 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
-import br.leg.alrr.abrindocaminhos.model.Acesso;
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Autorizacao;
 import br.leg.alrr.abrindocaminhos.model.Mensagem;
 import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
-import br.leg.alrr.abrindocaminhos.persistence.AcessoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.AutorizacaoDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MensagemDAO;
 import br.leg.alrr.abrindocaminhos.persistence.UsuarioComUnidadeDAO;
 import br.leg.alrr.abrindocaminhos.util.Criptografia;
@@ -13,8 +14,6 @@ import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.ZoneId;
 import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
@@ -36,14 +35,14 @@ public class StartMB implements Serializable {
     private UsuarioComUnidadeDAO usuarioDAO;
 
     @EJB
-    private AcessoDAO acessoDAO;
-    
-    @EJB
     private MensagemDAO mensagemDAO;
+
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private UsuarioComUnidade usuario;
     private Autorizacao autorizacao;
-    
+
     private ArrayList<Mensagem> mensagens;
 
     private String login = "";
@@ -56,7 +55,7 @@ public class StartMB implements Serializable {
         usuario = new UsuarioComUnidade();
         listarMensagens();
     }
-    
+
     private void listarMensagens() {
         try {
             mensagens = new ArrayList<>();
@@ -73,14 +72,8 @@ public class StartMB implements Serializable {
             if (usuario != null) {
                 usuario = usuarioDAO.pesquisarPorLoginESenha(login, Criptografia.criptografarEmMD5(senha));
                 if (usuario != null && usuario.isStatus()) {
-                    //==========================================================
-                    // Código que incrementa a estatística de acesso na aplicação
-                    Acesso acesso = new Acesso();
-                    acesso.setDataDeAcesso(LocalDate.now());
-                    acesso.setMomentoDoAcesso(LocalTime.now());
-                    acesso.setUsuario(usuario);
-                    acessoDAO.salvar(acesso);
-                    //==========================================================
+
+                    Loger.registrar(logSistemaDAO, TipoAcao.ENTRAR, "O usuário entrou o sistema.");
 
                     FacesUtils.setBean("usuario", usuario);
                     return "/pages/user/listar-editar-aluno.xhtml" + "?faces-redirect=true";
@@ -107,20 +100,14 @@ public class StartMB implements Serializable {
                 usuario = usuarioDAO.pesquisarPorLoginESenha(login, Criptografia.criptografarEmMD5(senha));
                 FacesUtils.setBean("usuario", usuario);
                 FacesUtils.setBean("autorizacao", autorizacao);
-                
-                //==========================================================
-                // Código que incrementa a estatística de acesso na aplicação
-                Acesso acesso = new Acesso();
-                ZoneId zone1 = ZoneId.of("America/Boa_Vista");
-                
-                acesso.setDataDeAcesso(LocalDate.now(zone1));
-                acesso.setMomentoDoAcesso(LocalTime.now(zone1));
-                acesso.setUsuario(usuario);
-                acessoDAO.salvar(acesso);
-                //==========================================================
-                
-                
-                return "/pages/user/listar-editar-aluno.xhtml" + "?faces-redirect=true";
+                Loger.registrar(logSistemaDAO, TipoAcao.ENTRAR, "O usuário entrou o sistema.");
+
+                if (usuario.getNome() == null || usuario.getMatricula() == null) {
+                    FacesUtils.addWarnMessageFlashScoped("O usuário está com o nome ou matrícula não preenchidos. Complete o seu perfil!");
+                    return "/pages/user/perfil.xhtml" + "?faces-redirect=true";
+                } else {
+                    return "/pages/user/listar-editar-aluno.xhtml" + "?faces-redirect=true";
+                }
             } else {
                 FacesUtils.addErrorMessageFlashScoped("Usuário e/ou senha incorreto");
             }
@@ -134,6 +121,7 @@ public class StartMB implements Serializable {
 
     public String sair() {
         try {
+            Loger.registrar(logSistemaDAO, TipoAcao.SAIR, "O usuário fez saiu do sistema.");
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         } catch (Exception e) {
         }
@@ -141,19 +129,36 @@ public class StartMB implements Serializable {
     }
 
     public void trocarSenha() {
+
         try {
             if (verificarForcaDaSenha(senha1)) {
                 usuario.setSenha(Criptografia.criptografarEmMD5(senha1));
                 usuarioDAO.atualizar(usuario);
                 FacesUtils.addInfoMessage("Senha atualizada com sucesso!!!");
+
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método StartMB.trocarSenha().", "A senha fo atualizada com sucesso.");
             } else {
-                FacesUtils.addWarnMessage("A senha deve atender aos seguintes requisitos: ter no mínimo 8 caracteres, possuir letra minúcula 'a', "
-                        + "possuir letra maiúscula 'A' e número '123'!!!");
+                FacesUtils.addWarnMessage("A senha deve atender aos seguintes requisitos: ter no mínimo 8 caracteres, possuir letra minúcula 'a', possuir letra maiúscula 'A' e número '123'!!!");
+
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método StartMB.trocarSenha().", "A senha não foi atualizada porque não atendeu aos requisitos mínimos.");
             }
 
         } catch (DAOException e) {
-            FacesUtils.addInfoMessage("Senha atualizada com sucesso!!!");
+            FacesUtils.addErrorMessage("Erro au atualizar senha.");
         }
+    }
+
+    public String salvarNomeMatricula() {
+
+        try {
+            usuarioDAO.atualizar(usuario);
+            FacesUtils.addInfoMessage("Usuário atualizado com sucesso!!!");
+            Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método StartMB.salvarNomeMatricula().");
+            return "listar-editar-aluno.xhtml" + "?faces-redirect=true";
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessage("Erro au atualizar senha.");
+        }
+        return null;
     }
 
     public String retornarUnidadeAtiva() {
@@ -264,5 +269,5 @@ public class StartMB implements Serializable {
     public ArrayList<Mensagem> getMensagens() {
         return mensagens;
     }
-    
+
 }

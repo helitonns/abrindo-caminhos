@@ -70,4 +70,5 @@ public class FacesUtils {
         HttpServletRequest request = (HttpServletRequest) fc.getExternalContext().getRequest();
         return request.getRequestURI();
     }
+
 }

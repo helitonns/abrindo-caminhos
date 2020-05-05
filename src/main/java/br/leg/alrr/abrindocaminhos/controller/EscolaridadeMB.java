@@ -1,7 +1,10 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Escolaridade;
 import br.leg.alrr.abrindocaminhos.persistence.EscolaridadeDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -24,6 +27,9 @@ public class EscolaridadeMB implements Serializable {
 
     @EJB
     private EscolaridadeDAO escolaridadeDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Escolaridade escolaridade;
 
@@ -37,6 +43,8 @@ public class EscolaridadeMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarEscolaridade() {
@@ -44,9 +52,11 @@ public class EscolaridadeMB implements Serializable {
             if (escolaridade.getId() != null) {
                 escolaridadeDAO.atualizar(escolaridade);
                 FacesUtils.addInfoMessageFlashScoped("Escolaridade atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método EscolaridadeMB.salvarEscolaridade() para atualizar a escolaridade "+ escolaridade.getId()+".");
             } else {
                 escolaridadeDAO.salvar(escolaridade);
                 FacesUtils.addInfoMessageFlashScoped("Escolaridade salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método EscolaridadeMB.salvarEscolaridade() para salvar a escolaridade "+ escolaridade.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class EscolaridadeMB implements Serializable {
             if (removerEscolaridadeSelecionada) {
                 escolaridadeDAO.remover(escolaridadeSelecionada);
                 FacesUtils.addInfoMessage("Escolaridade removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método EscolaridadeMB.removerEscolaridade() para excluir a escolaridade "+ escolaridade.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("A escolaridade não pode ser excluída pois ainda está referenciada em instrução.");

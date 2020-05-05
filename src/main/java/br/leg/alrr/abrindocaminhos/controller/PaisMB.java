@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Pais;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.PaisDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -24,6 +27,9 @@ public class PaisMB implements Serializable {
 
     @EJB
     private PaisDAO paisDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Pais pais;
 
@@ -37,6 +43,8 @@ public class PaisMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarPais() {
@@ -44,9 +52,11 @@ public class PaisMB implements Serializable {
             if (pais.getId() != null) {
                 paisDAO.atualizar(pais);
                 FacesUtils.addInfoMessageFlashScoped("Pais atualizado com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método PaisMB.salvarAtividade() para atualizar o país "+ pais.getId()+".");
             } else {
                 paisDAO.salvar(pais);
                 FacesUtils.addInfoMessageFlashScoped("Pais salvo com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método PaisMB.salvarAtividade() para salvar o país "+ pais.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class PaisMB implements Serializable {
             if (removerPaisSelecionado) {
                 paisDAO.remover(paisSelecionado);
                 FacesUtils.addInfoMessage("País removido com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método PaisMB.removerAtividade() para excluir o país "+ pais.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("O país não pode ser excluído pois ainda está refenciado em aluno.");

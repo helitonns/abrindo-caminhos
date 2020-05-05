@@ -1,5 +1,7 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
 import br.leg.alrr.abrindocaminhos.model.Inscricao;
 import br.leg.alrr.abrindocaminhos.model.ListaDeEspera;
@@ -8,6 +10,7 @@ import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
 import br.leg.alrr.abrindocaminhos.persistence.AlunoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.InscricaoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.ListaDeEsperaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
 import java.io.Serializable;
@@ -37,6 +40,9 @@ public class InscricaoMB implements Serializable {
 
     @EJB
     private ListaDeEsperaDAO listaDeEsperaDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private ArrayList<ListaDeEspera> listas;
 
@@ -64,6 +70,8 @@ public class InscricaoMB implements Serializable {
         } catch (Exception e) {
             FacesUtils.addErrorMessage("Erro ao tentar matricular aluno.");
         }
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     private void listarListasIniciadas() {
@@ -108,6 +116,7 @@ public class InscricaoMB implements Serializable {
             if (inscricao.getId() != null) {
                 inscricaoDAO.atualizar(inscricao);
                 FacesUtils.addInfoMessageFlashScoped("Inscrição atualizada com sucesso!!!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método InscricaoMB.inscrever() para atualizar a inscrição "+ inscricao.getId()+".");
             } //salvar
             else {
                 GregorianCalendar gc = new GregorianCalendar();
@@ -119,6 +128,7 @@ public class InscricaoMB implements Serializable {
                 if (b) {
                     inscricaoDAO.salvar(inscricao);
                     FacesUtils.addInfoMessageFlashScoped("Inscrição salva com sucesso!!!");
+                    Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método InscricaoMB.inscrever() para salvar a inscrição "+ inscricao.getId()+".");
                 } else {
                     FacesUtils.addWarnMessageFlashScoped("O aluno já está inscrito nesta lista!");
                 }
@@ -129,11 +139,12 @@ public class InscricaoMB implements Serializable {
         return "inscricao.xhtml" + "?faces-redirect=true";
     }
 
-    public void cancelarMatricula() {
+    public void cancelarInscricao() {
         try {
             if (cancelaInscricao) {
                 inscricaoDAO.remover(inscricao);
                 FacesUtils.addInfoMessage("Inscrição cancelada com sucesso!!!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método InscricaoMB.cancelarInscricao() para excluir a inscricao "+inscricao.getId()+".");
                 limparForm();
             }
         } catch (DAOException e) {

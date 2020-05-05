@@ -1,6 +1,9 @@
 package br.leg.alrr.abrindocaminhos.controller;
 
+import br.leg.alrr.abrindocaminhos.business.Loger;
+import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Periodo;
+import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.PeriodoDAO;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
 import br.leg.alrr.abrindocaminhos.util.FacesUtils;
@@ -24,6 +27,9 @@ public class PeriodoMB implements Serializable {
 
     @EJB
     private PeriodoDAO periodoDAO;
+    
+    @EJB
+    private LogSistemaDAO logSistemaDAO;
 
     private Periodo periodo;
 
@@ -37,6 +43,8 @@ public class PeriodoMB implements Serializable {
     @PostConstruct
     public void init() {
         limparForm();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     public String salvarPeriodo() {
@@ -44,9 +52,11 @@ public class PeriodoMB implements Serializable {
             if (periodo.getId() != null) {
                 periodoDAO.atualizar(periodo);
                 FacesUtils.addInfoMessageFlashScoped("Período atualizada com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método PeriodoMB.salvarPeriodo() para atualizar o período "+ periodo.getId()+".");
             } else {
                 periodoDAO.salvar(periodo);
                 FacesUtils.addInfoMessageFlashScoped("Período salva com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método PeriodoMB.salvarPeriodo() para salvar o período "+ periodo.getId()+".");
             }
         } catch (DAOException e) {
             FacesUtils.addErrorMessageFlashScoped(e.getMessage());
@@ -67,6 +77,7 @@ public class PeriodoMB implements Serializable {
             if (removerPeriodoSelecionado) {
                 periodoDAO.remover(periodoSelecionado);
                 FacesUtils.addInfoMessage("Período removida com sucesso!");
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método PeriodoMB.removerPeriodo() para excluir o período "+ periodo.getId()+".");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("O período não pode ser excluído pois ainda está referenciado em instrução.");
