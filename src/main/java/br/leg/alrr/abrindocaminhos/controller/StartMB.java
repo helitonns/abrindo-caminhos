@@ -54,6 +54,8 @@ public class StartMB implements Serializable {
     private void init() {
         usuario = new UsuarioComUnidade();
         listarMensagens();
+        
+        Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
     }
 
     private void listarMensagens() {
@@ -121,7 +123,7 @@ public class StartMB implements Serializable {
 
     public String sair() {
         try {
-            Loger.registrar(logSistemaDAO, TipoAcao.SAIR, "O usuário fez saiu do sistema.");
+            Loger.registrar(logSistemaDAO, TipoAcao.SAIR, "O usuário saiu do sistema.");
             FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         } catch (Exception e) {
         }

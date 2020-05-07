@@ -5,7 +5,6 @@ import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
 import br.leg.alrr.abrindocaminhos.model.Genitores;
 import br.leg.alrr.abrindocaminhos.model.Matricula;
-import br.leg.alrr.abrindocaminhos.model.UsuarioComUnidade;
 import br.leg.alrr.abrindocaminhos.persistence.AlunoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MatriculaDAO;

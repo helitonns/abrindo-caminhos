@@ -139,8 +139,9 @@
 
                             <p:submenu id="menu_estatistica" label="Auditoria" icon="assignment" rendered="#{startMB.superAdmin}">
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="menu_estatistica_acesso" value="Estatísticas por acesso" icon="pie_chart" outcome="/pages/superadmin/estatistica"/>
-                                <p:menuitem id="menu_estatistica_usuario" value="Estatísticas por usuário" icon="pie_chart" outcome="/pages/superadmin/estatistica-usuario"/>
+                                <p:menuitem id="menu_log" value="Log do sistema" icon="pie_chart" outcome="/pages/superadmin/log"/>
+                                <p:menuitem id="menu_estatistica_acesso" value="Estatísticas por acesso" icon="pie_chart" outcome="/pages/superadmin/estatistica" rendered="false"/>
+                                <p:menuitem id="menu_estatistica_usuario" value="Estatísticas por usuário" icon="pie_chart" outcome="/pages/superadmin/estatistica-usuario" rendered="false"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="menu_auditoria_auditityEntity" value="Auditoria AuditEntity" icon="pie_chart" outcome="/pages/superadmin/auditoria-revisao"/>
                                 <p:menuitem id="menu_auditoria_aluno" value="Auditoria Aluno" icon="pie_chart" outcome="/pages/superadmin/auditoria-aluno"/>
