@@ -61,16 +61,12 @@
                             </div>
 
 
-
                             <div class="ui-g-12 ui-md-4">
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
                                 <p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioEspecificoMB.pesquisarPorTurma}" ajax="false" />
                             </div>
-
-
-
                             <div class="ui-g-12 ui-md-4">
                                 <p:commandButton value="Limpar" icon="ui-icon-close" action="#{relatorioEspecificoMB.cancelarRenovacao()}" immediate="true" ajax="false" styleClass="blue-grey-btn"/>
                             </div>
@@ -89,7 +85,7 @@
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                <p:dataTable var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" ">
                                     <p:column headerText="Atividade" sortBy="#{var_matricula.turma.atividade.descricao}">
                                         <h:outputText value="#{var_matricula.turma.atividade.descricao}"/>
                                     </p:column>

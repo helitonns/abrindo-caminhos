@@ -51,10 +51,6 @@
                                 </p:selectOneMenu>
                             </div>
 
-                            
-
-
-
                             <div class="ui-g-12 ui-md-4">
                                 <p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioEspecificoMB.pesquisarPorAtividadePorQuantidade}" ajax="false" />
                             </div>
@@ -81,8 +77,8 @@
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable id="tbl_quantidade" var="var_quantidade" value="#{relatorioEspecificoMB.retornoConsultaQuantidades}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" reflow="true" paginator="true" rows="10" emptyMessage=" " >
-                                    <p:column headerText="Atividade">
+                                <p:dataTable id="tbl_quantidade" var="var_quantidade" value="#{relatorioEspecificoMB.retornoConsultaQuantidades}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" " >
+                                    <p:column headerText="Atividade" sortBy="#{var_quantidade.texto}">
                                         <h:outputText value="#{var_quantidade.texto}"/>
                                     </p:column>
                                     <p:column headerText="Quantidade">

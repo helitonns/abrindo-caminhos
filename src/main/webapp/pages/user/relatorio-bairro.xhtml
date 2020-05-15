@@ -84,7 +84,7 @@
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable id="tbl_aluno" var="var_aluno" value="#{relatorioEspecificoMB.alunos}" rendered="#{relatorioEspecificoMB.exibirTabelaAluno}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                <p:dataTable id="tbl_aluno" var="var_aluno" value="#{relatorioEspecificoMB.alunos}" rendered="#{relatorioEspecificoMB.exibirTabelaAluno}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" ">
                                     <p:column headerText="Aluno" sortBy="#{var_aluno.nome}">
                                         <h:outputText value="#{var_aluno.nome}"/>
                                     </p:column>
@@ -113,7 +113,7 @@
                                     </f:facet>
                                 </p:dataTable>
 
-                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" ">
                                     <p:column headerText="Aluno">
                                         <h:outputText value="#{var_matricula.aluno.nome}"/>
                                     </p:column>

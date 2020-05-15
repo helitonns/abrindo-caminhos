@@ -88,7 +88,7 @@
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" ">
                                     <p:column headerText="Atividade" sortBy="#{var_matricula.turma.atividade.descricao}">
                                         <h:outputText value="#{var_matricula.turma.atividade.descricao}"/>
                                     </p:column>

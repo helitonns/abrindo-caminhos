@@ -78,7 +78,7 @@
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable id="tbl_turma_quantidade" var="var_turma" value="#{relatorioEspecificoMB.turmas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" sortBy="#{var_turma.atividade.descricao}" reflow="true" paginator="true" rows="10" emptyMessage=" " >
+                                <p:dataTable id="tbl_turma_quantidade" var="var_turma" value="#{relatorioEspecificoMB.turmas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" draggableColumns="true" sortBy="#{var_turma.atividade.descricao}" reflow="true" paginator="true" rows="10" emptyMessage=" " >
                                     <p:column headerText="Atividade" groupRow="true" sortBy="#{var_turma.atividade.descricao}">
                                         <h:outputText value="#{var_turma.atividade.descricao}"/>
                                     </p:column>
