@@ -28,21 +28,15 @@
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
                             <div class="ui-g-12 ui-md-12">
-                                <div class="ui-inputgroup">
-                                    <h:panelGroup styleClass="md-inputfield">
-                                        <p:inputTextarea id="id_duvida_pergunta" value="#{mensagemMB.mensagem.titulo}" rows="2"  required="true" />
-                                        <label>Título</label>
-                                    </h:panelGroup>     
-                                </div>
+                                <h:outputText value="Título da mensagem:"/>
+                                <br/>
+                                <p:editor id="id_duvida_pergunta"  value="#{mensagemMB.mensagem.titulo}" required="true" height="80"/>
                             </div>
 
                             <div class="ui-g-12 ui-md-12">
-                                <div class="ui-inputgroup">
-                                    <h:panelGroup styleClass="md-inputfield">
-                                        <p:inputTextarea id="id_duvida_resposta" value="#{mensagemMB.mensagem.conteudo}" rows="2" required="true" />
-                                        <label>Conteúdo</label>
-                                    </h:panelGroup>     
-                                </div>
+                                <h:outputText value="Corpo da mensagem:"/>
+                                <br/>
+                                <p:editor id="id_duvida_resposta"  value="#{mensagemMB.mensagem.conteudo}" required="true"/>
                             </div>
 
                             <div class="ui-g-12 ui-md-4">
