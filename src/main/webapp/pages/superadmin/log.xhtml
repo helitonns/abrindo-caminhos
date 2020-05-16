@@ -24,8 +24,8 @@
                         <p:messages globalOnly="true" closable="true"/>
 
                         <div class="ui-g ui-fluid form-group">
-                            
-                            
+
+
                             <div class="ui-g-12 ui-md-3">
                                 <h:outputText value="Tipo de Log" />
                             </div>
@@ -38,7 +38,7 @@
                             <div class="ui-g-12 ui-md-3">
                                 <h:outputText value="Data 2" />
                             </div>
-                            
+
                             <div class="ui-g-12 ui-md-3">
                                 <p:selectOneMenu id="idSelectTA" value="#{logMB.tipoDeAcao}"  style="margin-top: 10px;">
                                     <f:selectItem itemLabel=" - Todos os tipos - " itemValue="#{0}"/>
@@ -61,7 +61,7 @@
                                     <f:convertDateTime type="localDate" pattern="dd/MM/yyyy" />
                                 </p:calendar> 
                             </div>
-                            
+
                             <div class="ui-g-12 ui-md-9"/>
                             <div class="ui-g-12 ui-md-3">
                                 <p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{logMB.listarLogs()}" ajax="false" />
@@ -80,26 +80,33 @@
 
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable var="log_var" value="#{logMB.logs}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                <p:dataTable id="log_tbl" var="log_var" value="#{logMB.logs}" reflow="true" paginator="true" rows="10" emptyMessage=" ">
                                     <p:column headerText="Data" style="width: 200px">
                                         <h:outputText value="#{log_var.dataOperacao}">
                                             <f:convertDateTime type="localDate" pattern="dd/MM/yyyy hh:mm:ss" />
                                         </h:outputText>
                                     </p:column>
-                                    
+
                                     <p:column headerText="Usuário" sortBy="#{log_var.usuario.login}" filterBy="#{log_var.usuario.login}" style="width: 200px">
                                         <h:outputText value="#{log_var.usuario.login}" />
                                     </p:column>
-                                    
+
                                     <p:column headerText="Tipo de ação" sortBy="#{log_var.tipoAcao}" filterBy="#{log_var.tipoAcao}" style="width: 200px">
                                         <h:outputText value="#{log_var.tipoAcao}" />
                                     </p:column>
-                                    
+
                                     <p:column headerText="Mensagem">
                                         <h:outputText value="#{log_var.mensagemDeEntrada}" />
                                     </p:column>
-                                    
+
                                 </p:dataTable>
+                            </div>
+                            
+                            <div class="ui-g-12 ui-md-9"/>
+                            <div class="ui-g-12 ui-md-3">
+                                <p:commandButton value="EXCEL" ajax="false" icon="ui-icon-file-download" styleClass="green-btn">
+                                    <p:dataExporter type="xls" target="log_tbl" fileName="relatorio-geral"/>
+                                </p:commandButton>    
                             </div>
                         </div>
                     </div>

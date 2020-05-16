@@ -85,6 +85,25 @@ public class RelatorioEspecificoMB implements Serializable {
 
     private boolean exibirTabelaAluno;
     private boolean exibirTabelaMatricula;
+    
+    
+    private boolean exibirColunaAtividade = true;
+    private boolean exibirColunaCodigo = false;
+    private boolean exibirColunaTelefone = true;
+    private boolean exibirColunaDataNascimentoAluno = false;
+    private boolean exibirColunaNomeAluno = true;
+    private boolean exibirColunaSexo = false;
+    private boolean exibirColunaCEP = false;
+    private boolean exibirColunaComplemento = false;
+    private boolean exibirColunaNumero = false;
+    private boolean exibirColunaRua = false;
+    private boolean exibirColunaBairro = false;
+    private boolean exibirColunaNomeMae = true;
+    private boolean exibirColunaDataNascimentoMae = false;
+    private boolean exibirColunaCPFMae = false;
+    private boolean exibirColunaNomePai = false;
+    private boolean exibirColunaDataNascimentoPai = false;
+    private boolean exibirColunaCPFPai = false;
 //==========================================================================
 
     @PostConstruct
@@ -1005,4 +1024,140 @@ public class RelatorioEspecificoMB implements Serializable {
         return totalDeAlunos;
     }
 
+    public boolean isExibirColunaTelefone() {
+        return exibirColunaTelefone;
+    }
+
+    public void setExibirColunaTelefone(boolean exibirColunaTelefone) {
+        this.exibirColunaTelefone = exibirColunaTelefone;
+    }
+
+    public boolean isExibirColunaCodigo() {
+        return exibirColunaCodigo;
+    }
+
+    public void setExibirColunaCodigo(boolean exibirColunaCodigo) {
+        this.exibirColunaCodigo = exibirColunaCodigo;
+    }
+
+    public boolean isExibirColunaDataNascimentoAluno() {
+        return exibirColunaDataNascimentoAluno;
+    }
+
+    public void setExibirColunaDataNascimentoAluno(boolean exibirColunaDataNascimentoAluno) {
+        this.exibirColunaDataNascimentoAluno = exibirColunaDataNascimentoAluno;
+    }
+
+    public boolean isExibirColunaNomeAluno() {
+        return exibirColunaNomeAluno;
+    }
+
+    public void setExibirColunaNomeAluno(boolean exibirColunaNomeAluno) {
+        this.exibirColunaNomeAluno = exibirColunaNomeAluno;
+    }
+
+    public boolean isExibirColunaSexo() {
+        return exibirColunaSexo;
+    }
+
+    public void setExibirColunaSexo(boolean exibirColunaSexo) {
+        this.exibirColunaSexo = exibirColunaSexo;
+    }
+
+    public boolean isExibirColunaCEP() {
+        return exibirColunaCEP;
+    }
+
+    public void setExibirColunaCEP(boolean exibirColunaCEP) {
+        this.exibirColunaCEP = exibirColunaCEP;
+    }
+
+    public boolean isExibirColunaComplemento() {
+        return exibirColunaComplemento;
+    }
+
+    public void setExibirColunaComplemento(boolean exibirColunaComplemento) {
+        this.exibirColunaComplemento = exibirColunaComplemento;
+    }
+
+    public boolean isExibirColunaNumero() {
+        return exibirColunaNumero;
+    }
+
+    public void setExibirColunaNumero(boolean exibirColunaNumero) {
+        this.exibirColunaNumero = exibirColunaNumero;
+    }
+
+    public boolean isExibirColunaRua() {
+        return exibirColunaRua;
+    }
+
+    public void setExibirColunaRua(boolean exibirColunaRua) {
+        this.exibirColunaRua = exibirColunaRua;
+    }
+
+    public boolean isExibirColunaBairro() {
+        return exibirColunaBairro;
+    }
+
+    public void setExibirColunaBairro(boolean exibirColunaBairro) {
+        this.exibirColunaBairro = exibirColunaBairro;
+    }
+
+    public boolean isExibirColunaNomeMae() {
+        return exibirColunaNomeMae;
+    }
+
+    public void setExibirColunaNomeMae(boolean exibirColunaNomeMae) {
+        this.exibirColunaNomeMae = exibirColunaNomeMae;
+    }
+
+    public boolean isExibirColunaDataNascimentoMae() {
+        return exibirColunaDataNascimentoMae;
+    }
+
+    public void setExibirColunaDataNascimentoMae(boolean exibirColunaDataNascimentoMae) {
+        this.exibirColunaDataNascimentoMae = exibirColunaDataNascimentoMae;
+    }
+
+    public boolean isExibirColunaCPFMae() {
+        return exibirColunaCPFMae;
+    }
+
+    public void setExibirColunaCPFMae(boolean exibirColunaCPFMae) {
+        this.exibirColunaCPFMae = exibirColunaCPFMae;
+    }
+
+    public boolean isExibirColunaNomePai() {
+        return exibirColunaNomePai;
+    }
+
+    public void setExibirColunaNomePai(boolean exibirColunaNomePai) {
+        this.exibirColunaNomePai = exibirColunaNomePai;
+    }
+
+    public boolean isExibirColunaDataNascimentoPai() {
+        return exibirColunaDataNascimentoPai;
+    }
+
+    public void setExibirColunaDataNascimentoPai(boolean exibirColunaDataNascimentoPai) {
+        this.exibirColunaDataNascimentoPai = exibirColunaDataNascimentoPai;
+    }
+
+    public boolean isExibirColunaCPFPai() {
+        return exibirColunaCPFPai;
+    }
+
+    public void setExibirColunaCPFPai(boolean exibirColunaCPFPai) {
+        this.exibirColunaCPFPai = exibirColunaCPFPai;
+    }
+
+    public boolean isExibirColunaAtividade() {
+        return exibirColunaAtividade;
+    }
+
+    public void setExibirColunaAtividade(boolean exibirColunaAtividade) {
+        this.exibirColunaAtividade = exibirColunaAtividade;
+    }
+    
 }

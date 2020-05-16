@@ -42,7 +42,7 @@
                                     <f:selectItems value="#{relatorioEspecificoMB.unidades}" var="var_unidade" itemValue="#{var_unidade.id}" itemLabel="#{var_unidade.nome}"/>
                                 </p:selectOneMenu>
                             </div>
-                            
+
                             <div class="ui-g-12 ui-md-4">
                                 <p:selectOneMenu id="slt_atividades" value="#{relatorioEspecificoMB.idAtividade}" required="true" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Atividades"  noSelectionOption="true"   />
@@ -50,7 +50,7 @@
                                     <f:selectItems value="#{relatorioEspecificoMB.atividades}" var="var_atividade" itemValue="#{var_atividade.id}" itemLabel="#{var_atividade.descricao}"/>
                                 </p:selectOneMenu>
                             </div>
-                            
+
                             <div class="ui-g-12 ui-md-4">
                                 <p:selectOneMenu id="idStatusTurma" value="#{relatorioEspecificoMB.statusTurma}" style="width: 100%" autoWidth="true" filter="true">
                                     <f:selectItem itemLabel="Status da turma" itemValue="#{-1}" noSelectionOption="true"/>
@@ -59,7 +59,7 @@
                                     <f:selectItem itemLabel="Ambas" itemValue="ambas"/>
                                 </p:selectOneMenu>
                             </div>
-                            
+
 
                             <div class="ui-g-12 ui-md-4">
                                 <p:commandButton value="Pesquisar" icon="ui-icon-search" action="#{relatorioEspecificoMB.pesquisarPorAtividades}" ajax="false" />
@@ -83,23 +83,186 @@
             <div class="ui-g">
                 <div class="ui-g-12">
                     <div class="card card-w-title"> 
-                        <div style="margin-left: 20px">Resultado da pesquisa</div>
+                        <div>Resultado da pesquisa</div>
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
 
+                            <hr style="width: 100%; border-style: dashed"/>
+                            <h:outputText value="Selecione as colunas que deseja exibir na tabela: "/>
+                            
+                            
+                            <hr style="width: 100%; border-style: dashed"/>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaAtividade}" itemLabel="Atividade">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-10"/>
+                            
+                            
+
+                            <hr style="width: 100%; border-style: dashed"/>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaCodigo}" itemLabel="Código">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaNomeAluno}" itemLabel="Nome aluno">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaTelefone}" itemLabel="Telefone">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaDataNascimentoAluno}" itemLabel="D. nasc. aluno">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaSexo}" itemLabel="Sexo">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2"/>
+                            
+
+
+                            <hr style="width: 100%; border-style: dashed"/>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaNomeMae}" itemLabel="Nome mãe">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaDataNascimentoMae}" itemLabel="D. nasc. mãe">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaCPFMae}" itemLabel="CPF mãe">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaNomePai}" itemLabel="Nome pai">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaDataNascimentoPai}" itemLabel="D. nasc. pai">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaCPFPai}" itemLabel="CPF pai">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+
+                            
+                            
+                            <hr style="width: 100%; border-style: dashed"/>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaBairro}" itemLabel="Bairro">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaRua}" itemLabel="Rua">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaNumero}" itemLabel="Número">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaCEP}" itemLabel="CEP">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaComplemento}" itemLabel="Complemento">
+                                    <p:ajax update="tbl_matricula"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2"/>
+                            <hr style="width: 100%; border-style: dashed"/>
+
+
+
+
                             <div class="ui-g-12 ui-md-12">
-                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" ">
-                                    <p:column headerText="Aluno" sortBy="#{var_matricula.aluno.nome}">
+<!--                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" ">-->
+                                <p:dataTable id="tbl_matricula" var="var_matricula" value="#{relatorioEspecificoMB.matriculas}" draggableColumns="true" reflow="true" paginator="true" rows="10" emptyMessage=" ">
+                                    <p:column headerText="Código" sortBy="#{var_matricula.aluno.id}" rendered="#{relatorioEspecificoMB.exibirColunaCodigo}">
+                                        <h:outputText value="#{var_matricula.aluno.id}"/>
+                                    </p:column>
+                                    <p:column headerText="Aluno" sortBy="#{var_matricula.aluno.nome}" rendered="#{relatorioEspecificoMB.exibirColunaNomeAluno}">
                                         <h:outputText value="#{var_matricula.aluno.nome}"/>
                                     </p:column>
-                                    <p:column headerText="Telefone">
+                                    <p:column headerText="Telefone" rendered="#{relatorioEspecificoMB.exibirColunaTelefone}">
                                         <h:outputText value="#{var_matricula.aluno.celular}" />
                                         <h:outputText value=" - " rendered="#{(var_matricula.aluno.celular != '' and var_matricula.aluno.celular != null) and (var_matricula.aluno.fixo != '' and var_matricula.aluno.fixo != null)}"/>
                                         <h:outputText value="#{var_matricula.aluno.fixo}" />
                                     </p:column>
-                                    <p:column headerText="Nome da mãe" sortBy="#{var_matricula.aluno.genitores.nomeMae}">
+                                    <p:column headerText="D. nasc. aluno" rendered="#{relatorioEspecificoMB.exibirColunaDataNascimentoAluno}">
+                                        <h:outputText value="#{var_matricula.aluno.dataNascimento}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Sexo" sortBy="#{var_matricula.aluno.sexo}" rendered="#{relatorioEspecificoMB.exibirColunaSexo}">
+                                        <h:outputText value="#{var_matricula.aluno.sexo}"/>
+                                    </p:column>
+
+
+                                    <p:column headerText="Nome da mãe" sortBy="#{var_matricula.aluno.genitores.nomeMae}" rendered="#{relatorioEspecificoMB.exibirColunaNomeMae}">
                                         <h:outputText value="#{var_matricula.aluno.genitores.nomeMae}"/>
                                     </p:column>
-                                    <p:column headerText="Atividade" sortBy="#{var_matricula.turma.atividade.descricao} - #{var_matricula.turma.nome}">
+                                    <p:column headerText="D. nasc. mãe" rendered="#{relatorioEspecificoMB.exibirColunaDataNascimentoMae}">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.dataNascimentoMae}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="CPF mãe" rendered="#{relatorioEspecificoMB.exibirColunaCPFMae}">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.cpfMae}"/>
+                                    </p:column>
+                                    <p:column headerText="Nome da pai" sortBy="#{var_matricula.aluno.genitores.nomePai}" rendered="#{relatorioEspecificoMB.exibirColunaNomePai}">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.nomePai}"/>
+                                    </p:column>
+                                    <p:column headerText="D. nasc. pai" rendered="#{relatorioEspecificoMB.exibirColunaDataNascimentoPai}">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.dataNascimentoPai}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="CPF pai" rendered="#{relatorioEspecificoMB.exibirColunaCPFPai}">
+                                        <h:outputText value="#{var_matricula.aluno.genitores.cpfPai}"/>
+                                    </p:column>
+
+
+                                    <p:column headerText="Bairro" sortBy="#{var_matricula.aluno.endereco.bairro.nome}" rendered="#{relatorioEspecificoMB.exibirColunaBairro}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.bairro.nome}"/>
+                                    </p:column>
+                                    <p:column headerText="Rua" rendered="#{relatorioEspecificoMB.exibirColunaRua}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.rua}"/>
+                                    </p:column>
+                                    <p:column headerText="Nº" rendered="#{relatorioEspecificoMB.exibirColunaNumero}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.numero}"/>
+                                    </p:column>
+                                    <p:column headerText="CEP" rendered="#{relatorioEspecificoMB.exibirColunaCEP}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.cep}"/>
+                                    </p:column>
+                                    <p:column headerText="Complemento" rendered="#{relatorioEspecificoMB.exibirColunaComplemento}">
+                                        <h:outputText value="#{var_matricula.aluno.endereco.cep}"/>
+                                    </p:column>
+
+
+                                    <p:column headerText="Atividade" sortBy="#{var_matricula.turma.atividade.descricao} - #{var_matricula.turma.nome}" rendered="#{relatorioEspecificoMB.exibirColunaAtividade}">
                                         <h:outputText value="#{var_matricula.turma.atividade.descricao} - #{var_matricula.turma.nome}"/>
                                     </p:column>
                                     <f:facet name="footer">
@@ -107,14 +270,14 @@
                                     </f:facet>
                                 </p:dataTable>
                             </div>
-                            
+
                             <div class="ui-g-12 ui-md-9"/>
                             <div class="ui-g-12 ui-md-3">
                                 <p:commandButton value="EXCEL" ajax="false" icon="ui-icon-file-download" styleClass="green-btn" rendered="#{relatorioEspecificoMB.exibirTabelaMatricula}">
                                     <p:dataExporter type="xls" target="tbl_matricula" fileName="relatorio-geral"/>
                                 </p:commandButton>    
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
