@@ -1,6 +1,7 @@
 package br.leg.alrr.abrindocaminhos.persistence;
 
 import br.leg.alrr.abrindocaminhos.model.Aluno;
+import br.leg.alrr.abrindocaminhos.model.Atividade;
 import br.leg.alrr.abrindocaminhos.model.Turma;
 import br.leg.alrr.abrindocaminhos.model.Unidade;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
@@ -123,6 +124,17 @@ public class TurmaDAO {
         try {
             return em.createQuery("select o from Matricula o where o.aluno.id = :idAluno order by o.turma.nome asc")
                     .setParameter("idAluno", a.getId())
+                    .getResultList();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao listar turmas por aluno.", e);
+        }
+    }
+    
+    public List listarTurmasPorAtividade(Atividade a, boolean status) throws DAOException {
+        try {
+            return em.createQuery("select o from Turma o where o.atividade.id = :idAtividade and o.iniciada = :status order by o.nome asc")
+                    .setParameter("idAtividade", a.getId())
+                    .setParameter("status", status)
                     .getResultList();
         } catch (Exception e) {
             throw new DAOException("Erro ao listar turmas por aluno.", e);

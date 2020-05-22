@@ -85,9 +85,9 @@ public class RelatorioEspecificoMB implements Serializable {
 
     private boolean exibirTabelaAluno;
     private boolean exibirTabelaMatricula;
-    
-    
-    private boolean exibirColunaAtividade = true;
+
+    private boolean exibirColunaAtividade = false;
+    private boolean exibirColunaTurma = false;
     private boolean exibirColunaCodigo = false;
     private boolean exibirColunaTelefone = true;
     private boolean exibirColunaDataNascimentoAluno = false;
@@ -97,6 +97,7 @@ public class RelatorioEspecificoMB implements Serializable {
     private boolean exibirColunaComplemento = false;
     private boolean exibirColunaNumero = false;
     private boolean exibirColunaRua = false;
+    private boolean exibirColunaMunicipio = false;
     private boolean exibirColunaBairro = false;
     private boolean exibirColunaNomeMae = true;
     private boolean exibirColunaDataNascimentoMae = false;
@@ -104,6 +105,8 @@ public class RelatorioEspecificoMB implements Serializable {
     private boolean exibirColunaNomePai = false;
     private boolean exibirColunaDataNascimentoPai = false;
     private boolean exibirColunaCPFPai = false;
+
+    private boolean ativarParametroMatricula = false;
 //==========================================================================
 
     @PostConstruct
@@ -574,8 +577,7 @@ public class RelatorioEspecificoMB implements Serializable {
                     query.append("AND m.aluno.endereco.bairro.id=:idBairro ");
                     blocosParametros.add(new BlocoParametro("idBairro", idBairro));
                 }
-                
-                
+
                 alunos = (ArrayList<Aluno>) relatorioDAO.gerarRelatorioEspecificoPorAluno(query.toString(), blocosParametros);
                 exibirTabelaAluno = true;
 
@@ -601,7 +603,6 @@ public class RelatorioEspecificoMB implements Serializable {
             FacesUtils.addErrorMessage("Não há registros!");
         }
     }
-
 
     /* Relatório por Bairros */
     public void imprimirRelBairros() {
@@ -859,6 +860,104 @@ public class RelatorioEspecificoMB implements Serializable {
         matriculas = new ArrayList<>();
     }
 
+    //--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
+    public void ativarParametrosPesquisaMatricula(ValueChangeEvent event) {
+        if (event.getNewValue().toString().equals("porMatriculaAtiva")) {
+            ativarParametroMatricula = true;
+            exibirColunaAtividade = true;
+        } else {
+            ativarParametroMatricula = false;
+        }
+    }
+
+    public void capturarIdAtividade(ValueChangeEvent event) {
+
+        FacesUtils.setBean("idAtividade", idAtividade);
+    }
+
+    public void recarregarTurmasPorAtividade(ValueChangeEvent event) {
+        try {
+            idAtividade = Long.parseLong(event.getNewValue().toString());
+            turmas = (ArrayList<Turma>) turmaDAO.listarTurmasPorAtividade(new Atividade(idAtividade), true);
+        } catch (NumberFormatException | DAOException e) {
+            FacesUtils.addErrorMessage(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void pesquisarRelatorioGeral() {
+        try {
+            exibirTabelaAluno = false;
+            exibirTabelaMatricula = false;
+            blocosParametros = new ArrayList<>();
+            StringBuilder query = new StringBuilder();
+
+            if (tipoRelatorio.equals("geral")) {
+                query.append("SELECT a FROM Aluno a WHERE ");
+
+                if (idUnidade > 0) {
+                    query.append("a.unidade.id=:idUnidade ");
+                    blocosParametros.add(new BlocoParametro("idUnidade", idUnidade));
+                }
+                
+                if (idMunicipio > 0) {
+                    query.append("and a.endereco.bairro.municipio.id=:idMunicipio ");
+                    blocosParametros.add(new BlocoParametro("idMunicipio", idMunicipio));
+                }
+                
+                if (idBairro > 0) {
+                    query.append("and a.endereco.bairro.id=:idBairro ");
+                    blocosParametros.add(new BlocoParametro("idBairro", idBairro));
+                }
+                
+                query.append("ORDER BY a.nome");
+                
+                alunos = (ArrayList<Aluno>) relatorioDAO.gerarRelatorioEspecificoPorAluno(query.toString(), blocosParametros);
+                exibirTabelaAluno = true;
+
+            } else if (tipoRelatorio.equals("porMatriculaAtiva")) {
+                query.append("SELECT m FROM Matricula m WHERE ");
+
+                if (idUnidade > 0) {
+                    query.append("m.unidade.id=:idUnidade ");
+                    blocosParametros.add(new BlocoParametro("idUnidade", idUnidade));
+                }
+                
+                if (idAtividade > 0) {
+                    query.append("and m.turma.atividade.id=:idAtividade ");
+                    blocosParametros.add(new BlocoParametro("idAtividade", idAtividade));
+                }
+                
+                if (idTurma > 0) {
+                    query.append("and m.turma.id=:idTurma ");
+                    blocosParametros.add(new BlocoParametro("idTurma", idTurma));
+                }
+                
+                if (idMunicipio > 0) {
+                    query.append("and m.aluno.endereco.bairro.municipio.id=:idMunicipio ");
+                    blocosParametros.add(new BlocoParametro("idMunicipio", idMunicipio));
+                }
+                
+                if (idBairro > 0) {
+                    query.append("and m.aluno.endereco.bairro.id=:idBairro ");
+                    blocosParametros.add(new BlocoParametro("idBairro", idBairro));
+                }
+                
+                query.append("ORDER BY m.turma.atividade.descricao, m.turma.nome, m.aluno.nome");
+                
+                matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
+                exibirTabelaMatricula = true;
+            }
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarAlunos().");
+        } catch (DAOException e) {
+            System.out.println(e.getCause());
+            FacesUtils.addErrorMessage(e.getMessage());
+        }
+
+    }
+//--------------------------------------------------------------------------
+    //--------------------------------------------------------------------------
     public String cancelarAniversariante() {
         return "relatorio-aniversariante.xhtml" + "?faces-redirect=true";
     }
@@ -905,6 +1004,10 @@ public class RelatorioEspecificoMB implements Serializable {
 
     public String cancelarRenovacao() {
         return "relatorio-turma-renovacao.xhtml" + "?faces-redirect=true";
+    }
+    
+    public String cancelarRelatorioGeral() {
+        return "relatorio-geral.xhtml" + "?faces-redirect=true";
     }
 
 //==========================================================================
@@ -1158,6 +1261,30 @@ public class RelatorioEspecificoMB implements Serializable {
 
     public void setExibirColunaAtividade(boolean exibirColunaAtividade) {
         this.exibirColunaAtividade = exibirColunaAtividade;
+    }
+
+    public boolean isAtivarParametroMatricula() {
+        return ativarParametroMatricula;
+    }
+
+    public void setAtivarParametroMatricula(boolean ativarParametroMatricula) {
+        this.ativarParametroMatricula = ativarParametroMatricula;
+    }
+
+    public boolean isExibirColunaTurma() {
+        return exibirColunaTurma;
+    }
+
+    public void setExibirColunaTurma(boolean exibirColunaTurma) {
+        this.exibirColunaTurma = exibirColunaTurma;
+    }
+
+    public boolean isExibirColunaMunicipio() {
+        return exibirColunaMunicipio;
+    }
+
+    public void setExibirColunaMunicipio(boolean exibirColunaMunicipio) {
+        this.exibirColunaMunicipio = exibirColunaMunicipio;
     }
     
 }
