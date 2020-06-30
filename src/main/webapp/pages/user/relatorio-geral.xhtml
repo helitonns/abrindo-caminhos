@@ -156,7 +156,12 @@
                                     <p:ajax update="tbl_matricula tbl_aluno"/>
                                 </p:selectBooleanCheckbox>
                             </div>
-                            <div class="ui-g-12 ui-md-2"/>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaDataCadastro}" itemLabel="Data de cadastro">
+                                    <p:ajax update="tbl_matricula tbl_aluno"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            
 
 
 
@@ -258,6 +263,11 @@
                                     <p:column headerText="Sexo" sortBy="#{var_aluno.sexo}" rendered="#{relatorioEspecificoMB.exibirColunaSexo}">
                                         <h:outputText value="#{var_aluno.sexo}"/>
                                     </p:column>
+                                    <p:column headerText="D. de cadastro" rendered="#{relatorioEspecificoMB.exibirColunaDataCadastro}">
+                                        <h:outputText value="#{var_aluno.dataDeCadastro}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
 
 
                                     <p:column headerText="Nome da mãe" sortBy="#{var_aluno.genitores.nomeMae}" rendered="#{relatorioEspecificoMB.exibirColunaNomeMae}">
@@ -330,6 +340,11 @@
                                     </p:column>
                                     <p:column headerText="Sexo" sortBy="#{var_matricula.aluno.sexo}" rendered="#{relatorioEspecificoMB.exibirColunaSexo}">
                                         <h:outputText value="#{var_matricula.aluno.sexo}"/>
+                                    </p:column>
+                                    <p:column headerText="D. de cadastro" rendered="#{relatorioEspecificoMB.exibirColunaDataCadastro}">
+                                        <h:outputText value="#{var_aluno.dataDeCadastro}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
                                     </p:column>
 
 

@@ -105,6 +105,7 @@ public class RelatorioEspecificoMB implements Serializable {
     private boolean exibirColunaNomePai = false;
     private boolean exibirColunaDataNascimentoPai = false;
     private boolean exibirColunaCPFPai = false;
+    private boolean exibirColunaDataCadastro = false;
 
     private boolean ativarParametroMatricula = false;
 //==========================================================================
@@ -1290,6 +1291,14 @@ public class RelatorioEspecificoMB implements Serializable {
 
     public void setExibirColunaMunicipio(boolean exibirColunaMunicipio) {
         this.exibirColunaMunicipio = exibirColunaMunicipio;
+    }
+
+    public boolean isExibirColunaDataCadastro() {
+        return exibirColunaDataCadastro;
+    }
+
+    public void setExibirColunaDataCadastro(boolean exibirColunaDataCadastro) {
+        this.exibirColunaDataCadastro = exibirColunaDataCadastro;
     }
 
 }
