@@ -7,6 +7,7 @@ import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
 import br.leg.alrr.abrindocaminhos.model.Atividade;
 import br.leg.alrr.abrindocaminhos.model.Bairro;
+import br.leg.alrr.abrindocaminhos.model.Familiar;
 import br.leg.alrr.abrindocaminhos.model.Horario;
 import br.leg.alrr.abrindocaminhos.model.Matricula;
 import br.leg.alrr.abrindocaminhos.model.Municipio;
@@ -15,6 +16,7 @@ import br.leg.alrr.abrindocaminhos.model.Unidade;
 import br.leg.alrr.abrindocaminhos.persistence.AtividadeDAO;
 import br.leg.alrr.abrindocaminhos.persistence.BairroDAO;
 import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
+import br.leg.alrr.abrindocaminhos.persistence.MatriculaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MunicipioDAO;
 import br.leg.alrr.abrindocaminhos.persistence.RelatorioDAO;
 import br.leg.alrr.abrindocaminhos.persistence.TurmaDAO;
@@ -62,6 +64,9 @@ public class RelatorioEspecificoMB implements Serializable {
     @EJB
     private LogSistemaDAO logSistemaDAO;
 
+    @EJB
+    private MatriculaDAO matriculaDAO;
+
     private ArrayList<Aluno> alunos;
     private ArrayList<Matricula> matriculas;
     private ArrayList<Unidade> unidades;
@@ -71,6 +76,7 @@ public class RelatorioEspecificoMB implements Serializable {
     private ArrayList<Bairro> bairros;
     private ArrayList<BlocoParametro> blocosParametros;
     private ArrayList<RetornoConsultaQuantidade> retornoConsultaQuantidades;
+    private ArrayList<Familiar> familiaresGeral;
 
     private Date data1;
     private Date data2;
@@ -106,6 +112,10 @@ public class RelatorioEspecificoMB implements Serializable {
     private boolean exibirColunaDataNascimentoPai = false;
     private boolean exibirColunaCPFPai = false;
     private boolean exibirColunaDataCadastro = false;
+    private boolean exibirColunaFamiliaNome = true;
+    private boolean exibirColunaFamiliaDataNascimento = true;
+    private boolean exibirColunaFamiliaIdade = true;
+    private boolean exibirColunaFamiliaParentesco = true;
 
     private boolean ativarParametroMatricula = false;
 //==========================================================================
@@ -859,6 +869,7 @@ public class RelatorioEspecificoMB implements Serializable {
         retornoConsultaQuantidades = new ArrayList<>();
         alunos = new ArrayList<>();
         matriculas = new ArrayList<>();
+        familiaresGeral = new ArrayList<>();
     }
 
     //--------------------------------------------------------------------------
@@ -954,14 +965,69 @@ public class RelatorioEspecificoMB implements Serializable {
                 matriculas = (ArrayList<Matricula>) relatorioDAO.gerarRelatorioEspecificoPorMatricula(query.toString(), blocosParametros);
                 exibirTabelaMatricula = true;
             }
-            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarAlunos().");
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarRelatorioGeral().");
         } catch (DAOException e) {
             System.out.println(e.getCause());
             FacesUtils.addErrorMessage(e.getMessage());
         }
 
     }
-//--------------------------------------------------------------------------
+
+    public void pesquisarRelatorioGeralDeFamiliares() {
+        try {
+            exibirTabelaAluno = false;
+            blocosParametros = new ArrayList<>();
+            StringBuilder query = new StringBuilder();
+
+            query.append("SELECT f FROM Familiar f inner join f.aluno a WHERE ");
+
+            if (idUnidade > 0) {
+                query.append("a.unidade.id=:idUnidade ");
+                blocosParametros.add(new BlocoParametro("idUnidade", idUnidade));
+            }
+
+            if (idMunicipio > 0) {
+                query.append("and a.endereco.bairro.municipio.id=:idMunicipio ");
+                blocosParametros.add(new BlocoParametro("idMunicipio", idMunicipio));
+            }
+
+            if (idBairro > 0) {
+                query.append("and a.endereco.bairro.id=:idBairro ");
+                blocosParametros.add(new BlocoParametro("idBairro", idBairro));
+            }
+
+            query.append("ORDER BY a.nome, f.nome");
+
+            familiaresGeral = (ArrayList<Familiar>) relatorioDAO.gerarRelatorioEspecificoPorFamiliar(query.toString(), blocosParametros);
+
+            if (tipoRelatorio.equals("porMatriculaAtiva")) {
+                ArrayList<Familiar> familiaresMatricula = new ArrayList<>();
+
+                if (idAtividade > 0 && idTurma > 0) {
+                    for (Familiar f : familiaresGeral) {
+                        if (matriculaDAO.haMatriculaComAlunoAtividadeETurma(f.getAluno().getId(), idAtividade, idTurma)) {
+                            familiaresMatricula.add(f);
+                        }
+                    }
+                } else if (idAtividade > 0) {
+                    for (Familiar f : familiaresGeral) {
+                        if (matriculaDAO.haMatriculaComAlunoEAtividade(f.getAluno().getId(), idAtividade)) {
+                            familiaresMatricula.add(f);
+                        }
+                    }
+                }
+                familiaresGeral = familiaresMatricula;
+            }
+
+            exibirTabelaAluno = true;
+
+            Loger.registrar(logSistemaDAO, TipoAcao.EXECUTAR, "O usuário executou o método RelatorioEspecificoMB.pesquisarRelatorioGeralDeFamiliares().");
+        } catch (DAOException e) {
+            System.out.println(e.getCause());
+            FacesUtils.addErrorMessage(e.getMessage());
+        }
+
+    }
     //--------------------------------------------------------------------------
 
     public String cancelarAniversariante() {
@@ -1014,6 +1080,10 @@ public class RelatorioEspecificoMB implements Serializable {
 
     public String cancelarRelatorioGeral() {
         return "relatorio-geral.xhtml" + "?faces-redirect=true";
+    }
+
+    public String cancelarRelatorioGeralDeFamiliares() {
+        return "relatorio-familiares.xhtml" + "?faces-redirect=true";
     }
 
 //==========================================================================
@@ -1299,6 +1369,42 @@ public class RelatorioEspecificoMB implements Serializable {
 
     public void setExibirColunaDataCadastro(boolean exibirColunaDataCadastro) {
         this.exibirColunaDataCadastro = exibirColunaDataCadastro;
+    }
+
+    public boolean isExibirColunaFamiliaNome() {
+        return exibirColunaFamiliaNome;
+    }
+
+    public void setExibirColunaFamiliaNome(boolean exibirColunaFamiliaNome) {
+        this.exibirColunaFamiliaNome = exibirColunaFamiliaNome;
+    }
+
+    public boolean isExibirColunaFamiliaDataNascimento() {
+        return exibirColunaFamiliaDataNascimento;
+    }
+
+    public void setExibirColunaFamiliaDataNascimento(boolean exibirColunaFamiliaDataNascimento) {
+        this.exibirColunaFamiliaDataNascimento = exibirColunaFamiliaDataNascimento;
+    }
+
+    public boolean isExibirColunaFamiliaIdade() {
+        return exibirColunaFamiliaIdade;
+    }
+
+    public void setExibirColunaFamiliaIdade(boolean exibirColunaFamiliaIdade) {
+        this.exibirColunaFamiliaIdade = exibirColunaFamiliaIdade;
+    }
+
+    public boolean isExibirColunaFamiliaParentesco() {
+        return exibirColunaFamiliaParentesco;
+    }
+
+    public void setExibirColunaFamiliaParentesco(boolean exibirColunaFamiliaParentesco) {
+        this.exibirColunaFamiliaParentesco = exibirColunaFamiliaParentesco;
+    }
+
+    public ArrayList<Familiar> getFamiliaresGeral() {
+        return familiaresGeral;
     }
 
 }

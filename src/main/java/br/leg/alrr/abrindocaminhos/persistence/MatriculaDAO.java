@@ -125,6 +125,31 @@ public class MatriculaDAO {
             throw new DAOException("Erro ao contar matrículas na turma", e);
         }
     }
+    
+    public boolean haMatriculaComAlunoEAtividade(Long idAluno, Long idAtividade) throws DAOException {
+        try {
+            Long i = (Long) em.createQuery("select COUNT(o) from Matricula o where o.status = true and o.aluno.id =:idAluno and  o.turma.atividade.id = :idAtividade")
+                    .setParameter("idAluno", idAluno)
+                    .setParameter("idAtividade", idAtividade)
+                    .getSingleResult();
+            return i > 0;
+        } catch (Exception e) {
+            throw new DAOException("Erro ao contar matrículas na turma", e);
+        }
+    }
+    
+    public boolean haMatriculaComAlunoAtividadeETurma(Long idAluno, Long idAtividade, Long idTurma) throws DAOException {
+        try {
+            Long i = (Long) em.createQuery("select COUNT(o) from Matricula o where o.status = true and o.aluno.id =:idAluno and o.turma.id =:idTurma and o.turma.atividade.id =:idAtividade")
+                    .setParameter("idAluno", idAluno)
+                    .setParameter("idAtividade", idAtividade)
+                    .setParameter("idTurma", idTurma)
+                    .getSingleResult();
+            return i > 0;
+        } catch (Exception e) {
+            throw new DAOException("Erro ao contar matrículas na turma", e);
+        }
+    }
 
     public List<Matricula> gerarRelatorioDinamico(String consulta, List<BlocoParametro> parametros) throws DAOException {
         try {

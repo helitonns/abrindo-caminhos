@@ -345,7 +345,7 @@
                     </div>
                     <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->         
 
-                    <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O000 PAINEL DOS GENITORESOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+                    <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O000 PAINEL DOS GENITORES OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
                     <div class="card card-w-title" id="idPanelGenitores">
                         <div style="margin-left: 20px">Informações dos genitores</div>
                         <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
@@ -466,6 +466,86 @@
                         </div>
                     </div>        
                     <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+
+                    <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O000 PAINEL DOS FAMILIARES OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+                    <div class="card card-w-title" id="idPanelFamiliares">
+                        <div style="margin-left: 20px">Informações dos familiares</div>
+                        <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+
+
+                            <div class="ui-g-12 ui-md-12">
+                                <p:dataTable id="tbl_familiares" value="#{alunoMB.familiares}" var="var_familiar" reflow="true"  emptyMessage=" " style="width: 100%; margin-top: 10px">
+                                    <f:facet name="header"></f:facet>
+                                    <p:column headerText="Nome" sortBy="#{var_familiar.nome}">
+                                        <h:outputText value="#{var_familiar.nome}" />
+                                    </p:column>
+                                    <p:column headerText="Data de nascimento">
+                                        <h:outputText value="#{var_familiar.dataNascimento}">
+                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="Parentesco">
+                                        <h:outputText value="#{var_familiar.parentesco.descricao}" />
+                                    </p:column>
+                                    <p:column headerText="Ação" style="width: 250px;">
+                                        <p:commandButton  value="Remover" icon="ui-icon-delete" styleClass="red-btn" action="#{alunoMB.removerFamiliar}" update="tbl_familiares">
+                                            <f:setPropertyActionListener value="#{var_familiar}" target="#{alunoMB.recebeFamiliar}"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </div>
+
+                            <div class="ui-g-12 ui-md-4">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:inputText id="idNomeFamiliar" value="#{alunoMB.familiar.nome}" style="width: 100%;" converter="upper"/>
+                                        <label>Nome do familiar:</label>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-4" style="margin-top: 12px;">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:calendar id="idDataNascimentoFamiliar" value="#{alunoMB.familiar.dataNascimento}"  pattern="dd/MM/yyyy" style="margin-top: 11px;" mask="99/99/9999" showOn="button"/> 
+                                        <label>Data de nascimento do familiar:</label>
+                                        <p:message for="idDataNascimentoFamiliar" showSummary="false" showDetail="false"/>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-3" style="margin-top: 22px;">
+                                <p:selectOneMenu id="idGrauDeParentesco" value="#{alunoMB.familiar.parentesco}" converter="entityConverter" autoWidth="true" filter="true">
+                                    <f:selectItem itemLabel="Selecione o grau de parentesco" />
+                                    <f:selectItems value="#{alunoMB.parentescos}" var="slc_parentesco" itemValue="#{slc_parentesco}" itemLabel="#{slc_parentesco.descricao}"/>
+                                </p:selectOneMenu> 
+                            </div>
+                            <div class="ui-g-12 ui-md-1" style="margin-top: 12px;">
+                                <p:commandButton id="idAdicionarFamiliar" icon="ui-icon-plus" actionListener="#{alunoMB.adicionarFamiliar}" update="tbl_familiares idNomeFamiliar idDataNascimentoFamiliar idGrauDeParentesco">
+                                    <p:tooltip for="idAdicionarBairro" value="Adicionar familiar"/>
+                                </p:commandButton>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                     <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO0000000000 PAINEL DA MATRÍCULA OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
                     <div class="card card-w-title">

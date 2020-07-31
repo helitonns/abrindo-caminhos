@@ -4,6 +4,7 @@ import br.leg.alrr.abrindocaminhos.business.Sexo;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import javax.persistence.Basic;
 
 import javax.persistence.CascadeType;
@@ -16,6 +17,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -86,25 +88,28 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dataDeCadastro;
 
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Familiar> familia;
+
     @Transient
     private String idade;
-    
+
     @Transient
     private Long rev;
-    
+
     @Transient
     private Long revtype;
-    
+
     @Transient
     private Date dataOperacao;
-    
+
     @Transient
     private String usuario;
     //=========================================================================//
 
     public Aluno() {
     }
-    
+
     public Aluno(Long id, String nome, Long rev, Long revtype, String usuario, Date dataOperacao) {
         this.id = id;
         this.nome = nome;
@@ -113,8 +118,6 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
         this.usuario = usuario;
         this.dataOperacao = dataOperacao;
     }
-    
-    
 
     public Aluno(Long id) {
         this.id = id;
@@ -336,13 +339,13 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
     public void setRevtype(Long revtype) {
         this.revtype = revtype;
     }
-    
+
     public String getTipoDeOperacao() {
         if (revtype == 0) {
             return "INSERT";
-        }else if(revtype == 1){
+        } else if (revtype == 1) {
             return "UPDATE";
-        }else{
+        } else {
             return "DELETE";
         }
     }
@@ -362,6 +365,100 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-    
-    
+
+    public List<Familiar> getFamilia() {
+        return familia;
+    }
+
+    public void setFamilia(List<Familiar> familia) {
+        this.familia = familia;
+    }
+
+    public String getNomeDosFamiliares() {
+        if (familia.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+
+            int i = 0;
+
+            for (Familiar f : familia) {
+                sb.append("- ").append(f.getNome());
+                i++;
+
+                if (i < familia.size()) {
+                    sb.append("<br/>");
+                }
+            }
+
+            return sb.toString();
+        }
+        return null;
+    }
+
+    public String getIdadeDosFamiliares() {
+        if (familia.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+
+            int i = 0;
+
+            for (Familiar f : familia) {
+                if (f.getDataNascimento() != null) {
+                    GregorianCalendar g1 = new GregorianCalendar();
+                    GregorianCalendar g2 = new GregorianCalendar();
+                    g2.setTime(f.getDataNascimento());
+
+                    sb.append("- ").append(g1.get(GregorianCalendar.YEAR) - g2.get(GregorianCalendar.YEAR));
+                }
+                i++;
+
+                if (i < familia.size()) {
+                    sb.append("<br/>");
+                }
+            }
+
+            return sb.toString();
+        }
+        return null;
+    }
+
+    public String getDataDeNascimentoDosFamiliares() {
+        if (familia.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+
+            int i = 0;
+
+            for (Familiar f : familia) {
+                if (f.getDataNascimento() != null) {
+                    GregorianCalendar g2 = new GregorianCalendar();
+                    g2.setTime(f.getDataNascimento());
+                    sb.append("- ").append(g2.get(GregorianCalendar.DAY_OF_MONTH)).append("/").append(g2.get(GregorianCalendar.MONTH)+1).append("/").append(g2.get(GregorianCalendar.YEAR));
+                }
+                i++;
+
+                if (i < familia.size()) {
+                    sb.append("<br/>");
+                }
+            }
+            return sb.toString();
+        }
+        return null;
+    }
+
+    public String getParentescoDosFamiliares() {
+        if (familia.size() > 0) {
+            StringBuilder sb = new StringBuilder();
+
+            int i = 0;
+
+            for (Familiar f : familia) {
+                sb.append("- ").append(f.getParentesco().getDescricao());
+                i++;
+
+                if (i < familia.size()) {
+                    sb.append("<br/>");
+                }
+            }
+            return sb.toString();
+        }
+        return null;
+    }
 }

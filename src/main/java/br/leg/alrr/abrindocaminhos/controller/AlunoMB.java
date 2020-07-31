@@ -10,12 +10,14 @@ import br.leg.alrr.abrindocaminhos.business.TipoAcao;
 import br.leg.alrr.abrindocaminhos.model.Denominacao;
 import br.leg.alrr.abrindocaminhos.model.Escola;
 import br.leg.alrr.abrindocaminhos.model.Escolaridade;
+import br.leg.alrr.abrindocaminhos.model.Familiar;
 import br.leg.alrr.abrindocaminhos.model.Genitores;
 import br.leg.alrr.abrindocaminhos.model.Inscricao;
 import br.leg.alrr.abrindocaminhos.model.Instrucao;
 import br.leg.alrr.abrindocaminhos.model.ListaDeEspera;
 import br.leg.alrr.abrindocaminhos.model.Matricula;
 import br.leg.alrr.abrindocaminhos.model.Pais;
+import br.leg.alrr.abrindocaminhos.model.Parentesco;
 import br.leg.alrr.abrindocaminhos.model.Periodo;
 import br.leg.alrr.abrindocaminhos.model.Serie;
 import br.leg.alrr.abrindocaminhos.model.Situacao;
@@ -32,6 +34,7 @@ import br.leg.alrr.abrindocaminhos.persistence.LogSistemaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MatriculaDAO;
 import br.leg.alrr.abrindocaminhos.persistence.MunicipioDAO;
 import br.leg.alrr.abrindocaminhos.persistence.PaisDAO;
+import br.leg.alrr.abrindocaminhos.persistence.ParentescoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.PeriodoDAO;
 import br.leg.alrr.abrindocaminhos.persistence.SerieDAO;
 import br.leg.alrr.abrindocaminhos.persistence.SituacaoDAO;
@@ -108,9 +111,12 @@ public class AlunoMB implements Serializable {
 
     @EJB
     private InscricaoDAO inscricaoDAO;
-    
+
     @EJB
     private LogSistemaDAO logSistemaDAO;
+
+    @EJB
+    private ParentescoDAO parentescoDAO;
 
     private ArrayList<Pais> paises;
     private ArrayList<Municipio> municipios;
@@ -124,6 +130,9 @@ public class AlunoMB implements Serializable {
     private ArrayList<Turma> turmas;
     private ArrayList<ListaDeEspera> listas;
     private ArrayList<Matricula> matriculas;
+    private ArrayList<Parentesco> parentescos;
+    private ArrayList<Familiar> familiares;
+    private ArrayList<Familiar> familiaresParaExcluir;
 
     private Aluno aluno;
     private Endereco endereco;
@@ -136,6 +145,8 @@ public class AlunoMB implements Serializable {
     private Escola escola;
     private Pais pais;
     private Matricula matriculaSelecionada;
+    private Familiar familiar;
+    private Familiar recebeFamiliar;
 
     private Sexo sexo = Sexo.MASCULINO;
     private Long idMunicipio;
@@ -160,7 +171,7 @@ public class AlunoMB implements Serializable {
 
     private byte[] imagem;
 
-    //==========================================================================
+    //=========================================================================================================================================================================
     @PostConstruct
     public void init() {
         limparForm();
@@ -179,6 +190,7 @@ public class AlunoMB implements Serializable {
         listarDenominacoesAtivas();
         listarTurmasAtivas();
         listarListasAtivas();
+        listarParentescoAtivos();
 
         try {
             //VERIFICA SE HÁ CPF A SER VIRIFICADO
@@ -208,10 +220,11 @@ public class AlunoMB implements Serializable {
                 FacesUtils.removeBean("idAlunoParaProntuario");
             }
 
-            Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL()+".");
-            
+            Loger.registrar(logSistemaDAO, TipoAcao.ACESSAR, "O usuário acessou a página: " + FacesUtils.getURL() + ".");
+
         } catch (Exception e) {
             FacesUtils.addInfoMessage("Erro ao tentar editar aluno. \n" + e.getCause());
+            System.out.println(e.getCause());
         }
     }
 
@@ -267,6 +280,10 @@ public class AlunoMB implements Serializable {
         listarBairroPorMunicipio();
         editandoALuno = true;
         idPais = aluno.getPaisDeOrigem().getId();
+
+        for (Familiar f : aluno.getFamilia()) {
+            familiares.add(f);
+        }
 
         if (aluno.getInstrucao() != null) {
             instrucao = aluno.getInstrucao();
@@ -355,10 +372,18 @@ public class AlunoMB implements Serializable {
             preSalvar();
 
             if (aluno.getId() != null) {
+                excluirFamiliar();
+                
+                //setando aluno em familiar
+                for (Familiar f : familiares) {
+                    f.setAluno(aluno);
+                }
+                
+                aluno.setFamilia(familiares);
                 alunoDAO.atualizar(aluno);
                 FacesUtils.setBean("idAlunoParaProntuario", aluno.getId());
                 FacesUtils.addInfoMessageFlashScoped("Aluno atualizado com sucesso!!!");
-                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método AlunoMB.salvarAluno() para atualizar o aluno: "+ aluno.getId()+".");
+                Loger.registrar(logSistemaDAO, TipoAcao.ATUALIZAR, "O usuário executou o método AlunoMB.salvarAluno() para atualizar o aluno: " + aluno.getId() + ".");
 
                 //FAZENDO A MATRICULA NA TURMA
                 if (matricularNaTurma && turma.getId() != null) {
@@ -376,7 +401,7 @@ public class AlunoMB implements Serializable {
                         matricula.setStatus(true);
                         matriculaDAO.salvar(matricula);
                         FacesUtils.addInfoMessageFlashScoped("Aluno matriculado na turma com sucesso!!!");
-                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para matricular o aluno "+ aluno.getId()+" na turma "+turma.getId()+".");
+                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para matricular o aluno " + aluno.getId() + " na turma " + turma.getId() + ".");
 
                         if (!matricula.podeMatricular(turma, aluno)) {
                             FacesUtils.addWarnMessageFlashScoped("Lembrando que o aluno está fora da faxa etária da turma!");
@@ -402,7 +427,7 @@ public class AlunoMB implements Serializable {
                     if (inscricaoDAO.podeInscrever(listaDeEspera.getId(), aluno.getId())) {
                         inscricaoDAO.salvar(i);
                         FacesUtils.addInfoMessageFlashScoped("Inscrição salva com sucesso!!!");
-                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para inscrever em lista de espera o aluno "+ aluno.getId()+" na lista de espera "+listaDeEspera.getId()+".");
+                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para inscrever em lista de espera o aluno " + aluno.getId() + " na lista de espera " + listaDeEspera.getId() + ".");
                     } else {
                         FacesUtils.addWarnMessageFlashScoped("O aluno já está inscrito nesta lista!");
                     }
@@ -417,13 +442,18 @@ public class AlunoMB implements Serializable {
                 aluno.setGenitores(genitores);
                 aluno.setDataDeCadastro(new Date());
 
+                aluno.setFamilia(familiares);
+                for (Familiar f : familiares) {
+                    f.setAluno(aluno);
+                }
+
                 //verifica se o aluno tem CPF, se tiver será verificado se o CPF é único, caso contrário, o aluno será salvo sem a verificação
                 if (aluno.getCpf().length() >= 11) {
                     if (alunoDAO.cpfUnico(aluno.getCpf())) {
                         alunoDAO.salvar(aluno);
                         FacesUtils.addInfoMessageFlashScoped("Aluno salvo com sucesso!!!");
                         FacesUtils.addInfoMessageFlashScoped("Código do aluno: " + aluno.getId());
-                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para salvar o aluno: "+ aluno.getId()+".");
+                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para salvar o aluno: " + aluno.getId() + ".");
                     } else {
                         FacesUtils.addWarnMessageFlashScoped("O CPF de número " + aluno.getCpf() + " já está cadastrado!!!");
                     }
@@ -431,7 +461,7 @@ public class AlunoMB implements Serializable {
                     alunoDAO.salvar(aluno);
                     FacesUtils.addInfoMessageFlashScoped("Aluno salvo com sucesso!!!");
                     FacesUtils.addInfoMessageFlashScoped("Código do aluno: " + aluno.getId());
-                    Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para salvar o aluno "+ aluno.getId()+".");
+                    Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para salvar o aluno " + aluno.getId() + ".");
                 }
 
                 //FAZENDO A MATRICULA NA TURMA
@@ -453,7 +483,7 @@ public class AlunoMB implements Serializable {
                         matricula.setStatus(true);
                         matriculaDAO.salvar(matricula);
                         FacesUtils.addInfoMessageFlashScoped("Aluno matriculado na turma com sucesso!!!");
-                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para matricular o aluno "+ aluno.getId()+" na turma "+turma.getId()+".");
+                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para matricular o aluno " + aluno.getId() + " na turma " + turma.getId() + ".");
 
                         if (!matricula.podeMatricular(turma, aluno)) {
                             FacesUtils.addWarnMessageFlashScoped("Lembrando que o aluno está fora da faxa etária da turma!");
@@ -479,7 +509,7 @@ public class AlunoMB implements Serializable {
                     if (inscricaoDAO.podeInscrever(listaDeEspera.getId(), aluno.getId())) {
                         inscricaoDAO.salvar(i);
                         FacesUtils.addInfoMessageFlashScoped("Inscrição salva com sucesso!!!");
-                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para inscrever em lista de espera o aluno "+ aluno.getId()+" na lista de espera "+listaDeEspera.getId()+".");
+                        Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarAluno() para inscrever em lista de espera o aluno " + aluno.getId() + " na lista de espera " + listaDeEspera.getId() + ".");
                     } else {
                         FacesUtils.addWarnMessageFlashScoped("O aluno já está inscrito nesta lista!");
                     }
@@ -587,6 +617,14 @@ public class AlunoMB implements Serializable {
         }
     }
 
+    private void listarParentescoAtivos() {
+        try {
+            parentescos = (ArrayList<Parentesco>) parentescoDAO.listarAtivos();
+        } catch (DAOException e) {
+            FacesUtils.addInfoMessage(e.getMessage());
+        }
+    }
+
     public String verificarCodigoOuCpfCadastrado() {
 
         if (aluno.getId() != null && aluno.getId() != 0l) {
@@ -646,7 +684,7 @@ public class AlunoMB implements Serializable {
             bairro.setMunicipio(municipio);
             bairroDAO.salvar(bairro);
             FacesUtils.addInfoMessageFlashScoped("Bairro salvo com sucesso!");
-            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarBairro() para salvar o bairro: "+ bairro.getNome()+".");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarBairro() para salvar o bairro: " + bairro.getNome() + ".");
             listarBairroPorMunicipio();
             bairro = new Bairro();
         } catch (DAOException e) {
@@ -666,6 +704,11 @@ public class AlunoMB implements Serializable {
         pais = new Pais();
         matriculaSelecionada = new Matricula();
         turma = new Turma();
+        parentescos = new ArrayList<>();
+        familiares = new ArrayList<>();
+        familiaresParaExcluir = new ArrayList<>();
+        familiar = new Familiar();
+        recebeFamiliar = new Familiar();
 
         cpfPesquisa = "";
 
@@ -717,7 +760,7 @@ public class AlunoMB implements Serializable {
         FacesUtils.setBean("aluno", aluno);
         return "aluno.xhtml" + "?faces-redirect=true";
     }
-    
+
     public String listarEditarAluno() {
         return "listar-editar-aluno.xhtml" + "?faces-redirect=true";
     }
@@ -752,7 +795,7 @@ public class AlunoMB implements Serializable {
             escola.setStatus(true);
             escolaDAO.salvar(escola);
             FacesUtils.addInfoMessageFlashScoped("Escola salva com sucesso!");
-            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarEscola2() para salvar a escola: "+ escola.getNome()+".");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarEscola2() para salvar a escola: " + escola.getNome() + ".");
 
             escola = new Escola();
             listarEscolaPorDenominacao(d);
@@ -767,7 +810,7 @@ public class AlunoMB implements Serializable {
             pais.setStatus(true);
             paisDAO.salvar(pais);
             FacesUtils.addInfoMessage("País salvo com sucesso!");
-            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarPais() para salvar o pais: "+ pais.getNome()+".");
+            Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.salvarPais() para salvar o pais: " + pais.getNome() + ".");
 
             pais = new Pais();
 
@@ -797,12 +840,12 @@ public class AlunoMB implements Serializable {
             FacesUtils.addInfoMessage(e.getMessage());
         }
     }
-    
+
     public void matricular() {
         try {
             turma = new Turma();
             turma.setId(idTurma);
-            
+
             //FAZENDO A MATRICULA NA TURMA
             if (turma.getId() != null) {
                 if (!turmaDAO.verificarSeAlunoJaEstaMatriculadoNaTurma(aluno, turma)) {
@@ -819,8 +862,8 @@ public class AlunoMB implements Serializable {
                     matricula.setStatus(true);
                     matriculaDAO.salvar(matricula);
                     FacesUtils.addInfoMessageFlashScoped("Aluno(a) matriculado(a) na turma com sucesso!!!");
-                    Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.matricular() para matricular o aluno: "+ aluno.getId()+".");
-                    
+                    Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.matricular() para matricular o aluno: " + aluno.getId() + ".");
+
                     verificarMinhasAtividades();
 
                 } else {
@@ -835,7 +878,35 @@ public class AlunoMB implements Serializable {
         }
 
     }
-//==========================================================================
+
+    public void adicionarFamiliar() {
+        familiares.add(familiar);
+        familiar = new Familiar();
+    }
+
+    public void removerFamiliar() {
+        for (Familiar f : familiares) {
+            if (f.getNome().equals(recebeFamiliar.getNome())) {
+                familiares.remove(f);
+                familiaresParaExcluir.add(f);
+                recebeFamiliar = new Familiar();
+                break;
+            }
+        }
+    }
+
+    private void excluirFamiliar() {
+        try {
+            for (Familiar f : familiaresParaExcluir) {
+                if (f.getId() != null) {
+                    alunoDAO.DeleteFamiliar(f.getId());
+                }
+            }
+        } catch (DAOException e) {
+            FacesUtils.addErrorMessageFlashScoped("Erro ao excluir familiar!!!");
+        }
+    }
+//=============================================================================================================================================================================
 
     public Aluno getAluno() {
         return aluno;
@@ -1108,5 +1179,29 @@ public class AlunoMB implements Serializable {
     public void setIdTurma(Long idTurma) {
         this.idTurma = idTurma;
     }
-    
+
+    public ArrayList<Parentesco> getParentescos() {
+        return parentescos;
+    }
+
+    public Familiar getFamiliar() {
+        return familiar;
+    }
+
+    public void setFamiliar(Familiar familiar) {
+        this.familiar = familiar;
+    }
+
+    public ArrayList<Familiar> getFamiliares() {
+        return familiares;
+    }
+
+    public void setRecebeFamiliar(Familiar recebeFamiliar) {
+        this.recebeFamiliar = recebeFamiliar;
+    }
+
+    public void setFamiliares(ArrayList<Familiar> familiares) {
+        this.familiares = familiares;
+    }
+
 }

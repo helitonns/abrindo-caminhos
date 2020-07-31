@@ -311,4 +311,14 @@ public class AlunoDAO {
             throw new DAOException("Erro ao deletar aluno.", e);
         }
     }
+    
+    public void DeleteFamiliar(Long idFamiliar) throws DAOException {
+        try {
+            em.createQuery("Delete from Familiar e where e.id = :idFamiliar")
+                    .setParameter("idFamiliar", idFamiliar)
+                    .executeUpdate();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao deletar familiar.", e);
+        }
+    }
 }

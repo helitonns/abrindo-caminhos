@@ -18,7 +18,7 @@
                                 <p:menuitem id="sm_aluno_listar_editar" value="Listar / Editar Aluno" icon="list" outcome="/pages/user/listar-editar-aluno"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_aluno_aluno"         value="Aluno" icon="person" outcome="/pages/user/aluno"/>
-                                <p:menuitem id="sm_aluno_familia"       value="Família" icon="group" outcome="/pages/user/familia"/>
+                                <p:menuitem id="sm_aluno_familia"       value="Família" icon="group" outcome="/pages/user/familia" rendered="false"/>
                                 <p:menuitem id="sm_aluno_prontuario"   value="Prontuário" icon="add_box" outcome="/pages/user/prontuario" />
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_aluno_meus_cursos"   value="Minhas Atividades" icon="books" outcome="/pages/user/minhas-atividades" rendered="false"/>
@@ -75,6 +75,12 @@
                                     <p:menuitem id="sm_cg_bairro" value="Bairro" icon="person_pin_circle" outcome="/pages/user/bairro" />
                                     <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 </p:submenu>
+
+                                <p:submenu id="t5" label="Outros" icon="&#xE896;">
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                    <p:menuitem id="sm_cg_parentesco" value="Parentescos" icon="group" outcome="/pages/user/parentesco"/>
+                                    <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                </p:submenu>
                             </p:submenu>
 
                             <p:submenu id="sub_menu_sistema" label="Config. do Sistema" icon="desktop_windows" rendered="#{!startMB.usuarioRelatorio}">
@@ -99,13 +105,15 @@
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                                 <p:menuitem id="sm_r_geral" value="Relatório geral" icon="assignment" outcome="/pages/user/relatorio-geral"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_r_atividade_quantidade" value="Atividades por quantidade" icon="content_paste" outcome="/pages/user/relatorio-atividade-quantidade"/>
+                                <p:menuitem id="sm_r_familiares" value="Relatório de familiares" icon="content_paste" outcome="/pages/user/relatorio-familiares"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_r_turma_quantidade" value="Turmas por quantidade" icon="assignment" outcome="/pages/user/relatorio-turma-quantidade"/>
+                                <p:menuitem id="sm_r_atividade_quantidade" value="Atividades por quantidade" icon="assignment" outcome="/pages/user/relatorio-atividade-quantidade"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_r_b_quant" value="Bairro por quantidade" icon="content_paste" outcome="/pages/user/relatorio-bairro-quantidade"/>
+                                <p:menuitem id="sm_r_turma_quantidade" value="Turmas por quantidade" icon="content_paste" outcome="/pages/user/relatorio-turma-quantidade"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="sm_r_turma_renovacao" value="Frequência / Renovação" icon="assignment" outcome="/pages/user/relatorio-turma-renovacao"/>
+                                <p:menuitem id="sm_r_b_quant" value="Bairro por quantidade" icon="assignment" outcome="/pages/user/relatorio-bairro-quantidade"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
+                                <p:menuitem id="sm_r_turma_renovacao" value="Frequência / Renovação" icon="content_paste" outcome="/pages/user/relatorio-turma-renovacao"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 

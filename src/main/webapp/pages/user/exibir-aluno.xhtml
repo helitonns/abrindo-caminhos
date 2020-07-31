@@ -402,7 +402,35 @@
 
                 </div>
             </div>  
+
+            <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O000 PAINEL DOS FAMILIARES OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
+            <div class="card card-w-title">
+                <div style="margin-left: 20px">Informações dos familiares</div>
+                <div class="ui-g ui-fluid form-group" style="margin-top: 20px">
+                    <div class="ui-g-12 ui-md-12">
+                        <p:dataTable id="tbl_familiares" value="#{alunoMB.familiares}" var="var_familiar" reflow="true"  emptyMessage=" " draggableColumns="true" style="width: 100%; margin-top: 10px">
+                            <f:facet name="header"></f:facet>
+                            <p:column headerText="Nome" sortBy="#{var_familiar.nome}">
+                                <h:outputText value="#{var_familiar.nome}" />
+                            </p:column>
+                            <p:column headerText="Data de nascimento">
+                                <h:outputText value="#{var_familiar.dataNascimento}">
+                                    <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                </h:outputText>
+                            </p:column>
+                            <p:column headerText="Idade">
+                                <h:outputText value="#{var_familiar.idade}"/>
+                            </p:column>
+                            <p:column headerText="Parentesco" sortBy="#{var_familiar.parentesco.descricao}">
+                                <h:outputText value="#{var_familiar.parentesco.descricao}" />
+                            </p:column>
+                        </p:dataTable>
+                    </div>
+                </div>    
+            </div>
         </h:form> 
+
+
         <h:form id="form2">
             <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O00000000000000000OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
             <h:panelGroup id="idTabelaCursoDoAlunos">

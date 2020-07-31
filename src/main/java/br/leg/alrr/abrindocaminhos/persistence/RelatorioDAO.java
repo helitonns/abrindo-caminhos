@@ -2,6 +2,7 @@ package br.leg.alrr.abrindocaminhos.persistence;
 
 import br.leg.alrr.abrindocaminhos.business.BlocoParametro;
 import br.leg.alrr.abrindocaminhos.model.Aluno;
+import br.leg.alrr.abrindocaminhos.model.Familiar;
 import br.leg.alrr.abrindocaminhos.model.Matricula;
 import br.leg.alrr.abrindocaminhos.model.Turma;
 import br.leg.alrr.abrindocaminhos.util.DAOException;
@@ -25,6 +26,33 @@ public class RelatorioDAO {
     protected EntityManager em;
 
     public List<Aluno> gerarRelatorioEspecificoPorAluno(String consulta, List<BlocoParametro> parametros) throws DAOException {
+        try {
+
+            Query q = em.createQuery(consulta);
+            Calendar d = new GregorianCalendar();
+
+            for (BlocoParametro b : parametros) {
+
+                if (b.getParametro().equals("dataNascimento1")) {
+                    d.setTime((Date) b.getValor());
+                    q.setParameter("dia1", d.get(Calendar.DAY_OF_MONTH));
+                    q.setParameter("mes1", d.get(Calendar.MONTH) + 1);
+                } else if (b.getParametro().equals("dataNascimento2")) {
+                    d.setTime((Date) b.getValor());
+                    q.setParameter("dia2", d.get(Calendar.DAY_OF_MONTH));
+                    q.setParameter("mes2", d.get(Calendar.MONTH) + 1);
+                } else if (b.getParametro().equals("idUnidade") || b.getParametro().equals("idAtividade") || b.getParametro().equals("idTurma")
+                        || b.getParametro().equals("idMunicipio") || b.getParametro().equals("idBairro")) {
+                    q.setParameter(b.getParametro(), (Long) b.getValor());
+                }
+            }
+            return q.getResultList();
+        } catch (Exception e) {
+            throw new DAOException("Erro ao gerar relatório.", e);
+        }
+    }
+    
+    public List<Familiar> gerarRelatorioEspecificoPorFamiliar(String consulta, List<BlocoParametro> parametros) throws DAOException {
         try {
 
             Query q = em.createQuery(consulta);
