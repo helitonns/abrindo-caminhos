@@ -20,9 +20,38 @@
         <h:outputScript name="js/ripple.js" library="sapphire-layout" />
         <h:outputScript name="locale-primefaces.js" library="js" />
         <ui:insert name="head"/>
+
+        <SCRIPT language="JavaScript">
+
+            var g_iCount = new Number();
+           
+            var g_iCount = 1800;
+            var segundos = 60;
+
+            function startCountdown() {
+                if ((g_iCount - 1) >= 0) {
+                    g_iCount = g_iCount - 1;
+                    segundos = segundos - 1;
+                    
+                    numberCountdown.innerText = 'A sessão irá expirar em 00:'+parseInt(g_iCount/60)+':' + segundos;
+                    setTimeout('startCountdown()', 1000);
+                    
+                    if(segundos == 0){
+                        segundos = 60;
+                    }
+                    if (g_iCount == 0){
+                         window.location.href = "/abrindocaminhos/index.xhtml";
+                    }
+                    
+                }
+            }
+        </SCRIPT> 
     </h:head>
 
-    <h:body>
+    <h:body onload="startCountdown();">
+        
+        
+        
         <div class="layout-container layout-menu-#{guestPreferences.menuTheme} layout-topbar-#{guestPreferences.topBar} #{guestPreferences.horizontal ? 'layout-menu-horizontal' : ''} layout-top-#{guestPreferences.topBarSize}">
             <div class="layout-top">
                 <ui:include src="./topbar.xhtml" />
@@ -32,6 +61,7 @@
                         <li><p:link outcome="/pages/user/listar-editar-aluno"><i class="material-icons">&#xE88A;</i></p:link></li>
                         <li><i class="material-icons">chevron_right</i></li>
                         <ui:insert name="breadcrumb" />
+                        <h:outputText id="numberCountdown" style="float: right; color: white"/>
                     </ul>
                 </div>
             </div>
