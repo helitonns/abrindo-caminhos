@@ -51,7 +51,7 @@ public class NavegacaoFilter implements Filter {
                         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/pages/relatorio/relatorio-aniversariante-endereco.xhtml");
                     } else if (autorizacao.getPrivilegio().getDescricao().equals("OPERADOR") && (httpServletRequest.getRequestURI().contains("admin") || httpServletRequest.getRequestURI().contains("superadmin"))) {
                         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/pages/user/listar-editar-aluno.xhtml");
-                    } else if (autorizacao.getPrivilegio().getDescricao().equals("ADMIN") && httpServletRequest.getRequestURI().contains("superadmin")) {
+                    } else if (autorizacao.getPrivilegio().getDescricao().equals("ADMIN") && httpServletRequest.getRequestURI().contains("superadmin") && !httpServletRequest.getRequestURI().contains("log")) {
                         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/pages/user/listar-editar-aluno.xhtml");
                     } else {
                         chain.doFilter(request, response);

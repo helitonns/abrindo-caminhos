@@ -142,20 +142,20 @@
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 
-                            <p:submenu id="menu_estatistica" label="Auditoria" icon="assignment" rendered="#{startMB.superAdmin}">
+                            <p:submenu id="menu_estatistica" label="Auditoria" icon="assignment" rendered="#{startMB.superAdmin || startMB.admin}">
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="menu_log" value="Log do sistema" icon="pie_chart" outcome="/pages/superadmin/log"/>
+                                <p:menuitem id="menu_log" value="Log do sistema" icon="pie_chart" outcome="/pages/superadmin/log" rendered="#{startMB.superAdmin || startMB.admin}"/>
                                 <p:menuitem id="menu_estatistica_acesso" value="Estatísticas por acesso" icon="pie_chart" outcome="/pages/superadmin/estatistica" rendered="false"/>
                                 <p:menuitem id="menu_estatistica_usuario" value="Estatísticas por usuário" icon="pie_chart" outcome="/pages/superadmin/estatistica-usuario" rendered="false"/>
-                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
-                                <p:menuitem id="menu_auditoria_auditityEntity" value="Auditoria AuditEntity" icon="pie_chart" outcome="/pages/superadmin/auditoria-revisao"/>
-                                <p:menuitem id="menu_auditoria_aluno" value="Auditoria Aluno" icon="pie_chart" outcome="/pages/superadmin/auditoria-aluno"/>
-                                <p:menuitem id="menu_auditoria_endereco" value="Auditoria Endereço" icon="pie_chart" outcome="/pages/superadmin/auditoria-endereco"/>
-                                <p:menuitem id="menu_auditoria_genitores" value="Auditoria Genitores" icon="pie_chart" outcome="/pages/superadmin/auditoria-genitores"/>
-                                <p:menuitem id="menu_auditoria_prontuario" value="Auditoria Prontuário" icon="pie_chart" outcome="/pages/superadmin/auditoria-prontuario"/>
-                                <p:menuitem id="menu_auditoria_instrucao" value="Auditoria Instrução" icon="pie_chart" outcome="/pages/superadmin/auditoria-instrucao"/>
-                                <p:menuitem id="menu_auditoria_turma" value="Auditoria Turma" icon="pie_chart" outcome="/pages/superadmin/auditoria-turma"/>
-                                <p:menuitem id="menu_auditoria_matricula" value="Auditoria Matrícula" icon="pie_chart" outcome="/pages/superadmin/auditoria-matricula"/>
+                                <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_auditityEntity" value="Auditoria AuditEntity" icon="pie_chart" outcome="/pages/superadmin/auditoria-revisao" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_aluno" value="Auditoria Aluno" icon="pie_chart" outcome="/pages/superadmin/auditoria-aluno" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_endereco" value="Auditoria Endereço" icon="pie_chart" outcome="/pages/superadmin/auditoria-endereco" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_genitores" value="Auditoria Genitores" icon="pie_chart" outcome="/pages/superadmin/auditoria-genitores" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_prontuario" value="Auditoria Prontuário" icon="pie_chart" outcome="/pages/superadmin/auditoria-prontuario" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_instrucao" value="Auditoria Instrução" icon="pie_chart" outcome="/pages/superadmin/auditoria-instrucao" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_turma" value="Auditoria Turma" icon="pie_chart" outcome="/pages/superadmin/auditoria-turma" rendered="#{startMB.superAdmin}"/>
+                                <p:menuitem id="menu_auditoria_matricula" value="Auditoria Matrícula" icon="pie_chart" outcome="/pages/superadmin/auditoria-matricula" rendered="#{startMB.superAdmin}"/>
                                 <p:separator style="color: #999999; border-top-style: dashed; border-width: thin; margin-left: 15px; margin-right: 20px;"/>
                             </p:submenu>
 
