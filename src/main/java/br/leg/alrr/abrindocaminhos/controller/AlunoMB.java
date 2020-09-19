@@ -827,6 +827,8 @@ public class AlunoMB implements Serializable {
                 matriculaDAO.remover(matriculaSelecionada);
                 FacesUtils.addInfoMessage("Matrícula cancelada com sucesso!!!");
                 verificarMinhasAtividades();
+                Loger.registrar(logSistemaDAO, TipoAcao.APAGAR, "O usuário executou o método AlunoMB.cancelarMatricula() para cancelar a matricula do aluno " 
+                        + matriculaSelecionada.getAluno().getId() + " da turma "+matriculaSelecionada.getTurma().getId()+" ("+matriculaSelecionada.getTurma().getNome()+").");
             }
         } catch (Exception e) {
             FacesUtils.addErrorMessage("Erro ao cacelar matrícula!!!");
@@ -862,7 +864,7 @@ public class AlunoMB implements Serializable {
                     matricula.setStatus(true);
                     matriculaDAO.salvar(matricula);
                     FacesUtils.addInfoMessageFlashScoped("Aluno(a) matriculado(a) na turma com sucesso!!!");
-                    Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.matricular() para matricular o aluno: " + aluno.getId() + ".");
+                    Loger.registrar(logSistemaDAO, TipoAcao.SALVAR, "O usuário executou o método AlunoMB.matricular() para matricular o aluno: " + aluno.getId() + " na turma "+turma.getId()+".");
 
                     verificarMinhasAtividades();
 
