@@ -66,14 +66,22 @@
                     <div class="card card-w-title" >
                         <p:messages globalOnly="true" closable="true"/>
                         <div style="margin-left: 20px">Dados do aluno</div>
-
+                        
                         <div class="ui-g ui-fluid form-group">
 
                             <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O PAINEL DO ALUNO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
                             <div class="ui-g-12 ui-md-6">
+                                <div class="ui-inputgroup">
+                                    <h:panelGroup rendered="#{alunoMB.aluno.id != null}">
+                                        <h:outputLabel value="Código: #{alunoMB.aluno.id}" style="color: red"/>
+                                    </h:panelGroup>     
+                                </div>
+                            </div>
+                            <div class="ui-g-12 ui-md-6"/>
+                            
+                            <div class="ui-g-12 ui-md-6">
                                 <p:message for="idNomeAluno" showSummary="true" showDetail="false"/>
                             </div>
-
                             <div class="ui-g-12 ui-md-6"/>
 
                             <div class="ui-g-12 ui-md-6">
