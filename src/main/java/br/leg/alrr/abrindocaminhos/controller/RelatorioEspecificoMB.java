@@ -105,6 +105,9 @@ public class RelatorioEspecificoMB implements Serializable {
     private boolean exibirColunaRua = false;
     private boolean exibirColunaMunicipio = false;
     private boolean exibirColunaBairro = false;
+    private boolean exibirColunaEmail = false;
+    private boolean exibirColunaFacebook = false;
+    private boolean exibirColunaInstagram = false;
     private boolean exibirColunaNomeMae = true;
     private boolean exibirColunaDataNascimentoMae = false;
     private boolean exibirColunaCPFMae = false;
@@ -1407,4 +1410,29 @@ public class RelatorioEspecificoMB implements Serializable {
         return familiaresGeral;
     }
 
+    public boolean isExibirColunaEmail() {
+        return exibirColunaEmail;
+    }
+
+    public void setExibirColunaEmail(boolean exibirColunaEmail) {
+        this.exibirColunaEmail = exibirColunaEmail;
+    }
+
+    public boolean isExibirColunaFacebook() {
+        return exibirColunaFacebook;
+    }
+
+    public void setExibirColunaFacebook(boolean exibirColunaFacebook) {
+        this.exibirColunaFacebook = exibirColunaFacebook;
+    }
+
+    public boolean isExibirColunaInstagram() {
+        return exibirColunaInstagram;
+    }
+
+    public void setExibirColunaInstagram(boolean exibirColunaInstagram) {
+        this.exibirColunaInstagram = exibirColunaInstagram;
+    }
+
+    
 }

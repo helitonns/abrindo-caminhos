@@ -161,8 +161,24 @@
                                     <p:ajax update="tbl_matricula tbl_aluno"/>
                                 </p:selectBooleanCheckbox>
                             </div>
-
-
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaEmail}" itemLabel="E-mail">
+                                    <p:ajax update="tbl_matricula tbl_aluno"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaFacebook}" itemLabel="Facebook">
+                                    <p:ajax update="tbl_matricula tbl_aluno"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2">
+                                <p:selectBooleanCheckbox value="#{relatorioEspecificoMB.exibirColunaInstagram}" itemLabel="Instagram">
+                                    <p:ajax update="tbl_matricula tbl_aluno"/>
+                                </p:selectBooleanCheckbox>
+                            </div>
+                            <div class="ui-g-12 ui-md-2"/>
+                            <div class="ui-g-12 ui-md-2"/>
+                            <div class="ui-g-12 ui-md-2"/>
 
 
                             <hr style="width: 100%; border-style: dashed"/>
@@ -267,6 +283,15 @@
                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                         </h:outputText>
                                     </p:column>
+                                    <p:column headerText="E-mail" rendered="#{relatorioEspecificoMB.exibirColunaEmail}">
+                                        <h:outputText value="#{var_aluno.email}"/>
+                                    </p:column>
+                                    <p:column headerText="Facebook" rendered="#{relatorioEspecificoMB.exibirColunaFacebook}">
+                                        <h:outputText value="#{var_aluno.facebook}"/>
+                                    </p:column>
+                                    <p:column headerText="Instagram" rendered="#{relatorioEspecificoMB.exibirColunaInstagram}">
+                                        <h:outputText value="#{var_aluno.instagram}"/>
+                                    </p:column>
 
 
                                     <p:column headerText="Nome da mãe" sortBy="#{var_aluno.genitores.nomeMae}" rendered="#{relatorioEspecificoMB.exibirColunaNomeMae}">
@@ -345,7 +370,15 @@
                                             <f:convertDateTime pattern="dd/MM/yyyy"/>
                                         </h:outputText>
                                     </p:column>
-
+                                    <p:column headerText="E-mail" rendered="#{relatorioEspecificoMB.exibirColunaEmail}">
+                                        <h:outputText value="#{var_matricula.aluno.email}"/>
+                                    </p:column>
+                                    <p:column headerText="Facebook" rendered="#{relatorioEspecificoMB.exibirColunaFacebook}">
+                                        <h:outputText value="#{var_matricula.aluno.facebook}"/>
+                                    </p:column>
+                                    <p:column headerText="Instagram" rendered="#{relatorioEspecificoMB.exibirColunaInstagram}">
+                                        <h:outputText value="#{var_matricula.aluno.instagram}"/>
+                                    </p:column>
 
                                     <p:column headerText="Nome da mãe" sortBy="#{var_matricula.aluno.genitores.nomeMae}" rendered="#{relatorioEspecificoMB.exibirColunaNomeMae}">
                                         <h:outputText value="#{var_matricula.aluno.genitores.nomeMae}"/>

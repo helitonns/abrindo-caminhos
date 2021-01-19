@@ -66,7 +66,7 @@
                     <div class="card card-w-title" >
                         <p:messages globalOnly="true" closable="true"/>
                         <div style="margin-left: 20px">Dados do aluno</div>
-                        
+
                         <div class="ui-g ui-fluid form-group">
 
                             <!-- OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO000000000000O PAINEL DO ALUNO OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO-->
@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="ui-g-12 ui-md-6"/>
-                            
+
                             <div class="ui-g-12 ui-md-6">
                                 <p:message for="idNomeAluno" showSummary="true" showDetail="false"/>
                             </div>
@@ -176,8 +176,53 @@
                                     <p:tooltip for="idAdicionarPais" value="Adicionar país"/>
                                 </p:commandButton>
                             </div>
-
                             <div class="ui-g-12 ui-md-12"/>
+
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            
+                            <div class="ui-g-12 ui-md-4">
+                                <p:message id="msgEmail" for="idEmail" showSummary="true" showDetail="false"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-4"/>
+                            <div class="ui-g-12 ui-md-4"/>
+                            
+                            <div class="ui-g-12 ui-md-4">
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="idEmail" value="#{alunoMB.aluno.email}" style="width: 100%;" validatorMessage="O e-mail digitado não está dentto do padrão!">
+                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <p:ajax update="idEmail msgEmail"/>
+                                    </p:inputText>
+                                    <label>E-mail: </label>
+                                </h:panelGroup>
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="idFacebook" value="#{alunoMB.aluno.facebook}" style="width: 100%;"/>
+                                    <label>Facebook: </label>
+                                </h:panelGroup>
+                            </div>
+                            <div class="ui-g-12 ui-md-4">
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText id="idInstagram" value="#{alunoMB.aluno.instagram}" style="width: 100%;"/>
+                                    <label>Instagram: </label>
+                                </h:panelGroup>
+                            </div>
+
                             <div class="ui-g-12 ui-md-12">
                                 <div class="ui-inputgroup">
                                     <h:panelGroup styleClass="md-inputfield">

@@ -91,6 +91,10 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
 
     @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Familiar> familia;
+    
+    private String email;
+    private String facebook;
+    private String instagram;
 
     @Transient
     private String idade;
@@ -462,4 +466,30 @@ public class Aluno implements Serializable, Comparable<Aluno>, Cloneable {
         }
         return null;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFacebook() {
+        return facebook;
+    }
+
+    public void setFacebook(String facebook) {
+        this.facebook = facebook;
+    }
+
+    public String getInstagram() {
+        return instagram;
+    }
+
+    public void setInstagram(String instagram) {
+        this.instagram = instagram;
+    }
+    
+    
 }
