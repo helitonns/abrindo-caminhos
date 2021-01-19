@@ -177,24 +177,6 @@
                                 </p:commandButton>
                             </div>
                             <div class="ui-g-12 ui-md-12"/>
-
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
-                            
                             <div class="ui-g-12 ui-md-4">
                                 <p:message id="msgEmail" for="idEmail" showSummary="true" showDetail="false"/>
                             </div>
@@ -204,7 +186,7 @@
                             <div class="ui-g-12 ui-md-4">
                                 <h:panelGroup styleClass="md-inputfield">
                                     <p:inputText id="idEmail" value="#{alunoMB.aluno.email}" style="width: 100%;" validatorMessage="O e-mail digitado não está dentto do padrão!">
-                                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                                        <f:validateRegex pattern="(^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$)|()" />
                                         <p:ajax update="idEmail msgEmail"/>
                                     </p:inputText>
                                     <label>E-mail: </label>
